@@ -75,4 +75,8 @@ export class MockUserRepository implements IUsersRepository {
   delete(id: string): void {
     this.users = this.users.filter(user => user.id !== id);
   }
+
+  cleanRepository() {
+    this.users = [];
+  }
 }
