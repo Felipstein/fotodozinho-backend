@@ -1,5 +1,6 @@
 import { IUser } from '../../../entities/IUser';
 import { IUsersRepository } from './../../../repositories/IUsersRepository';
+import { BadRequestError } from '../../../errors/BadRequestError';
 
 export class ListUserByIdUseCases {
 
@@ -9,8 +10,10 @@ export class ListUserByIdUseCases {
 
   async execute(id: string): Promise<IUser> {
     if(!id) {
-
+      throw new BadRequestError('Usuário não encontrado');
     }
+
+
   }
 
 }
