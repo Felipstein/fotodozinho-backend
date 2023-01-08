@@ -1,17 +1,18 @@
 import { IUser } from './../entities/IUser';
+import { IUserView } from './../entities/IUserView';
 
 export interface IUsersRepository {
 
-  listAll(): Promise<IUser[]>;
+  listAll(): Promise<IUserView[]>;
 
-  listById(id: string): Promise<IUser | null>;
+  listById(id: string): Promise<IUserView | null>;
 
-  listByEmail(email: string): Promise<IUser | null>;
+  listByEmail(email: string): Promise<IUserView | null>;
 
-  create({ name, email, password }: Omit<IUser, 'id'>): Promise<IUser>;
+  create({ name, email, password }: Omit<IUser, 'id'>): Promise<IUserView>;
 
-  update(id: string, { name, email, password }: Omit<IUser, 'id'>): Promise<IUser>;
+  update(id: string, { name, email, password }: Omit<IUser, 'id'>): Promise<IUserView | null>;
 
-  delete(id: string): Promise<IUser>;
+  delete(id: string): void;
 
 }
