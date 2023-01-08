@@ -1,3 +1,4 @@
 import { app } from './app';
+import EnvProvider from './utils/EnvProvider';
 
-app.listen(3333);
+app.listen(EnvProvider.port, () => console.log(`Server started at port ${EnvProvider.port}`));
