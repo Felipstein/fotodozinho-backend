@@ -1,12 +1,12 @@
-import { IUser } from './../entities/User';
+import { IUser } from './../entities/IUser';
 
 export interface IUsersRepository {
 
-  listAll(): Promise<IUser>;
+  listAll(): Promise<IUser[]>;
 
-  listById(id: string): Promise<IUser | undefined>;
+  listById(id: string): Promise<IUser | null>;
 
-  listByEmail(email: string): Promise<IUser | undefined>;
+  listByEmail(email: string): Promise<IUser | null>;
 
   create({ name, email, password }: Omit<IUser, 'id'>): Promise<IUser>;
 
