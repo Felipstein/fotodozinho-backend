@@ -10,7 +10,7 @@ export class ListUserByIdUseCases {
 
   async execute(id: string): Promise<IUser> {
     if(!id) {
-      throw new BadRequestError('Usuário não encontrado');
+      throw new BadRequestError('ID não informado');
     }
 
 
