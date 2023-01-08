@@ -6,7 +6,8 @@
   "author": "Felipstein <luisfelipe-oliveira@outlook.com.br>",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd --respawn --transpile-only --exit-child --ignore-watch node_modules src/server.ts"
+    "dev": "tsnd --respawn --transpile-only --exit-child --ignore-watch node_modules src/server.ts",
+    "test": "jest"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
