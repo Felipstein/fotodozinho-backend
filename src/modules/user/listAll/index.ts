@@ -6,5 +6,5 @@ export function listUsersFactory() {
   const listUsersUseCases = new ListUsersUseCases(currentRepository);
   const listUsersController = new ListUsersController(listUsersUseCases);
 
-  return { listUsersUseCases, listUsersController };
+  return { useCases: listUsersUseCases, controller: listUsersController };
 }
