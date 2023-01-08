@@ -6,7 +6,7 @@ import { IUserView } from './../../entities/IUserView';
 
 export class MockUserRepository implements IUsersRepository {
 
-  private users: IUser[];
+  private users: IUser[] = [];
 
   async listAll(): Promise<IUserView[]> {
     const users = this.users.map(user => {
@@ -43,11 +43,15 @@ export class MockUserRepository implements IUsersRepository {
     return userWithoutPassword;
   }
 
-  async create({ name, email, phone, password }: Omit<IUser, 'id'>): Promise<IUserView> {
+  async create({ name, email, phone, password }: Omit<IUser, 'id'>, isTest: boolean): Promise<IUserView> {
     const id = uuidProvider.generateCUID();
     const user = { id, name, email, phone, password };
 
     this.users.push(user);
+
+    if(isTest) {
+      return cloneDeep(user);
+    }
 
     const userWithoutPassword = cloneDeep(user);
     delete userWithoutPassword.password;

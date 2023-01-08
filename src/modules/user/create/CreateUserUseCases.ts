@@ -2,7 +2,6 @@ import { BadRequestError } from './../../../errors/BadRequestError';
 import { IUserView } from './../../../entities/IUserView';
 import { IUsersRepository } from './../../../repositories/IUsersRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
-
 import { CreateUserDTO } from './CreateUserDTO';
 import { crypt } from '../../../providers/Crypt';
 
@@ -12,7 +11,7 @@ export class CreateUserUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute({ name, email, phone, password }: CreateUserDTO): Promise<IUserView> {
+  async execute({ name, email, phone, password }: CreateUserDTO, isTest = false): Promise<IUserView> {
     if(someIsNullOrUndefined(name, email, password)) {
       throw new BadRequestError('Os campos nome, e-mail e senha são obrigatórios');
     }
@@ -23,7 +22,7 @@ export class CreateUserUseCases {
     }
 
     const encryptedPassword = await crypt.hash(password);
-    const user = await this.usersRepository.create({ name, email, phone, password: encryptedPassword });
+    const user = await this.usersRepository.create({ name, email, phone, password: encryptedPassword }, isTest);
 
     return user;
   }

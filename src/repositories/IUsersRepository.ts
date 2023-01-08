@@ -9,7 +9,7 @@ export interface IUsersRepository {
 
   listByEmail(email: string): Promise<IUserView | null>;
 
-  create({ name, email, phone, password }: Omit<IUser, 'id'>): Promise<IUserView>;
+  create({ name, email, phone, password }: Omit<IUser, 'id'>, isTest: boolean): Promise<IUserView>;
 
   update(id: string, { name, email, phone, password }: Omit<IUser, 'id'>): Promise<IUserView | null>;
 
