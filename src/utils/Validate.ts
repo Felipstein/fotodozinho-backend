@@ -6,5 +6,5 @@ export function someIsNullOrUndefined(...values: any[]) {
     return true;
   }
 
-  return values.some(nullOrUndefined.includes);
+  return values.some(value => nullOrUndefined.includes(value));
 }
