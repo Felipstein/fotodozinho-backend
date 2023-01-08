@@ -4,7 +4,7 @@ import { listUsersFactory } from '../modules/user/listAll';
 
 const route = Router();
 
-route.get('/users', (req, res) => {
+route.get('/', (req, res) => {
   return listUsersFactory().controller.handle(req, res);
 });
 
