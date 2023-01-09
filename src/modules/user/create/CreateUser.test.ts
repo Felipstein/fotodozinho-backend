@@ -13,7 +13,7 @@ describe('Create User', () => {
     usersRepository.cleanRepository();
   });
 
-  it('should create new user and do not return password', async () => {
+  it('should create new user', async () => {
     const user: Omit<IUser, 'id'> = {
       name: 'User Test',
       email: 'emailtest@hotmail.com',
@@ -23,12 +23,25 @@ describe('Create User', () => {
 
     const userCreated = await createUserUseCases.execute(user);
 
+    expect(userCreated).not.toBeNull();
     expect(userCreated).toEqual({
       id: expect.any(String),
       name: user.name,
       email: user.email,
       phone: user.phone,
     });
+  });
+
+  it('should not return the password when creating a new user', async () => {
+    const user: Omit<IUser, 'id'> = {
+      name: 'User Test',
+      email: 'emailtest@hotmail.com',
+      phone: '99999999999',
+      password: '123456',
+    };
+
+    const userCreated = await createUserUseCases.execute(user);
+
     expect(userCreated).not.toContain('password');
   });
 
