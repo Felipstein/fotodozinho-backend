@@ -3,4 +3,6 @@ export interface IUserView {
   name: string;
   email: string;
   phone?: string | null;
+  createdAt: Date;
+  admin: boolean;
 }

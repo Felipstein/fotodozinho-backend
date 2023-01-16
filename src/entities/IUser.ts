@@ -4,4 +4,6 @@ export interface IUser {
   email: string;
   phone?: string | null;
   password: string;
+  createdAt: Date;
+  admin: boolean;
 }
