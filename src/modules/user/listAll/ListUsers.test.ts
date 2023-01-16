@@ -52,8 +52,8 @@ describe('List all Users', () => {
 
     const users = await listUsersUseCases.execute();
 
-    expect(users).toContainEqual({ id: expect.any(String), ...user1, password: undefined });
-    expect(users).toContainEqual({ id: expect.any(String), ...user2, password: undefined });
+    expect(users).toContainEqual({ id: expect.any(String), admin: false, createdAt: expect.any(Date), ...user1, password: undefined });
+    expect(users).toContainEqual({ id: expect.any(String), admin: false, createdAt: expect.any(Date), ...user2, password: undefined });
   });
 
   it('should return the exact array object with created users', async () => {

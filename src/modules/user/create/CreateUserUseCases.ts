@@ -11,7 +11,7 @@ export class CreateUserUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute({ name, email, phone, password }: CreateUserDTO, isTest = false): Promise<IUserView> {
+  async execute({ name, email, phone, password, admin = false }: CreateUserDTO, isTest = false): Promise<IUserView> {
     if(someIsNullOrUndefined(name, email, password)) {
       throw new BadRequestError('Os campos nome, e-mail e senha são obrigatórios');
     }
@@ -22,7 +22,7 @@ export class CreateUserUseCases {
     }
 
     const encryptedPassword = await crypt.hash(password);
-    const user = await this.usersRepository.create({ name, email, phone, password: encryptedPassword }, isTest);
+    const user = await this.usersRepository.create({ name, email, phone, password: encryptedPassword, admin }, isTest);
 
     return user;
   }

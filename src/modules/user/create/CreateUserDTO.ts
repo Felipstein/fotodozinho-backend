@@ -3,4 +3,5 @@ export interface CreateUserDTO {
   email: string;
   phone?: string;
   password: string;
+  admin?: boolean;
 }

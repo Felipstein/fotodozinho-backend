@@ -1,7 +1,7 @@
+import { IUserCreation } from './../../../entities/IUserCreation';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { BadRequestError } from './../../../errors/BadRequestError';
 import { CreateUserUseCases } from './CreateUserUseCases';
-import { IUser } from '../../../entities/IUser';
 import { MockUserRepository } from '../../../repositories/mock/MockUserRepository';
 
 describe('Create User', () => {
@@ -14,11 +14,12 @@ describe('Create User', () => {
   });
 
   it('should create new user', async () => {
-    const user: Omit<IUser, 'id'> = {
+    const user: IUserCreation = {
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       phone: '99999999999',
       password: '123456',
+      admin: true,
     };
 
     const userCreated = await createUserUseCases.execute(user);
@@ -29,15 +30,18 @@ describe('Create User', () => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      admin: user.admin,
+      createdAt: expect.any(Date),
     });
   });
 
   it('should not return the password when creating a new user', async () => {
-    const user: Omit<IUser, 'id'> = {
+    const user: IUserCreation = {
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       phone: '99999999999',
       password: '123456',
+      admin: false,
     };
 
     const userCreated = await createUserUseCases.execute(user);
@@ -51,6 +55,7 @@ describe('Create User', () => {
       email: 'emailtest1@hotmail.com',
       phone: '99999999999',
       password: '123456',
+      admin: false,
     });
 
     const user2Created = await createUserUseCases.execute({
@@ -58,6 +63,7 @@ describe('Create User', () => {
       email: 'emailtest2@hotmail.com',
       phone: '99999999999',
       password: '123456',
+      admin: false,
     });
 
     expect(user1Created.id).not.toBe(user2Created.id);
@@ -68,9 +74,21 @@ describe('Create User', () => {
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       password: '123456',
+      admin: false,
     });
 
     expect(userCreated).not.toContain('phone');
+  });
+
+  it('should create user without admin, but return admin with false value', async () => {
+    const userCreated = await createUserUseCases.execute({
+      name: 'User Test',
+      email: 'emailtest@hotmail.com',
+      password: '123456',
+    });
+
+    expect(userCreated).toHaveProperty('admin');
+    expect(userCreated.admin).toBe(false);
   });
 
   it('should create user with password encrypted', async () => {

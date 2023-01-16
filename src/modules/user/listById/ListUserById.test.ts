@@ -27,7 +27,7 @@ describe('List User by ID', () => {
 
     delete user.password;
 
-    expect(userListed).toEqual({ id: userCreated.id, ...user });
+    expect(userListed).toEqual({ id: userCreated.id, admin: false, createdAt: expect.any(Date), ...user });
   });
 
 });
