@@ -1,4 +1,4 @@
-import { IUser } from './../entities/IUser';
+import { IUserCreation } from '../entities/IUserCreation';
 import { IUserView } from './../entities/IUserView';
 
 export interface IUsersRepository {
@@ -9,9 +9,9 @@ export interface IUsersRepository {
 
   listByEmail(email: string): Promise<IUserView | null>;
 
-  create({ name, email, phone, password }: Omit<IUser, 'id'>, isTest: boolean): Promise<IUserView>;
+  create({ name, email, phone, password, admin }: IUserCreation, isTest: boolean): Promise<IUserView>;
 
-  update(id: string, { name, email, phone, password }: Omit<IUser, 'id'>): Promise<IUserView | null>;
+  update(id: string, { name, email, phone, password, admin }: IUserCreation): Promise<IUserView | null>;
 
   delete(id: string): void;
 
