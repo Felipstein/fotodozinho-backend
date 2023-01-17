@@ -4,6 +4,7 @@ import { IUsersRepository } from './../../../repositories/IUsersRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
 import { CreateUserDTO } from './CreateUserDTO';
 import { crypt } from '../../../providers/Crypt';
+import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 
 export class CreateUserUseCases {
 
@@ -13,7 +14,7 @@ export class CreateUserUseCases {
 
   async execute({ name, email, phone, password, admin = false }: CreateUserDTO, isTest = false): Promise<IUserView> {
     if(someIsNullOrUndefined(name, email, password)) {
-      throw new BadRequestError('Os campos nome, e-mail e senha são obrigatórios');
+      throw new RequiredFieldsError();
     }
 
     const emailAlreadyExists = await this.usersRepository.listByEmail(email);
