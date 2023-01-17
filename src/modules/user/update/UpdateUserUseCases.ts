@@ -1,6 +1,7 @@
 import { IUserView } from '../../../entities/IUserView';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
+import { crypt } from '../../../providers/Crypt';
 import { IUsersRepository } from '../../../repositories/IUsersRepository';
 import { UpdateUserDTO } from './UpdateUserDTO';
 
@@ -20,7 +21,10 @@ export class UpdateUserUseCases {
       throw new UserNotFoundError();
     }
 
-    const userUpdated = await this.usersRepository.update(id, { name, phone, password, admin });
+    const encryptedPassword = password ? await crypt.hash(password) : null;
+    const userUpdated = await this.usersRepository.update(id, { name, phone, password: encryptedPassword, admin });
+
+    return userUpdated;
   }
 
 }
