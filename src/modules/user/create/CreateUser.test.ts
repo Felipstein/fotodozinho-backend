@@ -35,6 +35,19 @@ describe('Create User', () => {
     });
   });
 
+  it('should return creation date when creating a new user', async () => {
+    const userCreated = await createUserUseCases.execute({
+      name: 'User Test',
+      email: 'emailtest@hotmail.com',
+      phone: '99999999999',
+      password: '123456',
+      admin: false,
+    });
+
+    expect(userCreated).toHaveProperty('createdAt');
+    expect(userCreated.createdAt).toEqual(expect.any(Date));
+  });
+
   it('should not return the password when creating a new user', async () => {
     const user: IUserCreation = {
       name: 'User Test',
