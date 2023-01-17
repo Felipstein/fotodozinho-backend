@@ -1,7 +1,7 @@
 import { NotFoundError } from './../../../errors/NotFoundError';
 import { IUsersRepository } from './../../../repositories/IUsersRepository';
-import { BadRequestError } from '../../../errors/BadRequestError';
 import { IUserView } from '../../../entities/IUserView';
+import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 
 export class ListUserByIdUseCases {
 
@@ -11,7 +11,7 @@ export class ListUserByIdUseCases {
 
   async execute(id: string): Promise<IUserView> {
     if(!id) {
-      throw new BadRequestError('ID não informado');
+      throw new IDNotGivenError();
     }
 
     const user = await this.usersRepository.listById(id);
