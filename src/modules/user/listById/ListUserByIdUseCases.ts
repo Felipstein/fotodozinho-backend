@@ -1,7 +1,7 @@
-import { NotFoundError } from './../../../errors/NotFoundError';
 import { IUsersRepository } from './../../../repositories/IUsersRepository';
 import { IUserView } from '../../../entities/IUserView';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
+import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 
 export class ListUserByIdUseCases {
 
@@ -16,7 +16,7 @@ export class ListUserByIdUseCases {
 
     const user = await this.usersRepository.listById(id);
     if(!user) {
-      throw new NotFoundError('Usuário não encontrado');
+      throw new UserNotFoundError();
     }
 
     return user;
