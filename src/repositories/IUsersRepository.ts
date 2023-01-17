@@ -1,4 +1,5 @@
 import { IUserCreation } from '../entities/IUserCreation';
+import { IUserUpdating } from '../entities/IUserUpdating';
 import { IUserView } from './../entities/IUserView';
 
 export interface IUsersRepository {
@@ -11,7 +12,7 @@ export interface IUsersRepository {
 
   create({ name, email, phone, password, admin }: IUserCreation, isTest: boolean): Promise<IUserView>;
 
-  update(id: string, { name, email, phone, password, admin }: IUserCreation): Promise<IUserView | null>;
+  update(id: string, { name, phone, password, admin }: IUserUpdating): Promise<IUserView | null>;
 
   delete(id: string): void;
 

@@ -2,6 +2,7 @@ import { IUserCreation } from './../../entities/IUserCreation';
 import { prisma } from '../../database';
 import { IUserView } from '../../entities/IUserView';
 import { IUsersRepository } from './../IUsersRepository';
+import { IUserUpdating } from '../../entities/IUserUpdating';
 
 export class PrismaUserRepository implements IUsersRepository {
 
@@ -25,10 +26,10 @@ export class PrismaUserRepository implements IUsersRepository {
     });
   }
 
-  create({ name, email, phone, password }: IUserCreation): Promise<IUserView> {
+  create({ name, email, phone, password, admin }: IUserCreation): Promise<IUserView> {
     return prisma.user.create({
       data: {
-        name, email, phone, password,
+        name, email, phone, password, admin
       },
       select: {
         id: true, name: true, email: true, phone: true, createdAt: true, admin: true
@@ -36,11 +37,11 @@ export class PrismaUserRepository implements IUsersRepository {
     });
   }
 
-  update(id: string, { name, email, phone, password }: IUserCreation): Promise<IUserView | null> {
+  update(id: string, { name, phone, password, admin }: IUserUpdating): Promise<IUserView | null> {
     return prisma.user.update({
       where: { id },
       data: {
-        name, email, phone, password,
+        name, phone, password, admin,
       },
       select: {
         id: true, name: true, email: true, phone: true, createdAt: true, admin: true

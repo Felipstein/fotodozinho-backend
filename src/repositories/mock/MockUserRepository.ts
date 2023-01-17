@@ -1,6 +1,7 @@
 import { cloneDeep } from 'lodash';
 import { IUser } from '../../entities/IUser';
 import { IUserCreation } from '../../entities/IUserCreation';
+import { IUserUpdating } from '../../entities/IUserUpdating';
 import { uuidProvider } from '../../providers/UUID';
 import { IUsersRepository } from '../IUsersRepository';
 import { IUserView } from './../../entities/IUserView';
@@ -61,20 +62,21 @@ export class MockUserRepository implements IUsersRepository {
     return userWithoutPassword;
   }
 
-  async update(id: string, { name, email, phone, password, admin }: IUserCreation): Promise<IUserView | null> {
+  async update(id: string, { name, phone, password, admin }: IUserUpdating): Promise<IUserView | null> {
     const date = new Date();
-    const newUser = { id, name, email, phone, password, createdAt: date, admin };
+    const newUser = { id, name, phone, password, createdAt: date, admin };
+
+    let userUpdated;
 
     this.users = this.users.map(user => {
       if(user.id === id) {
-        return newUser;
+        return userUpdated = { ...user, newUser };
       }
 
       return user;
     });
 
-    const userWithoutPassword = cloneDeep(newUser);
-    delete userWithoutPassword.password;
+    const userWithoutPassword = cloneDeep(userUpdated);
 
     return userWithoutPassword;
   }
