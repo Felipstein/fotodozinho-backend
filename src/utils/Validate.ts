@@ -8,3 +8,11 @@ export function someIsNullOrUndefined(...values: any[]) {
 
   return values.some(value => nullOrUndefined.includes(value));
 }
+
+export function someIsNull(...values: any[]) {
+  if(values === null) {
+    return true;
+  }
+
+  return values.some(value => value === null);
+}
