@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { listUsersFactory } from '../modules/user/listAll';
 import { listUserByIdFactory } from '../modules/user/listById';
 import { createUserFactory } from '../modules/user/create';
+import { updateUserFactory } from '../modules/user/update';
 
 const route = Router();
 
@@ -16,6 +17,10 @@ route.get('/id/:id', (req, res) => {
 
 route.post('/', (req, res) => {
   return createUserFactory().controller.handle(req, res);
+});
+
+route.put('/:id', (req, res) => {
+  return updateUserFactory().controller.handle(req, res);
 });
 
 export { route as userRoutes };
