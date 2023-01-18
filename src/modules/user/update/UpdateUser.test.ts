@@ -1,3 +1,4 @@
+import { BadRequestError } from './../../../errors/BadRequestError';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { UserNotFoundError } from './../../../errors/UserNotFoundError';
 import { IUserCreation } from '../../../entities/IUserCreation';
@@ -70,6 +71,32 @@ describe('Update User', () => {
     const id = uuidProvider.generateCUID();
 
     expect(updateUserUseCases.execute(id, { name: 'John John' })).rejects.toThrow(UserNotFoundError);
+  });
+
+  it('should throw an error when updating user with name null', async () => {
+    const { id } = await createUserUseCases.execute({
+      name: 'User Test',
+      email: 'emailtest@hotmail.com',
+      password: '123456',
+      phone: '99999999999',
+      admin: false,
+    });
+
+    expect(updateUserUseCases.execute(id, { name: null })).rejects.toThrow(BadRequestError);
+    expect(updateUserUseCases.execute(id, { name: null })).rejects.toThrow('Nome e senha não podem ter valores em branco');
+  });
+
+  it('should throw an error when updating user with password null', async () => {
+    const { id } = await createUserUseCases.execute({
+      name: 'User Test',
+      email: 'emailtest@hotmail.com',
+      password: '123456',
+      phone: '99999999999',
+      admin: false,
+    });
+
+    expect(updateUserUseCases.execute(id, { password: null })).rejects.toThrow(BadRequestError);
+    expect(updateUserUseCases.execute(id, { password: null })).rejects.toThrow('Nome e senha não podem ter valores em branco');
   });
 
 });
