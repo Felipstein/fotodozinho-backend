@@ -21,7 +21,7 @@ export class UpdateUserUseCases {
       throw new UserNotFoundError();
     }
 
-    const encryptedPassword = password ? await crypt.hash(password) : null;
+    const encryptedPassword = password && await crypt.hash(password);
     const userUpdated = await this.usersRepository.update(id, { name, phone, password: encryptedPassword, admin }, isTest);
 
     return userUpdated;
