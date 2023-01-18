@@ -1,8 +1,10 @@
 import { IUserView } from '../../../entities/IUserView';
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { crypt } from '../../../providers/Crypt';
 import { IUsersRepository } from '../../../repositories/IUsersRepository';
+import { someIsNull } from '../../../utils/Validate';
 import { UpdateUserDTO } from './UpdateUserDTO';
 
 export class UpdateUserUseCases {
@@ -16,13 +18,17 @@ export class UpdateUserUseCases {
       throw new IDNotGivenError();
     }
 
+    if(someIsNull(name, password)) {
+      throw new BadRequestError('Nome e senha não podem ter valores em branco');
+    }
+
     const userExists = await this.usersRepository.listById(id);
     if(!userExists) {
       throw new UserNotFoundError();
     }
 
     const encryptedPassword = password && await crypt.hash(password);
-    const userUpdated = await this.usersRepository.update(id, { name, phone, password: encryptedPassword, admin }, isTest);
+    const userUpdated = await this.usersRepository.update(id, { name, phone, password: encryptedPassword, admin: admin || false }, isTest);
 
     return userUpdated;
   }
