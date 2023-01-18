@@ -53,7 +53,7 @@ export class MockUserRepository implements IUsersRepository {
     this.users.push(user);
 
     if(isTest) {
-      return cloneDeep(user);
+      return user;
     }
 
     const userWithoutPassword = cloneDeep(user);
@@ -62,11 +62,11 @@ export class MockUserRepository implements IUsersRepository {
     return userWithoutPassword;
   }
 
-  async update(id: string, { name, phone, password, admin }: IUserUpdating): Promise<IUserView | null> {
+  async update(id: string, { name, phone, password, admin }: IUserUpdating, isTest: boolean): Promise<IUserView | null> {
     const date = new Date();
     const newUser = { id, name, phone, password, createdAt: date, admin };
 
-    let userUpdated;
+    let userUpdated: IUser;
 
     this.users = this.users.map(user => {
       if(user.id === id) {
@@ -76,7 +76,14 @@ export class MockUserRepository implements IUsersRepository {
       return user;
     });
 
-    return userUpdated;
+    if(isTest) {
+      return userUpdated;
+    }
+
+    const userWithoutPassword = cloneDeep(userUpdated);
+    delete userWithoutPassword.password;
+
+    return userWithoutPassword;
   }
 
   delete(id: string): void {

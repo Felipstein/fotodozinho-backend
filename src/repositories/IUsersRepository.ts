@@ -12,7 +12,7 @@ export interface IUsersRepository {
 
   create({ name, email, phone, password, admin }: IUserCreation, isTest: boolean): Promise<IUserView>;
 
-  update(id: string, { name, phone, password, admin }: IUserUpdating): Promise<IUserView | null>;
+  update(id: string, { name, phone, password, admin }: IUserUpdating, isTest: boolean): Promise<IUserView | null>;
 
   delete(id: string): void;
 

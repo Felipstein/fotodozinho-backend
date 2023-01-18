@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { UserNotFoundError } from './../../../errors/UserNotFoundError';
 import { IUserCreation } from '../../../entities/IUserCreation';
 import { uuidProvider } from '../../../providers/UUID';
@@ -44,6 +45,25 @@ describe('Update User', () => {
       admin: true,
       createdAt: expect.any(Date),
     });
+  });
+
+  it('should encrypt the password when updating it', async () => {
+    const { id } = await createUserUseCases.execute({
+      name: 'User Test',
+      email: 'emailtest@hotmail.com',
+      password: '123456',
+      phone: '99999999999',
+      admin: false,
+    });
+
+    const newPassword = 'abcdefg';
+
+    const userUpdated = await updateUserUseCases.execute(id, {
+      password: newPassword,
+    }, true);
+
+    // @ts-ignore
+    expect(userUpdated.password).not.toBe(newPassword);
   });
 
   it('should throw an error when updating data for a user that doesn\'t exist', async () => {
