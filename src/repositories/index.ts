@@ -1,5 +1,5 @@
 import { PrismaUserRepository } from './prisma/PrismaUserRepository';
 
-const currentRepository = new PrismaUserRepository();
+const currentUserRepository = new PrismaUserRepository();
 
-export { currentRepository };
+export { currentUserRepository };
