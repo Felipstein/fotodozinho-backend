@@ -70,15 +70,13 @@ export class MockUserRepository implements IUsersRepository {
 
     this.users = this.users.map(user => {
       if(user.id === id) {
-        return userUpdated = { ...user, newUser };
+        return userUpdated = { ...user, ...newUser };
       }
 
       return user;
     });
 
-    const userWithoutPassword = cloneDeep(userUpdated);
-
-    return userWithoutPassword;
+    return userUpdated;
   }
 
   delete(id: string): void {

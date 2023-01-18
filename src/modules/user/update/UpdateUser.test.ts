@@ -34,14 +34,13 @@ describe('Update User', () => {
 
     const userListed = await listUserByIdUseCases.execute(id);
 
-    // está crashando: pode ser que o repositório fake não salva no array as atualizações
-
     expect(userListed).toEqual({
       id: expect.any(String),
       name: 'John John',
       email: user.email,
       phone: '44444444444',
       admin: true,
+      createdAt: expect.any(Date),
     });
   });
 
