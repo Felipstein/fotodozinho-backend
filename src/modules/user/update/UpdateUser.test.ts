@@ -1,4 +1,6 @@
+import { UserNotFoundError } from './../../../errors/UserNotFoundError';
 import { IUserCreation } from '../../../entities/IUserCreation';
+import { uuidProvider } from '../../../providers/UUID';
 import { MockUserRepository } from '../../../repositories/mock/MockUserRepository';
 import { CreateUserUseCases } from '../create/CreateUserUseCases';
 import { ListUserByIdUseCases } from '../listById/ListUserByIdUseCases';
@@ -42,6 +44,12 @@ describe('Update User', () => {
       admin: true,
       createdAt: expect.any(Date),
     });
+  });
+
+  it('should throw an error when updating data for a user that doesn\'t exist', async () => {
+    const id = uuidProvider.generateCUID();
+
+    expect(updateUserUseCases.execute(id, { name: 'John John' })).rejects.toThrow(UserNotFoundError);
   });
 
 });
