@@ -1,4 +1,5 @@
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
+import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IUsersRepository } from '../../../repositories/IUsersRepository';
 
 export class DeleteUserUseCases {
@@ -12,7 +13,12 @@ export class DeleteUserUseCases {
       throw new IDNotGivenError();
     }
 
-    this.usersRepository.delete(id);
+    const userExists = await this.usersRepository.listById(id);
+    if(!userExists) {
+      throw new UserNotFoundError();
+    }
+
+    await this.usersRepository.delete(id);
   }
 
 }

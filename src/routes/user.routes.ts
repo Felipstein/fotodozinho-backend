@@ -4,6 +4,7 @@ import { listUsersFactory } from '../modules/user/listAll';
 import { listUserByIdFactory } from '../modules/user/listById';
 import { createUserFactory } from '../modules/user/create';
 import { updateUserFactory } from '../modules/user/update';
+import { deleteUserFactory } from '../modules/user/delete';
 
 const route = Router();
 
@@ -21,6 +22,10 @@ route.post('/', (req, res) => {
 
 route.put('/:id', (req, res) => {
   return updateUserFactory().controller.handle(req, res);
+});
+
+route.delete('/:id', (req, res) => {
+  return deleteUserFactory().controller.handle(req, res);
 });
 
 export { route as userRoutes };

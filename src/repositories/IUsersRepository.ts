@@ -14,6 +14,6 @@ export interface IUsersRepository {
 
   update(id: string, { name, phone, password, admin }: IUserUpdating, isTest: boolean): Promise<IUserView | null>;
 
-  delete(id: string): void;
+  delete(id: string): Promise<void>;
 
 }

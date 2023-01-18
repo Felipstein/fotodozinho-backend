@@ -12,14 +12,14 @@ describe('Delete User', () => {
   const listUserByIdUseCases = new ListUserByIdUseCases(usersRepository);
   const deleteUserUseCases = new DeleteUserUseCases(usersRepository);
 
-  beforeEach(() => {
+  afterEach(() => {
     usersRepository.cleanRepository();
   });
 
   it('should delete user', async () => {
     const { id } = await createUserUseCases.execute({
       name: 'User Test',
-      email: 'usertest@hotmail.com',
+      email: 'usertest3@hotmail.com',
       phone: '99999999999',
       password: '123456',
       admin: false,
@@ -27,13 +27,13 @@ describe('Delete User', () => {
 
     await deleteUserUseCases.execute(id);
 
-    expect(listUserByIdUseCases.execute(id)).rejects.toThrow(UserNotFoundError);
+    await expect(() => listUserByIdUseCases.execute(id)).rejects.toThrow(UserNotFoundError);
   });
 
-  it('should not throw error or anything when deleted user doesn\'t exist', async () => {
+  it('should throw error when deleted user doesn\'t exist', async () => {
     const id = uuidProvider.generateCUID();
 
-    expect(deleteUserUseCases.execute(id)).resolves;
+    await expect(() => deleteUserUseCases.execute(id)).rejects.toThrow(UserNotFoundError);
   });
 
 });

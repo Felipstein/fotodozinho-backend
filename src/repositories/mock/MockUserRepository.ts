@@ -86,7 +86,7 @@ export class MockUserRepository implements IUsersRepository {
     return userWithoutPassword;
   }
 
-  delete(id: string): void {
+  async delete(id: string): Promise<void> {
     this.users = this.users.filter(user => user.id !== id);
   }
 
