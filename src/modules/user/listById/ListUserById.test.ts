@@ -30,4 +30,17 @@ describe('List User by ID', () => {
     expect(userListed).toEqual({ id: userCreated.id, admin: false, createdAt: expect.any(Date), ...user });
   });
 
+  it('should not return password', async () => {
+    const { id } = await createUserUseCases.execute({
+      name: 'User Test',
+      email: 'testemail@hotmail.com',
+      phone: '99999999999',
+      password: '123456',
+    });
+
+    const user = await listUserByIdUseCases.execute(id);
+
+    expect(user).not.toHaveProperty('password');
+  });
+
 });
