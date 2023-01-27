@@ -3,7 +3,7 @@ import { BadRequestError } from '../../../errors/BadRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { crypt } from '../../../providers/Crypt';
-import { IUsersRepository } from '../../../repositories/IUsersRepository';
+import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { someIsNull } from '../../../utils/Validate';
 import { UpdateUserDTO } from './UpdateUserDTO';
 

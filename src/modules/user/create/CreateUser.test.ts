@@ -1,8 +1,8 @@
+import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
 import { IUserCreation } from './../../../entities/user/IUserCreation';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { BadRequestError } from './../../../errors/BadRequestError';
 import { CreateUserUseCases } from './CreateUserUseCases';
-import { MockUserRepository } from '../../../repositories/mock/MockUserRepository';
 
 describe('Create User', () => {
 

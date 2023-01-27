@@ -1,6 +1,6 @@
-import { IUserCreation } from '../entities/user/IUserCreation';
-import { IUserUpdating } from '../entities/user/IUserUpdating';
-import { IUserView } from './../entities/user/IUserView';
+import { IUserCreation } from '../../entities/user/IUserCreation';
+import { IUserUpdating } from '../../entities/user/IUserUpdating';
+import { IUserView } from '../../entities/user/IUserView';
 
 export interface IUsersRepository {
 

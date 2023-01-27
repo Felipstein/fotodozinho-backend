@@ -1,7 +1,7 @@
 import { IUserCreation } from './../../entities/user/IUserCreation';
 import { prisma } from '../../database';
 import { IUserView } from '../../entities/user/IUserView';
-import { IUsersRepository } from './../IUsersRepository';
+import { IUsersRepository } from './IUsersRepository';
 import { IUserUpdating } from '../../entities/user/IUserUpdating';
 
 export class PrismaUsersRepository implements IUsersRepository {

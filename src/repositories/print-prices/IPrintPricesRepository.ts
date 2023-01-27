@@ -1,6 +1,6 @@
-import { IPrintPriceUpdating } from './../entities/print-price/IPrintPriceUpdating';
-import { IPrintPriceCreation } from './../entities/print-price/IPrintPriceCreation';
-import { IPrintPrice } from '../entities/print-price/IPrintPrice';
+import { IPrintPriceUpdating } from '../../entities/print-price/IPrintPriceUpdating';
+import { IPrintPriceCreation } from '../../entities/print-price/IPrintPriceCreation';
+import { IPrintPrice } from '../../entities/print-price/IPrintPrice';
 
 export interface IPrintPricesRepository {
 

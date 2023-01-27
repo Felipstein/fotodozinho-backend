@@ -1,9 +1,9 @@
 import { ListUserByIdUseCases } from './../listById/ListUserByIdUseCases';
-import { MockUserRepository } from '../../../repositories/mock/MockUserRepository';
 import { CreateUserUseCases } from '../create/CreateUserUseCases';
 import { DeleteUserUseCases } from './DeleteUserUseCases';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { uuidProvider } from '../../../providers/UUID';
+import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
 
 describe('Delete User', () => {
 

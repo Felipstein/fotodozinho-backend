@@ -1,5 +1,7 @@
-import { PrismaUsersRepository } from './prisma/PrismaUsersRepository';
+import { PrismaPrintPricesRepository } from './print-prices/PrismaPrintPricesRepository';
+import { PrismaUsersRepository } from './users/PrismaUsersRepository';
 
-const currentUserRepository = new PrismaUsersRepository();
+const currentUsersRepository = new PrismaUsersRepository();
+const currentPrintPricesRepository = new PrismaPrintPricesRepository();
 
-export { currentUserRepository };
+export { currentUsersRepository, currentPrintPricesRepository };

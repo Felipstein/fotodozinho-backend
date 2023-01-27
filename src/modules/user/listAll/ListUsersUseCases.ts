@@ -1,5 +1,6 @@
-import { IUserView } from '../../../entities/IUserView';
-import { IUsersRepository } from './../../../repositories/IUsersRepository';
+import { IUserView } from '../../../entities/user/IUserView';
+import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
+
 export class ListUsersUseCases {
 
   constructor(

@@ -1,4 +1,4 @@
-import { MockUserRepository } from '../../../repositories/mock/MockUserRepository';
+import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
 import { CreateUserUseCases } from './../create/CreateUserUseCases';
 import { ListUserByIdUseCases } from './ListUserByIdUseCases';
 

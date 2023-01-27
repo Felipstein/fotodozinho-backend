@@ -3,7 +3,7 @@ import { IUser } from '../../entities/user/IUser';
 import { IUserCreation } from '../../entities/user/IUserCreation';
 import { IUserUpdating } from '../../entities/user/IUserUpdating';
 import { uuidProvider } from '../../providers/UUID';
-import { IUsersRepository } from '../IUsersRepository';
+import { IUsersRepository } from './IUsersRepository';
 import { IUserView } from './../../entities/user/IUserView';
 
 export class MockUserRepository implements IUsersRepository {

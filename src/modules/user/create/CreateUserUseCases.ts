@@ -1,10 +1,10 @@
 import { BadRequestError } from './../../../errors/BadRequestError';
-import { IUserView } from './../../../entities/IUserView';
-import { IUsersRepository } from './../../../repositories/IUsersRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
 import { CreateUserDTO } from './CreateUserDTO';
 import { crypt } from '../../../providers/Crypt';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
+import { IUserView } from '../../../entities/user/IUserView';
 
 export class CreateUserUseCases {
 

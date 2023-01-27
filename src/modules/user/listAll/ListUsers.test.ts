@@ -1,7 +1,7 @@
 import { CreateUserUseCases } from './../create/CreateUserUseCases';
 import { ListUsersUseCases } from './ListUsersUseCases';
-import { MockUserRepository } from '../../../repositories/mock/MockUserRepository';
 import { cloneDeep } from 'lodash';
+import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
 
 describe('List all Users', () => {
 

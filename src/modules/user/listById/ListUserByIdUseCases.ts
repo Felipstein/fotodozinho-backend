@@ -1,7 +1,7 @@
-import { IUsersRepository } from './../../../repositories/IUsersRepository';
-import { IUserView } from '../../../entities/IUserView';
+import { IUserView } from '../../../entities/user/IUserView';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
+import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 
 export class ListUserByIdUseCases {
 

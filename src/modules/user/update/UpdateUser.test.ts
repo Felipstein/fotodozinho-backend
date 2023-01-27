@@ -1,12 +1,11 @@
 import { BadRequestError } from './../../../errors/BadRequestError';
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { UserNotFoundError } from './../../../errors/UserNotFoundError';
 import { IUserCreation } from '../../../entities/user/IUserCreation';
 import { uuidProvider } from '../../../providers/UUID';
-import { MockUserRepository } from '../../../repositories/mock/MockUserRepository';
 import { CreateUserUseCases } from '../create/CreateUserUseCases';
 import { ListUserByIdUseCases } from '../listById/ListUserByIdUseCases';
 import { UpdateUserUseCases } from './UpdateUserUseCases';
+import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
 
 describe('Update User', () => {
 
@@ -63,7 +62,6 @@ describe('Update User', () => {
       password: newPassword,
     }, true);
 
-    // @ts-ignore
     expect(userUpdated.password).not.toBe(newPassword);
   });
 

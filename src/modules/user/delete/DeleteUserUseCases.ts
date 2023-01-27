@@ -1,6 +1,6 @@
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
-import { IUsersRepository } from '../../../repositories/IUsersRepository';
+import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 
 export class DeleteUserUseCases {
 

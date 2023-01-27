@@ -3,7 +3,7 @@ import { printPriceMapper } from '../../domain/PrintPriceMapper';
 import { IPrintPrice } from '../../entities/print-price/IPrintPrice';
 import { IPrintPriceCreation } from '../../entities/print-price/IPrintPriceCreation';
 import { IPrintPriceUpdating } from '../../entities/print-price/IPrintPriceUpdating';
-import { IPrintPricesRepository } from './../IPrintPricesRepository';
+import { IPrintPricesRepository } from './IPrintPricesRepository';
 
 export class PrismaPrintPricesRepository implements IPrintPricesRepository {
 
