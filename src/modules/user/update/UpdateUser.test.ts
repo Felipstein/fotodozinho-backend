@@ -62,6 +62,7 @@ describe('Update User', () => {
       password: newPassword,
     }, true);
 
+    // @ts-ignore
     expect(userUpdated.password).not.toBe(newPassword);
   });
 
