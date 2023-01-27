@@ -18,3 +18,11 @@ model User {
 
   @@map("users")
 }
+
+model PrintPrice {
+  id     String  @id @default(cuid())
+  length String  @unique
+  price  Decimal
+
+  @@map("print_prices")
+}
