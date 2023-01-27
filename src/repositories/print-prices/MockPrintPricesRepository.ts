@@ -12,6 +12,10 @@ export class MockPrintPricesRepository implements IPrintPricesRepository {
     return [...this.printPrices];
   }
 
+  async listByLength(length: string): Promise<IPrintPrice> {
+    return this.printPrices.find(printPrice => printPrice.length === length);
+  }
+
   async create({ length, price }: IPrintPriceCreation): Promise<IPrintPrice> {
     const id = uuidProvider.generateCUID();
     const printPrice: IPrintPrice = { id, length, price };

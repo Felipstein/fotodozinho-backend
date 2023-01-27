@@ -6,6 +6,8 @@ export interface IPrintPricesRepository {
 
   listAll(): Promise<IPrintPrice[]>;
 
+  listByLength(length: string): Promise<IPrintPrice>;
+
   create({ length, price }: IPrintPriceCreation): Promise<IPrintPrice>;
 
   updatePrice(id: string, { price }: IPrintPriceUpdating): Promise<IPrintPrice>;
