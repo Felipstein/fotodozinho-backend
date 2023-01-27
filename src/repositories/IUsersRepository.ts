@@ -1,6 +1,6 @@
-import { IUserCreation } from '../entities/IUserCreation';
-import { IUserUpdating } from '../entities/IUserUpdating';
-import { IUserView } from './../entities/IUserView';
+import { IUserCreation } from '../entities/user/IUserCreation';
+import { IUserUpdating } from '../entities/user/IUserUpdating';
+import { IUserView } from './../entities/user/IUserView';
 
 export interface IUsersRepository {
 
@@ -15,5 +15,7 @@ export interface IUsersRepository {
   update(id: string, { name, phone, password, admin }: IUserUpdating, isTest: boolean): Promise<IUserView | null>;
 
   delete(id: string): Promise<void>;
+
+  cleanRepository(): void;
 
 }

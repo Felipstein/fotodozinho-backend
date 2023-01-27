@@ -1,10 +1,10 @@
-import { IUserCreation } from './../../entities/IUserCreation';
+import { IUserCreation } from './../../entities/user/IUserCreation';
 import { prisma } from '../../database';
-import { IUserView } from '../../entities/IUserView';
+import { IUserView } from '../../entities/user/IUserView';
 import { IUsersRepository } from './../IUsersRepository';
-import { IUserUpdating } from '../../entities/IUserUpdating';
+import { IUserUpdating } from '../../entities/user/IUserUpdating';
 
-export class PrismaUserRepository implements IUsersRepository {
+export class PrismaUsersRepository implements IUsersRepository {
 
   listAll(): Promise<IUserView[]> {
     return prisma.user.findMany({
@@ -52,5 +52,7 @@ export class PrismaUserRepository implements IUsersRepository {
   async delete(id: string): Promise<void> {
     await prisma.user.delete({ where: { id } });
   }
+
+  cleanRepository(): void {}
 
 }

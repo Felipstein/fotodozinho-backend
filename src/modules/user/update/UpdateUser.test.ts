@@ -1,7 +1,7 @@
 import { BadRequestError } from './../../../errors/BadRequestError';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { UserNotFoundError } from './../../../errors/UserNotFoundError';
-import { IUserCreation } from '../../../entities/IUserCreation';
+import { IUserCreation } from '../../../entities/user/IUserCreation';
 import { uuidProvider } from '../../../providers/UUID';
 import { MockUserRepository } from '../../../repositories/mock/MockUserRepository';
 import { CreateUserUseCases } from '../create/CreateUserUseCases';

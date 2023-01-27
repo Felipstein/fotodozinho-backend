@@ -1,4 +1,4 @@
-import { IUserCreation } from './../../../entities/IUserCreation';
+import { IUserCreation } from './../../../entities/user/IUserCreation';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { BadRequestError } from './../../../errors/BadRequestError';
 import { CreateUserUseCases } from './CreateUserUseCases';
