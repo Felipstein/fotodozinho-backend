@@ -1,4 +1,4 @@
-import { IUserView } from '../../../entities/IUserView';
+import { IUserView } from '../../../entities/user/IUserView';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
