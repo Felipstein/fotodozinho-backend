@@ -8,7 +8,7 @@ export interface IPrintPricesRepository {
 
   create({ length, price }: IPrintPriceCreation): Promise<IPrintPrice>;
 
-  update(id: string, { price }: IPrintPriceUpdating): Promise<IPrintPrice>;
+  updatePrice(id: string, { price }: IPrintPriceUpdating): Promise<IPrintPrice>;
 
   delete(id: string): Promise<void>;
 
