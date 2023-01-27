@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { IUser } from '../entities/IUser';
+import { IUser } from '../entities/user/IUser';
 
 class Crypt {
   hash(value: string) {
