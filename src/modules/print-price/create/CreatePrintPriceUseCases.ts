@@ -1,5 +1,5 @@
 import { IPrintPrice } from '../../../entities/print-price/IPrintPrice';
-import { APIError } from '../../../errors/APIError';
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
@@ -18,7 +18,7 @@ export class CreatePrintPriceUseCases {
 
     const lengthExists = await this.printPricesRepository.listByLength(length);
     if(lengthExists) {
-      throw new APIError(400, 'Já existe esse tamanho/tipo cadastrado');
+      throw new BadRequestError('Já existe esse tamanho/tipo cadastrado');
     }
 
     const printPrice = await this.printPricesRepository.create({ length, price });
