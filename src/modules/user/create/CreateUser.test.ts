@@ -1,6 +1,6 @@
+import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
 import { IUserCreation } from './../../../entities/user/IUserCreation';
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { BadRequestError } from './../../../errors/BadRequestError';
 import { CreateUserUseCases } from './CreateUserUseCases';
 
@@ -167,13 +167,8 @@ describe('Create User', () => {
       })
     );
 
-    await expect(createUserWithoutName).rejects.toThrow(BadRequestError);
-    await expect(createUserWithoutName).rejects.toThrow('Os campos nome, e-mail e senha são obrigatórios');
-
-    await expect(createUserWithoutEmail).rejects.toThrow(BadRequestError);
-    await expect(createUserWithoutEmail).rejects.toThrow('Os campos nome, e-mail e senha são obrigatórios');
-
-    await expect(createUserWithoutPassword).rejects.toThrow(BadRequestError);
-    await expect(createUserWithoutPassword).rejects.toThrow('Os campos nome, e-mail e senha são obrigatórios');
+    await expect(createUserWithoutName).rejects.toThrow(RequiredFieldsError);
+    await expect(createUserWithoutEmail).rejects.toThrow(RequiredFieldsError);
+    await expect(createUserWithoutPassword).rejects.toThrow(RequiredFieldsError);
   });
 });
