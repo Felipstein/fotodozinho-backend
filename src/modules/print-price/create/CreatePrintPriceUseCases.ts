@@ -17,6 +17,10 @@ export class CreatePrintPriceUseCases {
       throw new RequiredFieldsError('Tamanho/tipo', 'Preço');
     }
 
+    if(isNaN(price)) {
+      throw new BadRequestError('Preço deve ser número');
+    }
+
     const lengthExists = await this.printPricesRepository.listByLength(length);
     if(lengthExists) {
       throw new BadRequestError('Já existe esse tamanho/tipo cadastrado');

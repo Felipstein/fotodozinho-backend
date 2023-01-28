@@ -1,4 +1,5 @@
 import { APIError } from '../../../errors/APIError';
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
 import { CreatePrintPriceDTO } from './CreatePrintPriceDTO';
@@ -41,12 +42,20 @@ describe('Create Print Price', () => {
     expect(createPrintPrice).rejects.toThrow('Já existe esse tamanho/tipo cadastrado');
   });
 
-  it('should throw an error when creating an impression missing attributes', async () => {
+  it('should throw an error when creating an print price missing attributes', async () => {
 
     //@ts-ignore
     expect(() => createPrintPriceUseCases.execute({ length: '10x15' })).rejects.toThrow(RequiredFieldsError);
     //@ts-ignore
     expect(() => createPrintPriceUseCases.execute({ price: 5 })).rejects.toThrow(RequiredFieldsError);
+  });
+
+  it('should throw an error when creating an print price with a non-numeric price value', async () => {
+
+    // @ts-ignore
+    expect(() => createPrintPriceUseCases.execute({ length: '10x15', price: 'hello' })).rejects.toThrow(BadRequestError);
+    // @ts-ignore
+    expect(() => createPrintPriceUseCases.execute({ length: '10x15', price: 'hello' })).rejects.toThrow('Preço deve ser número');
   });
 
 });
