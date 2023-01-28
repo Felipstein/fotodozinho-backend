@@ -12,6 +12,7 @@ export class CreatePrintPriceUseCases {
   ) { }
 
   async execute({ length, price }: CreatePrintPriceDTO): Promise<IPrintPrice> {
+
     if(someIsNullOrUndefined(length, price)) {
       throw new RequiredFieldsError('Tamanho/tipo', 'Preço');
     }
