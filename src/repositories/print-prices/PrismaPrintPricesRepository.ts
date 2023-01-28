@@ -51,7 +51,7 @@ export class PrismaPrintPricesRepository implements IPrintPricesRepository {
   }
 
   async delete(id: string): Promise<void> {
-    prisma.printPrice.delete({ where: { id } });
+    await prisma.printPrice.delete({ where: { id } });
   }
 
   cleanRepository(): void {}

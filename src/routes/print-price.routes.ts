@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { createPrintPriceFactory } from '../modules/print-price/create';
 import { listPrintPricesFactory } from '../modules/print-price/listAll';
 import { listPrintPriceByLengthFactory } from '../modules/print-price/listByLength';
+import { deletePrintPriceFactory } from '../modules/print-price/delete';
 
 const route = Router();
 
@@ -16,6 +17,10 @@ route.get('/:length', (req, res) => {
 
 route.post('/', (req, res) => {
   return createPrintPriceFactory().controller.handle(req, res);
+});
+
+route.delete('/:id', (req, res) => {
+  return deletePrintPriceFactory().controller.handle(req, res);
 });
 
 export { route as printPriceRoutes };
