@@ -1,5 +1,6 @@
 import { IPrintPrice } from '../../../entities/print-price/IPrintPrice';
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
@@ -18,7 +19,7 @@ export class CreatePrintPriceUseCases {
     }
 
     if(isNaN(price)) {
-      throw new BadRequestError('Preço deve ser número');
+      throw new FieldsMustBeNumericError('Preço');
     }
 
     const lengthExists = await this.printPricesRepository.listByLength(length);

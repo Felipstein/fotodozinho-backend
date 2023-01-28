@@ -1,5 +1,6 @@
 import { APIError } from '../../../errors/APIError';
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
 import { CreatePrintPriceDTO } from './CreatePrintPriceDTO';
@@ -53,9 +54,7 @@ describe('Create Print Price', () => {
   it('should throw an error when creating an print price with a non-numeric price value', async () => {
 
     // @ts-ignore
-    expect(() => createPrintPriceUseCases.execute({ length: '10x15', price: 'hello' })).rejects.toThrow(BadRequestError);
-    // @ts-ignore
-    expect(() => createPrintPriceUseCases.execute({ length: '10x15', price: 'hello' })).rejects.toThrow('Preço deve ser número');
+    expect(() => createPrintPriceUseCases.execute({ length: '10x15', price: 'hello' })).rejects.toThrow(FieldsMustBeNumericError);
   });
 
 });

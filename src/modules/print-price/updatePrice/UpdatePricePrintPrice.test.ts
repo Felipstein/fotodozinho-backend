@@ -1,4 +1,5 @@
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { PrintPriceNotFound } from '../../../errors/PrintPriceNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
@@ -48,9 +49,7 @@ describe('Update Price of Print Price', () => {
     });
 
     // @ts-ignore
-    expect(updatePricePrintPriceUseCases.execute(id, { price: 'hello' })).rejects.toThrow(BadRequestError);
-    // @ts-ignore
-    expect(updatePricePrintPriceUseCases.execute(id, { price: 'hello' })).rejects.toThrow('Preço deve ser número');
+    expect(updatePricePrintPriceUseCases.execute(id, { price: 'hello' })).rejects.toThrow(FieldsMustBeNumericError);
   });
 
 });
