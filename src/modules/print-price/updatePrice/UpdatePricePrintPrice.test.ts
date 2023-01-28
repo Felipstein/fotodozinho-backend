@@ -1,3 +1,4 @@
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { PrintPriceNotFound } from '../../../errors/PrintPriceNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
@@ -38,6 +39,18 @@ describe('Update Price of Print Price', () => {
   it('should throw an error when update the price of print price that does not exists', async () => {
 
     expect(updatePricePrintPriceUseCases.execute('unknowid', { price: 5 })).rejects.toThrow(PrintPriceNotFound);
+  });
+
+  it('should throw an error when updating the price with a non-numeric value', async () => {
+    const { id } = await createPrintPriceUseCases.execute({
+      length: '10x15',
+      price: 5,
+    });
+
+    // @ts-ignore
+    expect(updatePricePrintPriceUseCases.execute(id, { price: 'hello' })).rejects.toThrow(BadRequestError);
+    // @ts-ignore
+    expect(updatePricePrintPriceUseCases.execute(id, { price: 'hello' })).rejects.toThrow('Preço deve ser número');
   });
 
 });

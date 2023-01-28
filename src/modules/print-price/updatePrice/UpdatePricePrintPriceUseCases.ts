@@ -1,4 +1,5 @@
 import { IPrintPrice } from '../../../entities/print-price/IPrintPrice';
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { PrintPriceNotFound } from '../../../errors/PrintPriceNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
@@ -18,6 +19,10 @@ export class UpdatePricePrintPriceUseCases {
 
     if(!price) {
       throw new RequiredFieldsError('Preço');
+    }
+
+    if(isNaN(price)) {
+      throw new BadRequestError('Preço deve ser número');
     }
 
     const printPriceExists = await this.printPricesRepository.listById(id);
