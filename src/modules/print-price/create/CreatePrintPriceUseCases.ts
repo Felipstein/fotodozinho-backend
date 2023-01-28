@@ -13,7 +13,7 @@ export class CreatePrintPriceUseCases {
 
   async execute({ length, price }: CreatePrintPriceDTO): Promise<IPrintPrice> {
     if(someIsNullOrUndefined(length, price)) {
-      throw new RequiredFieldsError();
+      throw new RequiredFieldsError('Tamanho/tipo', 'Preço');
     }
 
     const lengthExists = await this.printPricesRepository.listByLength(length);

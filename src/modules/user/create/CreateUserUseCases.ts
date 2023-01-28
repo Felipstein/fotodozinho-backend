@@ -14,7 +14,7 @@ export class CreateUserUseCases {
 
   async execute({ name, email, phone, password, admin = false }: CreateUserDTO, isTest = false): Promise<IUserView> {
     if(someIsNullOrUndefined(name, email, password)) {
-      throw new RequiredFieldsError();
+      throw new RequiredFieldsError('Nome', 'E-mail', 'Senha');
     }
 
     const emailAlreadyExists = await this.usersRepository.listByEmail(email);
