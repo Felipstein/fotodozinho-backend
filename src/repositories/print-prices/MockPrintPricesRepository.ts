@@ -12,6 +12,10 @@ export class MockPrintPricesRepository implements IPrintPricesRepository {
     return [...this.printPrices];
   }
 
+  async listById(id: string): Promise<IPrintPrice> {
+    return this.printPrices.find(printPrice => printPrice.id === id);
+  }
+
   async listByLength(length: string): Promise<IPrintPrice> {
     return this.printPrices.find(printPrice => printPrice.length === length);
   }

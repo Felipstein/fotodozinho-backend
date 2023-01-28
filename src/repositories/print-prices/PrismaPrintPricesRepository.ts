@@ -13,6 +13,16 @@ export class PrismaPrintPricesRepository implements IPrintPricesRepository {
     return printPrices.map(printPriceMapper.toDomain);
   }
 
+  async listById(id: string): Promise<IPrintPrice> {
+    const printPrice = await prisma.printPrice.findFirst({ where: { id } });
+
+    if(!printPrice) {
+      return null;
+    }
+
+    return printPriceMapper.toDomain(printPrice);
+  }
+
   async listByLength(length: string): Promise<IPrintPrice> {
     const printPrice = await prisma.printPrice.findFirst({ where: { length } });
 
