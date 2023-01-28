@@ -5,6 +5,7 @@ import { listUserByIdFactory } from '../modules/user/listById';
 import { createUserFactory } from '../modules/user/create';
 import { updateUserFactory } from '../modules/user/update';
 import { deleteUserFactory } from '../modules/user/delete';
+import { listUserByEmailFactory } from '../modules/user/listByEmail';
 
 const route = Router();
 
@@ -14,6 +15,10 @@ route.get('/', (req, res) => {
 
 route.get('/id/:id', (req, res) => {
   return listUserByIdFactory().controller.handle(req, res);
+});
+
+route.get('/email/:email', (req, res) => {
+  return listUserByEmailFactory().controller.handle(req, res);
 });
 
 route.post('/', (req, res) => {
