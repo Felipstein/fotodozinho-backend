@@ -3,6 +3,7 @@ import { createNotificationFactory } from '../modules/notification/create';
 import { listAllNotificationsFactory } from '../modules/notification/listAll';
 import { listNotificationByIdFactory } from '../modules/notification/listById';
 import { listNotificationsByUserIdFactory } from '../modules/notification/listByUserId';
+import { updateReadNotificationFactory } from '../modules/notification/updateRead';
 
 const route = Router();
 
@@ -20,6 +21,10 @@ route.get('/user/:userId', (req, res) => {
 
 route.post('/', (req, res) => {
   return createNotificationFactory().controller.handle(req, res);
+});
+
+route.patch('/:id', (req, res) => {
+  return updateReadNotificationFactory().controller.handle(req, res);
 });
 
 export { route as notificationRoutes };
