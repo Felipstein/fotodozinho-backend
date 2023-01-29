@@ -1,5 +1,3 @@
-import { ListUserByIdUseCases } from './../listById/ListUserByIdUseCases';
-import { CreateUserUseCases } from '../create/CreateUserUseCases';
 import { DeleteUserUseCases } from './DeleteUserUseCases';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { uuidProvider } from '../../../providers/UUID';
@@ -8,8 +6,6 @@ import { MockUserRepository } from '../../../repositories/users/MockUserReposito
 describe('Delete User', () => {
 
   const usersRepository = new MockUserRepository();
-  const createUserUseCases = new CreateUserUseCases(usersRepository);
-  const listUserByIdUseCases = new ListUserByIdUseCases(usersRepository);
   const deleteUserUseCases = new DeleteUserUseCases(usersRepository);
 
   afterEach(() => {
@@ -17,7 +13,7 @@ describe('Delete User', () => {
   });
 
   it('should delete user', async () => {
-    const { id } = await createUserUseCases.execute({
+    const { id } = await usersRepository.create({
       name: 'User Test',
       email: 'usertest3@hotmail.com',
       phone: '99999999999',
@@ -27,7 +23,7 @@ describe('Delete User', () => {
 
     await deleteUserUseCases.execute(id);
 
-    await expect(() => listUserByIdUseCases.execute(id)).rejects.toThrow(UserNotFoundError);
+    expect(usersRepository.listById(id)).resolves.toBeNull();
   });
 
   it('should throw error when deleted user doesn\'t exist', async () => {

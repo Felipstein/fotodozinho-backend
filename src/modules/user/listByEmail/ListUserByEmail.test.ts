@@ -1,11 +1,9 @@
 import { ListUserByEmailUseCases } from './ListUserByEmailUseCases';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
-import { CreateUserUseCases } from './../create/CreateUserUseCases';
 
 describe('List User by Email', () => {
 
   const usersRepository = new MockUserRepository();
-  const createUserUseCases = new CreateUserUseCases(usersRepository);
   const listUserByEmailUseCases = new ListUserByEmailUseCases(usersRepository);
 
   beforeEach(() => {
@@ -20,7 +18,7 @@ describe('List User by Email', () => {
       password: '123456',
     };
 
-    const userCreated = await createUserUseCases.execute(user);
+    const userCreated = await usersRepository.create(user);
 
     const { email } = userCreated;
     const userListed = await listUserByEmailUseCases.execute(email);
@@ -31,7 +29,7 @@ describe('List User by Email', () => {
   });
 
   it('should not return password', async () => {
-    const { email } = await createUserUseCases.execute({
+    const { email } = await usersRepository.create({
       name: 'User Test',
       email: 'testemail@hotmail.com',
       phone: '99999999999',

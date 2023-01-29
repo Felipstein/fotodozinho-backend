@@ -1,4 +1,3 @@
-import { CreateUserUseCases } from './../create/CreateUserUseCases';
 import { ListUsersUseCases } from './ListUsersUseCases';
 import { cloneDeep } from 'lodash';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
@@ -6,7 +5,6 @@ import { MockUserRepository } from '../../../repositories/users/MockUserReposito
 describe('List all Users', () => {
 
   const usersRepository = new MockUserRepository();
-  const createUserUseCases = new CreateUserUseCases(usersRepository);
   const listUsersUseCases = new ListUsersUseCases(usersRepository);
 
   beforeEach(() => {
@@ -14,14 +12,14 @@ describe('List all Users', () => {
   });
 
   it('should list two users created', async () => {
-    await createUserUseCases.execute({
+    await usersRepository.create({
       name: 'User Test 1',
       email: 'emailtest1@hotmail.com',
       phone: '99999999999',
       password: '123456',
     });
 
-    await createUserUseCases.execute({
+    await usersRepository.create({
       name: 'User Test 2',
       email: 'emailtest2@hotmail.com',
       phone: '99999999999',
@@ -47,8 +45,8 @@ describe('List all Users', () => {
       password: '123456',
     };
 
-    await createUserUseCases.execute(user1);
-    await createUserUseCases.execute(user2);
+    await usersRepository.create(user1);
+    await usersRepository.create(user2);
 
     const users = await listUsersUseCases.execute();
 
@@ -70,8 +68,8 @@ describe('List all Users', () => {
       password: '123456',
     };
 
-    await createUserUseCases.execute(user1);
-    await createUserUseCases.execute(user2);
+    await usersRepository.create(user1);
+    await usersRepository.create(user2);
 
     const users = await listUsersUseCases.execute();
 

@@ -45,7 +45,7 @@ export class MockUserRepository implements IUsersRepository {
     return userWithoutPassword;
   }
 
-  async create({ name, email, phone, password, admin }: IUserCreation, isTest = false): Promise<IUserView> {
+  async create({ name, email, phone, password, admin = false}: IUserCreation, isTest = false): Promise<IUserView> {
     const id = uuidProvider.generateCUID();
     const date = new Date();
     const user = { id, name, email, phone, password, createdAt: date, admin };
