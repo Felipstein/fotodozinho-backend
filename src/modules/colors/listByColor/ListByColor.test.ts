@@ -1,3 +1,4 @@
+import { ColorNotFoundError } from '../../../errors/ColorNotFoundError';
 import { MockColorsRepository } from '../../../repositories/colors/MockColorsRepository';
 import { CreateColorUseCases } from '../create/CreateColorUseCases';
 import { ListByColorUseCases } from './ListByColorUseCases';
@@ -20,6 +21,11 @@ describe('List by Color', () => {
     const colorListed = await listByColorUseCases.execute(colorCreated.color);
 
     expect(colorListed).toEqual(colorCreated);
+  });
+
+  it('should throw an error when list color that does not exists', async () => {
+
+    expect(() => listByColorUseCases.execute('white')).rejects.toThrow(ColorNotFoundError);
   });
 
 });
