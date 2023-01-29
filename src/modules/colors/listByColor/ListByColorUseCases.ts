@@ -14,7 +14,7 @@ export class ListByColorUseCases {
       throw new RequiredFieldsError('Cor/descrição');
     }
 
-    const colorObj = this.colorsRepository.listByColor(color);
+    const colorObj = await this.colorsRepository.listByColor(color);
     if(!colorObj) {
       throw new ColorNotFoundError();
     }
