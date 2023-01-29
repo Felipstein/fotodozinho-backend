@@ -32,6 +32,12 @@ describe('List All Notifications', () => {
       userId,
     });
 
+    await createNotificationUseCases.execute({
+      title: 'Title Notification',
+      message: 'Body Notification',
+      userId,
+    });
+
     const notificationsListed = await listAllNotificationsUseCases.execute();
 
     expect(notificationsListed).toHaveLength(2);
