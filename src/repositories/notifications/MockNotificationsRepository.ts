@@ -1,6 +1,5 @@
 import { INotification } from '../../entities/notification/INotification';
 import { INotificationCreation } from '../../entities/notification/INotificationCreation';
-import { INotificationUpdating } from '../../entities/notification/INotificationUpdating';
 import { uuidProvider } from '../../providers/UUID';
 import { INotificationsRepository } from './INotificationsRepository';
 
@@ -38,12 +37,12 @@ export class MockNotificationsRepository implements INotificationsRepository {
     return notification;
   }
 
-  async updateRead(id: string, { read }: INotificationUpdating): Promise<INotification> {
+  async updateRead(id: string, isRead: boolean): Promise<INotification> {
     let notificationUpdated: INotification;
 
     this.notifications = this.notifications.map(notification => {
       if(notification.id === id) {
-        return notificationUpdated = { ...notification, read };
+        return notificationUpdated = { ...notification, read: isRead };
       }
 
       return notification;

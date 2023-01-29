@@ -1,7 +1,6 @@
 import { prisma } from '../../database';
 import { INotification } from '../../entities/notification/INotification';
 import { INotificationCreation } from '../../entities/notification/INotificationCreation';
-import { INotificationUpdating } from '../../entities/notification/INotificationUpdating';
 import { INotificationsRepository } from './INotificationsRepository';
 
 export class PrismaNotificationsRepository implements INotificationsRepository {
@@ -24,10 +23,10 @@ export class PrismaNotificationsRepository implements INotificationsRepository {
     });
   }
 
-  updateRead(id: string, { read }: INotificationUpdating): Promise<INotification> {
+  updateRead(id: string, isRead: boolean): Promise<INotification> {
     return prisma.notification.update({
       where: { id },
-      data: { read },
+      data: { read: isRead },
     });
   }
 

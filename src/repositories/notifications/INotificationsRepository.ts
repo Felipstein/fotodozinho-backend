@@ -1,6 +1,5 @@
 import { INotification } from '../../entities/notification/INotification';
 import { INotificationCreation } from '../../entities/notification/INotificationCreation';
-import { INotificationUpdating } from './../../entities/notification/INotificationUpdating';
 
 export interface INotificationsRepository {
 
@@ -12,7 +11,7 @@ export interface INotificationsRepository {
 
   create({ title, message, userId }: INotificationCreation): Promise<INotification>;
 
-  updateRead(id: string, { read }: INotificationUpdating): Promise<INotification>;
+  updateRead(id: string, isRead: boolean): Promise<INotification>;
 
   delete(id: string): Promise<void>;
 

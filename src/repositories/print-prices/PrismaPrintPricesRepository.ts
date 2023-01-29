@@ -2,7 +2,6 @@ import { prisma } from '../../database';
 import { printPriceMapper } from '../../domain/PrintPriceMapper';
 import { IPrintPrice } from '../../entities/print-price/IPrintPrice';
 import { IPrintPriceCreation } from '../../entities/print-price/IPrintPriceCreation';
-import { IPrintPriceUpdating } from '../../entities/print-price/IPrintPriceUpdating';
 import { IPrintPricesRepository } from './IPrintPricesRepository';
 
 export class PrismaPrintPricesRepository implements IPrintPricesRepository {
@@ -41,10 +40,10 @@ export class PrismaPrintPricesRepository implements IPrintPricesRepository {
     return printPriceMapper.toDomain(printPrice);
   }
 
-  async updatePrice(id: string, { price }: IPrintPriceUpdating): Promise<IPrintPrice> {
+  async updatePrice(id: string, newPrice: number): Promise<IPrintPrice> {
     const printPrice = await prisma.printPrice.update({
       where: { id },
-      data: { price },
+      data: { price: newPrice },
     });
 
     return printPriceMapper.toDomain(printPrice);

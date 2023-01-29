@@ -1,6 +1,5 @@
 import { IPrintPrice } from '../../entities/print-price/IPrintPrice';
 import { IPrintPriceCreation } from '../../entities/print-price/IPrintPriceCreation';
-import { IPrintPriceUpdating } from '../../entities/print-price/IPrintPriceUpdating';
 import { uuidProvider } from '../../providers/UUID';
 import { IPrintPricesRepository } from './IPrintPricesRepository';
 
@@ -29,12 +28,12 @@ export class MockPrintPricesRepository implements IPrintPricesRepository {
     return printPrice;
   }
 
-  async updatePrice(id: string, { price }: IPrintPriceUpdating): Promise<IPrintPrice> {
+  async updatePrice(id: string, newPrice: number): Promise<IPrintPrice> {
     let printPriceUpdated;
 
     this.printPrices = this.printPrices.map(printPrice => {
       if(printPrice.id === id) {
-        return printPriceUpdated = { ...printPrice, price };
+        return printPriceUpdated = { ...printPrice, price: newPrice };
       }
 
       return printPrice;
