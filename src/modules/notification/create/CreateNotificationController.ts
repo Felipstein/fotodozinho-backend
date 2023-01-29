@@ -12,7 +12,7 @@ export class CreateNotificationController {
 
     const notification = await this.createNotificationUseCases.execute({ title, message, userId });
 
-    return res.json(notification);
+    return res.status(201).json(notification);
   }
 
 }
