@@ -1,7 +1,7 @@
 import { CreateColorUseCases } from '../create/CreateColorUseCases';
 import { MockColorsRepository } from '../../../repositories/colors/MockColorsRepository';
 import { ListColorByIdUseCases } from './ListColorByIdUseCases';
-import { NotFoundError } from '../../../errors/NotFoundError';
+import { ColorNotFoundError } from '../../../errors/ColorNotFoundError';
 
 describe('List Color by Id', () => {
 
@@ -23,7 +23,7 @@ describe('List Color by Id', () => {
 
   it('should throw an error when list color that does not exists', async () => {
 
-    expect(() => listColorByIdUseCases.execute('unknowid')).rejects.toThrow(NotFoundError);
+    expect(() => listColorByIdUseCases.execute('unknowid')).rejects.toThrow(ColorNotFoundError);
   });
 
 });
