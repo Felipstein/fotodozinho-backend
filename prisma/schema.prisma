@@ -8,13 +8,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String   @db.VarChar(32)
-  email     String   @unique
-  phone     String?
-  password  String
-  createdAt DateTime @default(now())
-  admin     Boolean  @default(false)
+  id           String         @id @default(cuid())
+  name         String         @db.VarChar(32)
+  email        String         @unique
+  phone        String?
+  password     String
+  createdAt    DateTime       @default(now())
+  admin        Boolean        @default(false)
+  Notification Notification[]
 
   @@map("users")
 }
@@ -40,6 +41,8 @@ model Notification {
   message   String
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id])
+  userId    String
 
   @@map("notifications")
 }
