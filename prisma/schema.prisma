@@ -26,3 +26,10 @@ model PrintPrice {
 
   @@map("print_prices")
 }
+
+model Color {
+  id    String @id @default(cuid())
+  color String @unique
+
+  @@map("colors")
+}
