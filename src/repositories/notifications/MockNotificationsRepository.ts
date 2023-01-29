@@ -56,6 +56,10 @@ export class MockNotificationsRepository implements INotificationsRepository {
     this.notifications = this.notifications.filter(notification => notification.id !== id);
   }
 
+  async deleteByUserId(userId: string): Promise<void> {
+    this.notifications = this.notifications.filter(notification => notification.userId !== userId);
+  }
+
   cleanRepository(): void {
     this.notifications = [];
   }

@@ -16,6 +16,8 @@ export interface INotificationsRepository {
 
   delete(id: string): Promise<void>;
 
+  deleteByUserId(userId: string): Promise<void>;
+
   cleanRepository(): void;
 
 }
