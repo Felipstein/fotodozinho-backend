@@ -1,4 +1,3 @@
-import { CreateColorUseCases } from '../create/CreateColorUseCases';
 import { MockColorsRepository } from '../../../repositories/colors/MockColorsRepository';
 import { ListColorByIdUseCases } from './ListColorByIdUseCases';
 import { ColorNotFoundError } from '../../../errors/ColorNotFoundError';
@@ -6,7 +5,6 @@ import { ColorNotFoundError } from '../../../errors/ColorNotFoundError';
 describe('List Color by Id', () => {
 
   const colorsRepository = new MockColorsRepository();
-  const createColorUseCases = new CreateColorUseCases(colorsRepository);
   const listColorByIdUseCases = new ListColorByIdUseCases(colorsRepository);
 
   afterEach(() => {
@@ -14,7 +12,7 @@ describe('List Color by Id', () => {
   });
 
   it('should list exaclty color created', async () => {
-    const colorCreated = await createColorUseCases.execute({ color: 'red' });
+    const colorCreated = await colorsRepository.create({ color: 'red' });
 
     const colorListed = await listColorByIdUseCases.execute(colorCreated.id);
 
