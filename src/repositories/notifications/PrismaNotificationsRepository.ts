@@ -14,8 +14,8 @@ export class PrismaNotificationsRepository implements INotificationsRepository {
     return prisma.notification.findFirst({ where: { id } });
   }
 
-  listByUserId(userId: string): Promise<INotification> {
-    return prisma.notification.findFirst({ where: { userId } });
+  listByUserId(userId: string): Promise<INotification[]> {
+    return prisma.notification.findMany({ where: { userId } });
   }
 
   create({ title, message, userId }: INotificationCreation): Promise<INotification> {

@@ -8,7 +8,7 @@ export interface INotificationsRepository {
 
   listById(id: string): Promise<INotification>;
 
-  listByUserId(userId: string): Promise<INotification>;
+  listByUserId(userId: string): Promise<INotification[]>;
 
   create({ title, message, userId }: INotificationCreation): Promise<INotification>;
 

@@ -16,8 +16,8 @@ export class MockNotificationsRepository implements INotificationsRepository {
     return this.notifications.find(notification => notification.id === id);
   }
 
-  async listByUserId(userId: string): Promise<INotification> {
-    return this.notifications.find(notification => notification.userId === userId);
+  async listByUserId(userId: string): Promise<INotification[]> {
+    return this.notifications.filter(notification => notification.userId === userId);
   }
 
   async create({ title, message, userId }: INotificationCreation): Promise<INotification> {
