@@ -3,6 +3,7 @@ import { createColorFactory } from '../modules/colors/create';
 import { listColorsFactory } from '../modules/colors/listAll';
 import { listColorByIdFactory } from '../modules/colors/listById';
 import { listByColorFactory } from '../modules/colors/listByColor';
+import { deleteColorFactory } from '../modules/colors/delete';
 
 const route = Router();
 
@@ -20,6 +21,10 @@ route.get('/color/:color', (req, res) => {
 
 route.post('/', (req, res) => {
   return createColorFactory().controller.handle(req, res);
+});
+
+route.delete('/:id', (req, res) => {
+  return deleteColorFactory().controller.handle(req, res);
 });
 
 export { route as colorRoutes };
