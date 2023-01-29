@@ -1,16 +1,12 @@
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { MockNotificationsRepository } from '../../../repositories/notifications/MockNotificationsRepository';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
-import { CreateUserUseCases } from '../../user/create/CreateUserUseCases';
-import { CreateNotificationUseCases } from '../create/CreateNotificationUseCases';
 import { ListNotificationsByUserIdUseCases } from './ListNotificationsByUserIdUseCases';
 
 describe('List Notifications by User Id', () => {
 
   const notificationsRepository = new MockNotificationsRepository();
   const usersRepository = new MockUserRepository();
-  const createUserUseCases = new CreateUserUseCases(usersRepository);
-  const createNotificationUseCases = new CreateNotificationUseCases(notificationsRepository, usersRepository);
   const listNotificationsByUserIdUseCases = new ListNotificationsByUserIdUseCases(notificationsRepository, usersRepository);
 
   afterEach(() => {
@@ -19,7 +15,7 @@ describe('List Notifications by User Id', () => {
   });
 
   it('should list exaclty notifications of user created', async () => {
-    const { id: userId } = await createUserUseCases.execute({
+    const { id: userId } = await usersRepository.create({
       name: 'User Test',
       email: 'test@test.com',
       password: '123456',
@@ -27,13 +23,13 @@ describe('List Notifications by User Id', () => {
       admin: false,
     });
 
-    const notificationCreated1 = await createNotificationUseCases.execute({
+    const notificationCreated1 = await notificationsRepository.create({
       title: 'Title Notification',
       message: 'Body Notification',
       userId,
     });
 
-    const notificationCreated2 = await createNotificationUseCases.execute({
+    const notificationCreated2 = await notificationsRepository.create({
       title: 'Title Notification 2',
       message: 'Body Notification 2',
       userId,
@@ -47,7 +43,7 @@ describe('List Notifications by User Id', () => {
   });
 
   it('should list zero notifications of user that does not contain notifications', async () => {
-    const { id: userId } = await createUserUseCases.execute({
+    const { id: userId } = await usersRepository.create({
       name: 'User Test',
       email: 'test@test.com',
       password: '123456',

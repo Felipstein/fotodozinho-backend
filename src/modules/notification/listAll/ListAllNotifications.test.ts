@@ -1,15 +1,11 @@
 import { MockNotificationsRepository } from '../../../repositories/notifications/MockNotificationsRepository';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
-import { CreateUserUseCases } from '../../user/create/CreateUserUseCases';
-import { CreateNotificationUseCases } from '../create/CreateNotificationUseCases';
 import { ListAllNotificationsUseCases } from './ListAllNotificationsUseCases';
 
 describe('List All Notifications', () => {
 
   const notificationsRepository = new MockNotificationsRepository();
   const usersRepository = new MockUserRepository();
-  const createUserUseCases = new CreateUserUseCases(usersRepository);
-  const createNotificationUseCases = new CreateNotificationUseCases(notificationsRepository, usersRepository);
   const listAllNotificationsUseCases = new ListAllNotificationsUseCases(notificationsRepository);
 
   afterEach(() => {
@@ -18,7 +14,7 @@ describe('List All Notifications', () => {
   });
 
   it('should list two notifications created', async () => {
-    const { id: userId } = await createUserUseCases.execute({
+    const { id: userId } = await usersRepository.create({
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       password: '123456',
@@ -26,13 +22,13 @@ describe('List All Notifications', () => {
       admin: false,
     });
 
-    await createNotificationUseCases.execute({
+    await notificationsRepository.create({
       title: 'Title Notification',
       message: 'Body Notification',
       userId,
     });
 
-    await createNotificationUseCases.execute({
+    await notificationsRepository.create({
       title: 'Title Notification',
       message: 'Body Notification',
       userId,

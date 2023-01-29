@@ -1,7 +1,4 @@
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
-import { CreateUserUseCases } from '../../user/create/CreateUserUseCases';
-import { CreateNotificationUseCases } from '../create/CreateNotificationUseCases';
-import { ListNotificationByIdUseCases } from '../listById/ListNotificationByIdUseCases';
 import { MockNotificationsRepository } from '../../../repositories/notifications/MockNotificationsRepository';
 import { DeleteNotificationUseCases } from './DeleteNotificationUseCases';
 import { NotificationNotFoundError } from '../../../errors/NotificationNotFoundError';
@@ -10,10 +7,7 @@ describe('Delete Notification', () => {
 
   const notificationsRepository = new MockNotificationsRepository();
   const usersRepository = new MockUserRepository();
-  const createUserUseCases = new CreateUserUseCases(usersRepository);
-  const createNotificationUseCases = new CreateNotificationUseCases(notificationsRepository, usersRepository);
   const deleteNotificationUseCases = new DeleteNotificationUseCases(notificationsRepository);
-  const listNotificationByIdUseCases = new ListNotificationByIdUseCases(notificationsRepository);
 
   afterEach(() => {
     notificationsRepository.cleanRepository();
@@ -21,7 +15,7 @@ describe('Delete Notification', () => {
   });
 
   it('should delete a notification', async () => {
-    const { id: userId } = await createUserUseCases.execute({
+    const { id: userId } = await usersRepository.create({
       name: 'User Test',
       email: 'test@test.com',
       password: '123456',
@@ -29,7 +23,7 @@ describe('Delete Notification', () => {
       admin: false,
     });
 
-    const { id } = await createNotificationUseCases.execute({
+    const { id } = await notificationsRepository.create({
       title: 'Title Notification',
       message: 'Body Notification',
       userId,
@@ -37,7 +31,9 @@ describe('Delete Notification', () => {
 
     await deleteNotificationUseCases.execute(id);
 
-    expect(() => listNotificationByIdUseCases.execute(id)).rejects.toThrow(NotificationNotFoundError);
+    const result = await notificationsRepository.listById(id);
+
+    expect(result).toBeFalsy();
   });
 
   it('should throw an error when delete a notification that does not exists', async () => {

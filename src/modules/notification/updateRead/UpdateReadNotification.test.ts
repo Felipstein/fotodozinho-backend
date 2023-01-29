@@ -1,16 +1,12 @@
 import { NotificationNotFoundError } from '../../../errors/NotificationNotFoundError';
 import { MockNotificationsRepository } from '../../../repositories/notifications/MockNotificationsRepository';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
-import { CreateUserUseCases } from '../../user/create/CreateUserUseCases';
-import { CreateNotificationUseCases } from '../create/CreateNotificationUseCases';
 import { UpdateReadNotificationUseCases } from './UpdateReadNotificationUseCases';
 
 describe('Update Read Notification', () => {
 
   const notificationsRepository = new MockNotificationsRepository();
   const usersRepository = new MockUserRepository();
-  const createUserUseCases = new CreateUserUseCases(usersRepository);
-  const createNotificationUseCases = new CreateNotificationUseCases(notificationsRepository, usersRepository);
   const updateReadNotificationUseCases = new UpdateReadNotificationUseCases(notificationsRepository);
 
   afterEach(() => {
@@ -18,7 +14,7 @@ describe('Update Read Notification', () => {
   });
 
   it('should update read notification', async () => {
-    const { id: userId } = await createUserUseCases.execute({
+    const { id: userId } = await usersRepository.create({
       name: 'User Test',
       email: 'test@test.com',
       password: '123456',
@@ -26,7 +22,7 @@ describe('Update Read Notification', () => {
       admin: false,
     });
 
-    const { id } = await createNotificationUseCases.execute({
+    const { id } = await notificationsRepository.create({
       title: 'Title Notification',
       message: 'Body Notification',
       userId,
