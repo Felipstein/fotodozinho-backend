@@ -16,6 +16,7 @@ model User {
   createdAt    DateTime       @default(now())
   admin        Boolean        @default(false)
   Notification Notification[]
+  PrintOrder   PrintOrder[]
 
   @@map("users")
 }
@@ -24,13 +25,15 @@ model PrintPrice {
   id     String  @id @default(cuid())
   length String  @unique
   price  Decimal
+  Print  Print[]
 
   @@map("print_prices")
 }
 
 model Color {
-  id    String @id @default(cuid())
-  color String @unique
+  id    String  @id @default(cuid())
+  color String  @unique
+  Print Print[]
 
   @@map("colors")
 }
@@ -45,4 +48,38 @@ model Notification {
   userId    String
 
   @@map("notifications")
+}
+
+enum PrintOrderStatus {
+  WAITING
+  IN_PRODUCTION
+  DONE
+}
+
+model PrintOrder {
+  id        String           @id @default(cuid())
+  status    PrintOrderStatus @default(WAITING)
+  user      User             @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime         @default(now())
+  Print     Print[]
+
+  @@map("print_orders")
+}
+
+model Print {
+  id           String     @id @default(cuid())
+  imageName    String
+  imageUrl     String     @unique
+  key          String     @unique
+  printPrice   PrintPrice @relation(fields: [printPriceId], references: [id])
+  printPriceId String
+  border       Boolean
+  color        Color      @relation(fields: [colorId], references: [id])
+  colorId      String
+  quantity     Decimal
+  printOrder   PrintOrder @relation(fields: [printOrderId], references: [id])
+  printOrderId String
+
+  @@map("prints")
 }
