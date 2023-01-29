@@ -1,17 +1,12 @@
 import { BadRequestError } from './../../../errors/BadRequestError';
 import { UserNotFoundError } from './../../../errors/UserNotFoundError';
 import { IUserCreation } from '../../../entities/user/IUserCreation';
-import { uuidProvider } from '../../../providers/UUID';
-import { CreateUserUseCases } from '../create/CreateUserUseCases';
-import { ListUserByIdUseCases } from '../listById/ListUserByIdUseCases';
 import { UpdateUserUseCases } from './UpdateUserUseCases';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
 
 describe('Update User', () => {
 
   const usersRepository = new MockUserRepository();
-  const createUserUseCases = new CreateUserUseCases(usersRepository);
-  const listUserByIdUseCases = new ListUserByIdUseCases(usersRepository);
   const updateUserUseCases = new UpdateUserUseCases(usersRepository);
 
   beforeEach(() => {
@@ -27,7 +22,7 @@ describe('Update User', () => {
       admin: false,
     };
 
-    const { id } = await createUserUseCases.execute(user);
+    const { id } = await usersRepository.create(user);
 
     await updateUserUseCases.execute(id, {
       name: 'John John',
@@ -35,7 +30,7 @@ describe('Update User', () => {
       admin: true,
     });
 
-    const userListed = await listUserByIdUseCases.execute(id);
+    const userListed = await usersRepository.listById(id);
 
     expect(userListed).toEqual({
       id: expect.any(String),
@@ -48,7 +43,7 @@ describe('Update User', () => {
   });
 
   it('should encrypt the password when updating it', async () => {
-    const { id } = await createUserUseCases.execute({
+    const { id } = await usersRepository.create({
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       password: '123456',
@@ -67,13 +62,12 @@ describe('Update User', () => {
   });
 
   it('should throw an error when updating data for a user that doesn\'t exist', async () => {
-    const id = uuidProvider.generateCUID();
 
-    expect(updateUserUseCases.execute(id, { name: 'John John' })).rejects.toThrow(UserNotFoundError);
+    expect(updateUserUseCases.execute('fake-user-id', { name: 'John John' })).rejects.toThrow(UserNotFoundError);
   });
 
   it('should throw an error when updating user with name null', async () => {
-    const { id } = await createUserUseCases.execute({
+    const { id } = await usersRepository.create({
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       password: '123456',
@@ -86,7 +80,7 @@ describe('Update User', () => {
   });
 
   it('should throw an error when updating user with password null', async () => {
-    const { id } = await createUserUseCases.execute({
+    const { id } = await usersRepository.create({
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       password: '123456',
