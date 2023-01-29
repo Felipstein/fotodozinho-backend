@@ -1,12 +1,9 @@
-import { IPrintPrice } from './../../../entities/print-price/IPrintPrice';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
-import { CreatePrintPriceUseCases } from '../create/CreatePrintPriceUseCases';
 import { ListPrintPricesUseCases } from './ListPrintPricesUseCases';
 
 describe('List all Print Prices', () => {
 
   const printPricesRepository = new MockPrintPricesRepository();
-  const createPrintPriceUseCases = new CreatePrintPriceUseCases(printPricesRepository);
   const listPrintPricesUseCases = new ListPrintPricesUseCases(printPricesRepository);
 
   afterEach(() => {
@@ -14,12 +11,12 @@ describe('List all Print Prices', () => {
   });
 
   it('should list two print prices', async () => {
-    await createPrintPriceUseCases.execute({
+    await printPricesRepository.create({
       length: '10x15',
       price: 5,
     });
 
-    await createPrintPriceUseCases.execute({
+    await printPricesRepository.create({
       length: '15x21',
       price: 10,
     });
@@ -30,11 +27,11 @@ describe('List all Print Prices', () => {
   });
 
   it('should exactly two print prices', async () => {
-    const printPrice1 = await createPrintPriceUseCases.execute({
+    const printPrice1 = await printPricesRepository.create({
       length: '10x15',
       price: 5,
     });
-    const printPrice2 = await createPrintPriceUseCases.execute({
+    const printPrice2 = await printPricesRepository.create({
       length: '15x21',
       price: 10,
     });

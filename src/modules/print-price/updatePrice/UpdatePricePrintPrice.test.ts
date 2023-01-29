@@ -1,15 +1,12 @@
-import { BadRequestError } from '../../../errors/BadRequestError';
 import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { PrintPriceNotFound } from '../../../errors/PrintPriceNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
-import { CreatePrintPriceUseCases } from '../create/CreatePrintPriceUseCases';
 import { UpdatePricePrintPriceUseCases } from './UpdatePricePrintPriceUseCases';
 
 describe('Update Price of Print Price', () => {
 
   const printPricesRepository = new MockPrintPricesRepository();
-  const createPrintPriceUseCases = new CreatePrintPriceUseCases(printPricesRepository);
   const updatePricePrintPriceUseCases = new UpdatePricePrintPriceUseCases(printPricesRepository);
 
   afterEach(() => {
@@ -17,7 +14,7 @@ describe('Update Price of Print Price', () => {
   });
 
   it('should update the price of print price', async () => {
-    const { id } = await createPrintPriceUseCases.execute({
+    const { id } = await printPricesRepository.create({
       length: '15x21',
       price: 5,
     });
@@ -28,7 +25,7 @@ describe('Update Price of Print Price', () => {
   });
 
   it('should throw an error when not passing the price which should be updated', async () => {
-    const { id } = await createPrintPriceUseCases.execute({
+    const { id } = await printPricesRepository.create({
       length: '10x15',
       price: 5,
     });
@@ -43,7 +40,7 @@ describe('Update Price of Print Price', () => {
   });
 
   it('should throw an error when updating the price with a non-numeric value', async () => {
-    const { id } = await createPrintPriceUseCases.execute({
+    const { id } = await printPricesRepository.create({
       length: '10x15',
       price: 5,
     });

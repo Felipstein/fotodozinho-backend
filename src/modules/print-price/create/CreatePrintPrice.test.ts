@@ -1,5 +1,4 @@
 import { APIError } from '../../../errors/APIError';
-import { BadRequestError } from '../../../errors/BadRequestError';
 import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
