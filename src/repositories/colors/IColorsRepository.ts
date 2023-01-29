@@ -7,6 +7,8 @@ export interface IColorsRepository {
 
   listById(id: string): Promise<IColor>;
 
+  listByColor(color: string): Promise<IColor>;
+
   create({ color }: IColorCreation): Promise<IColor>;
 
   delete(id: string): Promise<void>;

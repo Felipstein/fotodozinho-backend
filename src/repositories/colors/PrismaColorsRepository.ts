@@ -13,6 +13,10 @@ export class PrismaColorsRepository implements IColorsRepository {
     return prisma.color.findFirst({ where: { id } });
   }
 
+  listByColor(color: string): Promise<IColor> {
+    return prisma.color.findFirst({ where: { color } });
+  }
+
   create({ color }: IColorCreation): Promise<IColor> {
     return prisma.color.create({
       data: { color },

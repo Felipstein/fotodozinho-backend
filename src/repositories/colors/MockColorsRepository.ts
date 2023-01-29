@@ -15,6 +15,10 @@ export class MockColorsRepository implements IColorsRepository {
     return this.colors.find(color => color.id === id);
   }
 
+  async listByColor(color: string): Promise<IColor> {
+    return this.colors.find(colorObj => colorObj.color === color);
+  }
+
   async create({ color }: IColorCreation): Promise<IColor> {
     const id = uuidProvider.generateCUID();
     const newColor = { id, color };
