@@ -1,11 +1,16 @@
 import { Router } from 'express';
 import { createColorFactory } from '../modules/colors/create';
 import { listColorsFactory } from '../modules/colors/listAll';
+import { listColorByIdFactory } from '../modules/colors/listById';
 
 const route = Router();
 
 route.get('/', (req, res) => {
   return listColorsFactory().controller.handle(req, res);
+});
+
+route.get('/:id', (req, res) => {
+  return listColorByIdFactory().controller.handle(req, res);
 });
 
 route.post('/', (req, res) => {
