@@ -1,6 +1,7 @@
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
 import { IPrintCreation } from '../../../entities/print-order/print/IPrintCreation';
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { DetailedError } from '../../../errors/DetailedError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { MockColorsRepository } from '../../../repositories/colors/MockColorsRepository';
 import { MockPrintOrdersRepository } from '../../../repositories/print-orders/MockPrintOrdersRepository';
@@ -143,8 +144,7 @@ describe('Create Print Order', () => {
     // @ts-ignore
     const createPrintOrder = () => createPrintOrderUseCases.execute({ prints, userId });
 
-    expect(createPrintOrder).rejects.toThrow(BadRequestError);
-    expect(createPrintOrder).rejects.toThrow('Nenhuma foto para revelação possui seus campos corretos ou preenchidos');
+    expect(createPrintOrder).rejects.toThrow(DetailedError);
   });
 
   it('should return one rejected print because wrong attributes and one accepted print', async () => {

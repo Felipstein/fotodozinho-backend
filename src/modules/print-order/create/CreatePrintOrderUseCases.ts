@@ -2,6 +2,7 @@ import { prisma } from '../../../database';
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
 import { IPrintCreation } from '../../../entities/print-order/print/IPrintCreation';
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { DetailedError } from '../../../errors/DetailedError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IColorsRepository } from '../../../repositories/colors/IColorsRepository';
@@ -38,7 +39,9 @@ export class CreatePrintOrderUseCases {
     const { acceptedPrints, rejectedPrints } = await this.validatePrints(prints);
 
     if(acceptedPrints.length === 0) {
-      throw new BadRequestError('Nenhuma foto para revelação possui seus campos corretos ou preenchidos');
+      const reasons = rejectedPrints.map(({ print, reason }) => ({ printName: print.imageName, reason }));
+
+      throw new DetailedError(400, { reasons }, 'Nenhuma foto para revelação possui seus campos corretos ou preenchidos');
     }
 
     const printOrder = await this.printOrdersRepository.create({
