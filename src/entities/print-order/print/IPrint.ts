@@ -7,8 +7,10 @@ export interface IPrint {
   imageUrl: string;
   key: string;
   printPrice: IPrintPrice;
+  printPriceId: string;
   border: boolean;
   color: IColor;
+  colorId: string;
   quantity: number;
   printOrderId: string;
 }
