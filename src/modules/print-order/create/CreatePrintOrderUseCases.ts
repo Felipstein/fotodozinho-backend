@@ -1,3 +1,4 @@
+import { prisma } from '../../../database';
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
 import { IPrintCreation } from '../../../entities/print-order/print/IPrintCreation';
 import { BadRequestError } from '../../../errors/BadRequestError';
@@ -81,12 +82,32 @@ export class CreatePrintOrderUseCases {
         return;
       }
 
+      const imageUrlAlreadyExists = await this.listPrintByImageUrl(print.imageUrl);
+      if(imageUrlAlreadyExists) {
+        rejectedPrints.push(print);
+        return;
+      }
+
+      const keyAlreadyExists = await this.listPrintByKey(print.key);
+      if(keyAlreadyExists) {
+        rejectedPrints.push(print);
+        return;
+      }
+
       acceptedPrints.push(print);
     });
 
     await Promise.all(promises);
 
     return { acceptedPrints, rejectedPrints };
+  }
+
+  private listPrintByImageUrl(imageUrl: string) {
+    return prisma.print.findFirst({ where: { imageUrl } });
+  }
+
+  private listPrintByKey(key: string) {
+    return prisma.print.findFirst({ where: { key } });
   }
 
 }

@@ -1,6 +1,5 @@
 import { prisma } from '../../database';
 import { printCreationMapper } from '../../domain/PrintCreationMapper';
-import { printMapper } from '../../domain/PrintMapper';
 import { printOrderMapper } from '../../domain/PrintOrderMapper';
 import { IPrintOrder, PrintOrderStatus } from '../../entities/print-order/IPrintOrder';
 import { IPrintOrderCreation } from '../../entities/print-order/IPrintOrderCreation';
