@@ -24,7 +24,7 @@ export class UpdateReadNotificationUseCases {
       throw new NotificationNotFoundError();
     }
 
-    const notification = await this.notificationsRepository.updateRead(id, { read });
+    const notification = await this.notificationsRepository.updateRead(id, read);
 
     return notification;
   }

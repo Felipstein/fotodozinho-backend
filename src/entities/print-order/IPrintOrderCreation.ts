@@ -1,6 +1,6 @@
-import { IPrint } from './print/IPrint';
+import { IPrintCreation } from './print/IPrintCreation';
 
 export interface IPrintOrderCreation {
   userId: string;
-  prints: IPrint[];
+  prints: IPrintCreation[];
 }

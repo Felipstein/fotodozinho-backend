@@ -1,5 +1,6 @@
 import { IPrintOrder, PrintOrderStatus } from '../../entities/print-order/IPrintOrder';
 import { IPrintOrderCreation } from '../../entities/print-order/IPrintOrderCreation';
+import { IPrint } from '../../entities/print-order/print/IPrint';
 import { uuidProvider } from '../../providers/UUID';
 import { IPrintOrdersRepository } from './IPrintOrdersRepository';
 
@@ -23,8 +24,13 @@ export class MockPrintOrdersRepository implements IPrintOrdersRepository {
     const id = uuidProvider.generateCUID();
     const date = new Date();
 
+    const printsMapped = prints.map(print => ({
+      ...print,
+      id: uuidProvider.generateCUID(),
+    } as IPrint));
+
     const printOrder: IPrintOrder = {
-      id, prints, userId, status: 'WAITING', createdAt: date
+      id, prints: printsMapped, userId, status: 'WAITING', createdAt: date
     };
 
     this.printOrders.push(printOrder);

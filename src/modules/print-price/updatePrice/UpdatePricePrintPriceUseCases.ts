@@ -31,7 +31,7 @@ export class UpdatePricePrintPriceUseCases {
       throw new PrintPriceNotFound();
     }
 
-    const printPrice = await this.printPricesRepository.updatePrice(id, { price });
+    const printPrice = await this.printPricesRepository.updatePrice(id, price);
 
     return printPrice;
   }

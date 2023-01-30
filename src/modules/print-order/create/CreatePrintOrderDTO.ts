@@ -1,6 +1,6 @@
-import { IPrint } from '../../../entities/print-order/print/IPrint';
+import { IPrintCreation } from '../../../entities/print-order/print/IPrintCreation';
 
 export interface CreatePrintOrderDTO {
   userId: string;
-  prints: IPrint[];
+  prints: IPrintCreation[];
 }
