@@ -10,6 +10,7 @@ import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrin
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
 import { CreatePrintOrderDTO } from './CreatePrintOrderDTO';
+import { RejectedPrintResponse } from './RejectedPrintResponse';
 
 export class CreatePrintOrderUseCases {
 
@@ -20,7 +21,7 @@ export class CreatePrintOrderUseCases {
     private colorsRepository: IColorsRepository,
   ) { }
 
-  async execute({ userId, prints }: CreatePrintOrderDTO): Promise<{ printOrder: IPrintOrder, rejectedPrints: IPrintCreation[] }> {
+  async execute({ userId, prints }: CreatePrintOrderDTO): Promise<{ printOrder: IPrintOrder, rejectedPrints: RejectedPrintResponse[] }> {
     if(someIsNullOrUndefined(userId, prints)) {
       throw new RequiredFieldsError('Usuário', 'Fotos para revelação');
     }
@@ -47,9 +48,9 @@ export class CreatePrintOrderUseCases {
     return { printOrder, rejectedPrints };
   }
 
-  private async validatePrints(prints: IPrintCreation[]): Promise<{ acceptedPrints: IPrintCreation[], rejectedPrints: IPrintCreation[] }> {
+  private async validatePrints(prints: IPrintCreation[]): Promise<{ acceptedPrints: IPrintCreation[], rejectedPrints: RejectedPrintResponse[] }> {
     const acceptedPrints: IPrintCreation[] = [];
-    const rejectedPrints: IPrintCreation[] = [];
+    const rejectedPrints: RejectedPrintResponse[] = [];
 
     const promises = prints.map(async print => {
       if(someIsNullOrUndefined(
@@ -61,36 +62,36 @@ export class CreatePrintOrderUseCases {
         print.colorId,
         print.quantity,
       )) {
-        rejectedPrints.push(print);
+        rejectedPrints.push({ print, reason: RequiredFieldsError.buildStringMessage() });
         return;
       }
 
       if(isNaN(print.quantity)) {
-        rejectedPrints.push(print);
+        rejectedPrints.push({ print, reason: 'Preço deve ser um número' });
         return;
       }
 
       const printPricesExists = await this.printPricesRepository.listById(print.printPriceId);
       if(!printPricesExists) {
-        rejectedPrints.push(print);
+        rejectedPrints.push({ print, reason: 'Tamanho/tipo informado não existe' });
         return;
       }
 
       const colorExists = await this.colorsRepository.listById(print.colorId);
       if(!colorExists) {
-        rejectedPrints.push(print);
+        rejectedPrints.push({ print, reason: 'Cor/descrição informado não existe' });
         return;
       }
 
       const imageUrlAlreadyExists = await this.listPrintByImageUrl(print.imageUrl);
       if(imageUrlAlreadyExists) {
-        rejectedPrints.push(print);
+        rejectedPrints.push({ print, reason: 'O URL da foto já existe' });
         return;
       }
 
       const keyAlreadyExists = await this.listPrintByKey(print.key);
       if(keyAlreadyExists) {
-        rejectedPrints.push(print);
+        rejectedPrints.push({ print, reason: 'A chave da foto já existe' });
         return;
       }
 
