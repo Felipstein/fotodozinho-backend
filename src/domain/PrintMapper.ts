@@ -12,33 +12,17 @@ class PrintMapper {
 
   toDomain(persistencePrint: PrintPersistence): PrintDomain {
     return {
-      id: persistencePrint.id,
-      imageName: persistencePrint.imageName,
-      imageUrl: persistencePrint.imageUrl,
-      key: persistencePrint.key,
+      ...persistencePrint,
       printPrice: printPriceMapper.toDomain(persistencePrint.printPrice),
-      printPriceId: persistencePrint.printPriceId,
-      border: persistencePrint.border,
-      color: persistencePrint.color,
-      colorId: persistencePrint.colorId,
       quantity: Number(persistencePrint.quantity),
-      printOrderId: persistencePrint.printOrderId,
     };
   }
 
   toPersistence(domainPrint: PrintDomain): PrintPersistence {
     return {
-      id: domainPrint.id,
-      imageName: domainPrint.imageName,
-      imageUrl: domainPrint.imageUrl,
-      key: domainPrint.key,
+      ...domainPrint,
       printPrice: printPriceMapper.toPersistence(domainPrint.printPrice),
-      printPriceId: domainPrint.printPriceId,
-      border: domainPrint.border,
-      color: domainPrint.color,
-      colorId: domainPrint.colorId,
       quantity: new Prisma.Decimal(domainPrint.quantity),
-      printOrderId: domainPrint.printOrderId,
     };
   }
 

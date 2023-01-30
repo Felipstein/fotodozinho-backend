@@ -8,16 +8,14 @@ class PrintPriceMapper {
 
   toDomain(persistencePrintPrice: PrintPricePersistence): PrintPriceDomain {
     return {
-      id: persistencePrintPrice.id,
-      length: persistencePrintPrice.length,
+      ...persistencePrintPrice,
       price: Number(persistencePrintPrice.price),
     };
   }
 
   toPersistence(domainPrintPrice: PrintPriceDomain): PrintPricePersistence {
     return {
-      id: domainPrintPrice.id,
-      length: domainPrintPrice.length,
+      ...domainPrintPrice,
       price: new Prisma.Decimal(domainPrintPrice.price),
     };
   }

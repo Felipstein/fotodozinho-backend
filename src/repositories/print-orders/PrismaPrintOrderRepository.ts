@@ -1,4 +1,5 @@
 import { prisma } from '../../database';
+import { printCreationMapper } from '../../domain/PrintCreationMapper';
 import { printMapper } from '../../domain/PrintMapper';
 import { printOrderMapper } from '../../domain/PrintOrderMapper';
 import { IPrintOrder, PrintOrderStatus } from '../../entities/print-order/IPrintOrder';
@@ -47,7 +48,7 @@ export class PrismaPrintOrderRepository implements IPrintOrdersRepository {
       data: {
         userId,
         Print: {
-          create: prints.map(printMapper.toPersistence),
+          create: prints.map(printCreationMapper.toPersistence),
         },
       },
       include,
