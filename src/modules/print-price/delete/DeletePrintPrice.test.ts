@@ -26,7 +26,7 @@ describe('Delete Print Price', () => {
 
   it('should throw an error when deleting a print price that does not exist', async () => {
 
-    expect(deletePrintPriceUseCases.execute('unknowid')).rejects.toThrow(PrintPriceNotFound);
+    expect(() => deletePrintPriceUseCases.execute('unknowid')).rejects.toThrow(PrintPriceNotFound);
   });
 
 });

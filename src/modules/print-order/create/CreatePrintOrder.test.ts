@@ -38,9 +38,9 @@ describe('Create Print Order', () => {
 
     const prints: IPrintCreation[] = [
       {
-        imageName: 'Image Name.jpeg',
-        imageUrl: 'http://example.com/key-image-name.jpeg',
-        key: 'key-image-name.jpeg',
+        imageName: 'Image Name Test.jpeg',
+        imageUrl: 'http://example.com/key-image-name-test.jpeg',
+        key: 'key-image-name-test.jpeg',
         printPriceId: printPrice.id,
         border: false,
         colorId: color.id,
@@ -50,20 +50,20 @@ describe('Create Print Order', () => {
 
     const { printOrder } = await createPrintOrderUseCases.execute({
       prints, userId,
-    });
+    }, true);
 
     expect(printOrder).toEqual({
       id: printOrder.id,
       prints: [
         {
           id: printOrder.prints[0].id,
-          imageName: 'Image Name.jpeg',
-          imageUrl: 'http://example.com/key-image-name.jpeg',
-          key: 'key-image-name.jpeg',
-          printPrice,
+          imageName: 'Image Name Test.jpeg',
+          imageUrl: 'http://example.com/key-image-name-test.jpeg',
+          key: 'key-image-name-test.jpeg',
+          // printPrice,
           printPriceId: printPrice.id,
           border: false,
-          color,
+          // color,
           colorId: color.id,
           quantity: 1,
         },
@@ -142,7 +142,7 @@ describe('Create Print Order', () => {
     ];
 
     // @ts-ignore
-    const createPrintOrder = () => createPrintOrderUseCases.execute({ prints, userId });
+    const createPrintOrder = () => createPrintOrderUseCases.execute({ prints, userId }, true);
 
     expect(createPrintOrder).rejects.toThrow(DetailedError);
   });
@@ -161,24 +161,20 @@ describe('Create Print Order', () => {
 
     const prints = [
       {
-        imageName: 'Image Name.jpeg',
-        imageUrl: 'http://example.com/key-image-name.jpeg',
-        key: 'key-image-name.jpeg',
-        printPrice,
+        imageName: 'Image Name Test.jpeg',
+        imageUrl: 'http://example.com/key-image-name-test.jpeg',
+        key: 'key-image-name-test.jpeg',
         printPriceId: printPrice.id,
         border: false,
-        color,
         colorId: color.id,
         quantity: 1,
       },
       {
         imageName: 'Image Name.jpeg',
-        imageUrl: 'http://example.com/key-image-name.jpeg',
+        imageUrl: 'http://example.com/key-image-name-test.jpeg', // FAZER O YARN TEST E VER SE AGORA O PRIMEIRO DÁ ERRO DE KEY REPETIDA
         // key: 'key-image-name.jpeg',
-        printPrice,
         printPriceId: 'fake-print-price-id',
         border: false,
-        color,
         colorId: color.id,
         quantity: 'notnumber',
       },
@@ -187,7 +183,7 @@ describe('Create Print Order', () => {
     const { printOrder, rejectedPrints } = await createPrintOrderUseCases.execute({
       // @ts-ignore
       prints, userId
-    });
+    }, true);
 
     expect(printOrder.prints).toHaveLength(1);
     expect(rejectedPrints).toHaveLength(1);

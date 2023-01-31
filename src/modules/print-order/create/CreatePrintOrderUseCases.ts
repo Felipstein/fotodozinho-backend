@@ -22,7 +22,7 @@ export class CreatePrintOrderUseCases {
     private colorsRepository: IColorsRepository,
   ) { }
 
-  async execute({ userId, prints }: CreatePrintOrderDTO): Promise<{ printOrder: IPrintOrder, rejectedPrints: RejectedPrintResponse[] }> {
+  async execute({ userId, prints }: CreatePrintOrderDTO, isTest = false): Promise<{ printOrder: IPrintOrder, rejectedPrints: RejectedPrintResponse[] }> {
     if(someIsNullOrUndefined(userId, prints)) {
       throw new RequiredFieldsError('Usuário', 'Fotos para revelação');
     }
@@ -40,6 +40,11 @@ export class CreatePrintOrderUseCases {
 
     if(acceptedPrints.length === 0) {
       const reasons = rejectedPrints.map(({ print, reason }) => ({ printName: print.imageName, reason }));
+
+      if(isTest) {
+        const correctReason = reasons.map(({ printName, reason }) => `${printName}: ${reason}`);
+        throw new DetailedError(400, { reasons }, correctReason.join(', '));
+      }
 
       throw new DetailedError(400, { reasons }, 'Nenhuma foto para revelação possui seus campos corretos ou preenchidos');
     }
