@@ -74,6 +74,46 @@ describe('Create Print Order', () => {
     } as IPrintOrder);
   });
 
+  it('should create a print order and not return rejected prints', async () => {
+    const { id: userId } = await usersRepository.create({
+      name: 'User Test',
+      email: 'test@test.com',
+      password: '123456',
+      phone: '99999999999',
+      admin: false,
+    });
+
+    const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
+    const color = await colorsRepository.create({ color: 'red' });
+
+    const prints: IPrintCreation[] = [
+      {
+        imageName: 'Image Name Test.jpeg',
+        imageUrl: 'http://example.com/key-image-name-test.jpeg',
+        key: 'key-image-name-test.jpeg',
+        printPriceId: printPrice.id,
+        border: false,
+        colorId: color.id,
+        quantity: 1,
+      },
+      {
+        imageName: 'Other Image.jpeg',
+        imageUrl: 'http://example.com/key-other-image.jpeg',
+        key: 'key-other-image.jpeg',
+        printPriceId: printPrice.id,
+        border: true,
+        colorId: color.id,
+        quantity: 2,
+      },
+    ];
+
+    const { rejectedPrints } = await createPrintOrderUseCases.execute({
+      prints, userId,
+    }, true);
+
+    expect(rejectedPrints).toBeUndefined();
+  });
+
   it('should throw an error when create print order with user that does not exists', async () => {
     const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
     const color = await colorsRepository.create({ color: 'red' });
