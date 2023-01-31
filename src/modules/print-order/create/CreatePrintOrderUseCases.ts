@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import { prisma } from '../../../database';
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
 import { IPrintCreation } from '../../../entities/print-order/print/IPrintCreation';
@@ -53,7 +54,7 @@ export class CreatePrintOrderUseCases {
       userId, prints: acceptedPrints,
     });
 
-    return { printOrder, rejectedPrints };
+    return { printOrder, rejectedPrints: isEmpty(rejectedPrints) ? undefined : rejectedPrints };
   }
 
   private async validatePrints(prints: IPrintCreation[]): Promise<{ acceptedPrints: IPrintCreation[], rejectedPrints: RejectedPrintResponse[] }> {
