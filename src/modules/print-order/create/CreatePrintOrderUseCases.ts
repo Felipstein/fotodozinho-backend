@@ -75,7 +75,7 @@ export class CreatePrintOrderUseCases {
       }
 
       if(isNaN(print.quantity)) {
-        rejectedPrints.push({ print, reason: 'Preço deve ser um número' });
+        rejectedPrints.push({ print, reason: 'Quantidade deve ser um número' });
         return;
       }
 
