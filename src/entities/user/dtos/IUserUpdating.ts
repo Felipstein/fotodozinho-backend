@@ -1,4 +1,4 @@
-export interface IUserUpdating {
+export interface UserUpdateRequest {
   name?: string;
   phone?: string | null;
   password?: string;
