@@ -3,4 +3,6 @@ export interface IUserUpdating {
   phone?: string | null;
   password?: string;
   admin?: boolean;
+  totalPrints?: number;
+  totalPurchases?: number;
 }

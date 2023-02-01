@@ -31,6 +31,8 @@ describe('Create User', () => {
       email: user.email,
       phone: user.phone,
       admin: user.admin,
+      totalPrints: 0,
+      totalPurchases: 0,
       createdAt: expect.any(Date),
     });
   });
@@ -116,6 +118,20 @@ describe('Create User', () => {
 
     //@ts-ignore
     expect(userCreated.password).not.toBe(user.password);
+  });
+
+  it('should create user with 0 total prints and 0 total purchases', async () => {
+    const user: IUserCreation = {
+      name: 'User Test',
+      email: 'emailtest@hotmail.com',
+      phone: '99999999999',
+      password: '123456',
+    };
+
+    const userCreated = await createUserUseCases.execute(user);
+
+    expect(userCreated.totalPrints).toBe(0);
+    expect(userCreated.totalPurchases).toBe(0);
   });
 
   it('should throw an error when try create more users with same e-mail', async () => {

@@ -25,7 +25,14 @@ describe('List User by Email', () => {
 
     delete user.password;
 
-    expect(userListed).toEqual({ id: userCreated.id, admin: false, createdAt: expect.any(Date), ...user });
+    expect(userListed).toEqual({
+      id: userCreated.id,
+      admin: false,
+      createdAt: expect.any(Date),
+      totalPrints: 0,
+      totalPurchases: 0,
+      ...user,
+    });
   });
 
   it('should not return password', async () => {

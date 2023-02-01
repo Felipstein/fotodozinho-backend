@@ -6,4 +6,6 @@ export interface IUser {
   password: string;
   createdAt: Date;
   admin: boolean;
+  totalPrints: number;
+  totalPurchases: number;
 }

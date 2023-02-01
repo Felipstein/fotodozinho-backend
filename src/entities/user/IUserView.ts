@@ -5,4 +5,6 @@ export interface IUserView {
   phone?: string | null;
   createdAt: Date;
   admin: boolean;
+  totalPrints: number;
+  totalPurchases: number;
 }

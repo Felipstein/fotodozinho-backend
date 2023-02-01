@@ -3,50 +3,64 @@ import { prisma } from '../../database';
 import { IUserView } from '../../entities/user/IUserView';
 import { IUsersRepository } from './IUsersRepository';
 import { IUserUpdating } from '../../entities/user/IUserUpdating';
+import { userViewMapper } from '../../domain/UserViewMapper';
+
+
+const selectWithoutPassword = { id: true, name: true, email: true, phone: true, createdAt: true, admin: true, totalPrints: true, totalPurchases: true };
 
 export class PrismaUsersRepository implements IUsersRepository {
 
-  listAll(): Promise<IUserView[]> {
-    return prisma.user.findMany({
-      select: { id: true, name: true, email: true, phone: true, createdAt: true, admin: true },
+  async listAll(): Promise<IUserView[]> {
+    const users = await prisma.user.findMany({
+      select: selectWithoutPassword,
     });
+
+    return users.map(userViewMapper.toDomain);
   }
 
-  listById(id: string): Promise<IUserView | null> {
-    return prisma.user.findFirst({
+  async listById(id: string): Promise<IUserView | null> {
+    const user = await prisma.user.findFirst({
       where: { id },
-      select: { id: true, name: true, email: true, phone: true, createdAt: true, admin: true },
+      select: selectWithoutPassword,
     });
+
+    if(!user) {
+      return null;
+    }
+
+    return userViewMapper.toDomain(user);
   }
 
-  listByEmail(email: string): Promise<IUserView | null> {
-    return prisma.user.findFirst({
+  async listByEmail(email: string): Promise<IUserView | null> {
+    const user = await prisma.user.findFirst({
       where: { email },
-      select: { id: true, name: true, email: true, phone: true, createdAt: true, admin: true },
+      select: selectWithoutPassword,
     });
+
+    return userViewMapper.toDomain(user);
   }
 
-  create({ name, email, phone, password, admin }: IUserCreation): Promise<IUserView> {
-    return prisma.user.create({
+  async create({ name, email, phone, password, admin }: IUserCreation): Promise<IUserView> {
+    const user = await prisma.user.create({
       data: {
         name, email, phone, password, admin
       },
-      select: {
-        id: true, name: true, email: true, phone: true, createdAt: true, admin: true
-      }
+      select: selectWithoutPassword,
     });
+
+    return userViewMapper.toDomain(user);
   }
 
-  update(id: string, { name, phone, password, admin }: IUserUpdating): Promise<IUserView | null> {
-    return prisma.user.update({
+  async update(id: string, { name, phone, password, admin }: IUserUpdating): Promise<IUserView | null> {
+    const user = await prisma.user.update({
       where: { id },
       data: {
         name, phone, password, admin,
       },
-      select: {
-        id: true, name: true, email: true, phone: true, createdAt: true, admin: true
-      },
+      select: selectWithoutPassword,
     });
+
+    return userViewMapper.toDomain(user);
   }
 
   async delete(id: string): Promise<void> {
