@@ -13,7 +13,7 @@ export class UpdateUserUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(id: string, { name, phone, password, admin }: UpdateUserDTO, isTest = false): Promise<IUserView> {
+  async execute(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases }: UpdateUserDTO, isTest = false): Promise<IUserView> {
     if(!id) {
       throw new IDNotGivenError();
     }
@@ -28,7 +28,15 @@ export class UpdateUserUseCases {
     }
 
     const encryptedPassword = password && await crypt.hash(password);
-    const userUpdated = await this.usersRepository.update(id, { name, phone, password: encryptedPassword, admin: admin || false }, isTest);
+    const userUpdated = await this.usersRepository.update(id, {
+      name,
+      phone,
+      password: encryptedPassword,
+      admin: admin || false,
+      totalPrints,
+      totalPrintOrders,
+      totalPurchases,
+    }, isTest);
 
     return userUpdated;
   }

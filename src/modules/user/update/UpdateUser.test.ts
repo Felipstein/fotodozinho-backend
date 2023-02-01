@@ -28,6 +28,9 @@ describe('Update User', () => {
       name: 'John John',
       phone: '44444444444',
       admin: true,
+      totalPrints: 10,
+      totalPrintOrders: 2,
+      totalPurchases: 5,
     });
 
     const userListed = await usersRepository.listById(id);
@@ -38,6 +41,9 @@ describe('Update User', () => {
       email: user.email,
       phone: '44444444444',
       admin: true,
+      totalPrints: 10,
+      totalPrintOrders: 2,
+      totalPurchases: 5,
       createdAt: expect.any(Date),
     });
   });

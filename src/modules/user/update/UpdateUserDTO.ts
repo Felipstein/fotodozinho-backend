@@ -3,4 +3,7 @@ export interface UpdateUserDTO {
   phone?: string;
   password?: string;
   admin?: boolean;
+  totalPrints?: number;
+  totalPrintOrders?: number;
+  totalPurchases?: number;
 }
