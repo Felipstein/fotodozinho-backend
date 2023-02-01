@@ -48,7 +48,7 @@ export class MockUserRepository implements IUsersRepository {
   async create({ name, email, phone, password, admin = false }: IUserCreation, isTest = false): Promise<IUserView> {
     const id = uuidProvider.generateCUID();
     const date = new Date();
-    const user: IUser = { id, name, email, phone, password, createdAt: date, admin, totalPrints: 0, totalPurchases: 0 };
+    const user: IUser = { id, name, email, phone, password, createdAt: date, admin, totalPrints: 0, totalPrintOrders: 0, totalPurchases: 0 };
 
     this.users.push(user);
 
@@ -62,9 +62,9 @@ export class MockUserRepository implements IUsersRepository {
     return userWithoutPassword;
   }
 
-  async update(id: string, { name, phone, password, admin, totalPrints, totalPurchases }: IUserUpdating, isTest: boolean): Promise<IUserView | null> {
+  async update(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases }: IUserUpdating, isTest: boolean): Promise<IUserView | null> {
     const date = new Date();
-    const newUser = { id, name, phone, password, createdAt: date, admin, totalPrints, totalPurchases };
+    const newUser = { id, name, phone, password, createdAt: date, admin, totalPrints, totalPrintOrders, totalPurchases };
 
     let userUpdated: IUser;
 

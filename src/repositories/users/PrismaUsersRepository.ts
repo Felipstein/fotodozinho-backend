@@ -6,7 +6,17 @@ import { IUserUpdating } from '../../entities/user/IUserUpdating';
 import { userViewMapper } from '../../domain/UserViewMapper';
 
 
-const selectWithoutPassword = { id: true, name: true, email: true, phone: true, createdAt: true, admin: true, totalPrints: true, totalPurchases: true };
+const selectWithoutPassword = {
+  id: true,
+  name: true,
+  email: true,
+  phone: true,
+  createdAt: true,
+  admin: true,
+  totalPrints: true,
+  totalPrintOrders: true,
+  totalPurchases: true
+};
 
 export class PrismaUsersRepository implements IUsersRepository {
 
@@ -51,11 +61,11 @@ export class PrismaUsersRepository implements IUsersRepository {
     return userViewMapper.toDomain(user);
   }
 
-  async update(id: string, { name, phone, password, admin }: IUserUpdating): Promise<IUserView | null> {
+  async update(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases }: IUserUpdating): Promise<IUserView | null> {
     const user = await prisma.user.update({
       where: { id },
       data: {
-        name, phone, password, admin,
+        name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases,
       },
       select: selectWithoutPassword,
     });
