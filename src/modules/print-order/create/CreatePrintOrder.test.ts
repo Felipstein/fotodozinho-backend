@@ -75,7 +75,7 @@ describe('Create Print Order', () => {
     } as IPrintOrder);
   });
 
-  it('should create a print with number equals to total user prints + 1', async () => {
+  it('should create a print with number equals to total user print orders + 1', async () => {
     const { id: userId } = await usersRepository.create({
       name: 'User Test',
       email: 'test@test.com',
@@ -99,16 +99,16 @@ describe('Create Print Order', () => {
       },
     ];
 
-    const { totalPrints: totalUserPrints } = await usersRepository.listById(userId);
+    const { totalPrintOrders: totalUserPrintOrders } = await usersRepository.listById(userId);
 
     const { printOrder } = await createPrintOrderUseCases.execute({
       prints, userId,
     }, true);
 
-    expect(printOrder.number).toBe(totalUserPrints + 1);
+    expect(printOrder.number).toBe(totalUserPrintOrders + 1);
   });
 
-  it('should add one more to total user impressions when creating a print order', async () => {
+  it('should add one more to total user print orders when creating a print order', async () => {
     const { id: userId } = await usersRepository.create({
       name: 'User Test',
       email: 'test@test.com',
@@ -132,15 +132,15 @@ describe('Create Print Order', () => {
       },
     ];
 
-    const { totalPrints: beforeTotalPrints } = await usersRepository.listById(userId);
+    const { totalPrintOrders: beforeTotalPrintOrders } = await usersRepository.listById(userId);
 
     await createPrintOrderUseCases.execute({
       prints, userId,
     }, true);
 
-    const { totalPrints: afterTotalPrints } = await usersRepository.listById(userId);
+    const { totalPrintOrders: afterTotalPrintOrders } = await usersRepository.listById(userId);
 
-    expect(afterTotalPrints).toBe(beforeTotalPrints + 1);
+    expect(afterTotalPrintOrders).toBe(beforeTotalPrintOrders + 1);
   });
 
   it('should create a print order and not return rejected prints', async () => {

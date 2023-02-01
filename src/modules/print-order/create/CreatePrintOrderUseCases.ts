@@ -50,13 +50,13 @@ export class CreatePrintOrderUseCases {
       throw new DetailedError(400, { reasons }, 'Nenhuma foto para revelação possui seus campos corretos ou preenchidos');
     }
 
-    const number = user.totalPrints + 1;
+    const number = user.totalPrintOrders + 1;
 
     const printOrder = await this.printOrdersRepository.create({
       number, userId, prints: acceptedPrints,
     });
 
-    await this.usersRepository.update(userId, { totalPrints: number }, false);
+    await this.usersRepository.update(userId, { totalPrintOrders: number }, false);
 
     return { printOrder, rejectedPrints: isEmpty(rejectedPrints) ? undefined : rejectedPrints };
   }
