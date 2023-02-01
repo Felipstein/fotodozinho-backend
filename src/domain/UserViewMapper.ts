@@ -10,6 +10,7 @@ class UserViewMapper {
     return {
       ...persistenceUserView,
       totalPrints: Number(persistenceUserView.totalPrints),
+      totalPrintOrders: Number(persistenceUserView.totalPrintOrders),
       totalPurchases: Number(persistenceUserView.totalPurchases),
     };
   }
