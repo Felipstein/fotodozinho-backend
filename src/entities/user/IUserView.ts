@@ -6,5 +6,6 @@ export interface IUserView {
   createdAt: Date;
   admin: boolean;
   totalPrints: number;
+  totalPrintOrders: number;
   totalPurchases: number;
 }

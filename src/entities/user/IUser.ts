@@ -7,5 +7,6 @@ export interface IUser {
   createdAt: Date;
   admin: boolean;
   totalPrints: number;
+  totalPrintOrders: number;
   totalPurchases: number;
 }

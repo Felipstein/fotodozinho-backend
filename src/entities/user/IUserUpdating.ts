@@ -4,5 +4,6 @@ export interface IUserUpdating {
   password?: string;
   admin?: boolean;
   totalPrints?: number;
+  totalPrintOrders?: number;
   totalPurchases?: number;
 }
