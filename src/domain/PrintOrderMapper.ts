@@ -14,7 +14,10 @@ class PrintOrderMapper {
 
   toDomain(persistencePrintOrder: PrintOrderPersistence): PrintOrderDomain {
     return {
-      ...persistencePrintOrder,
+      id: persistencePrintOrder.id,
+      status: persistencePrintOrder.status,
+      userId: persistencePrintOrder.userId,
+      createdAt: persistencePrintOrder.createdAt,
       number: Number(persistencePrintOrder.number),
       prints: persistencePrintOrder.Print.map(printMapper.toDomain),
     };
