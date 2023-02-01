@@ -32,6 +32,7 @@ describe('Create User', () => {
       phone: user.phone,
       admin: user.admin,
       totalPrints: 0,
+      totalPrintOrders: 0,
       totalPurchases: 0,
       createdAt: expect.any(Date),
     });
@@ -120,7 +121,7 @@ describe('Create User', () => {
     expect(userCreated.password).not.toBe(user.password);
   });
 
-  it('should create user with 0 total prints and 0 total purchases', async () => {
+  it('should create user with total 0 prints, 0 print orders and 0 purchases', async () => {
     const user: IUserCreation = {
       name: 'User Test',
       email: 'emailtest@hotmail.com',
@@ -131,6 +132,7 @@ describe('Create User', () => {
     const userCreated = await createUserUseCases.execute(user);
 
     expect(userCreated.totalPrints).toBe(0);
+    expect(userCreated.totalPrintOrders).toBe(0);
     expect(userCreated.totalPurchases).toBe(0);
   });
 
