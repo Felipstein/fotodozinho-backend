@@ -8,15 +8,17 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(cuid())
-  name         String         @db.VarChar(32)
-  email        String         @unique
-  phone        String?
-  password     String
-  createdAt    DateTime       @default(now())
-  admin        Boolean        @default(false)
-  Notification Notification[]
-  PrintOrder   PrintOrder[]
+  id             String         @id @default(cuid())
+  name           String         @db.VarChar(32)
+  email          String         @unique
+  phone          String?
+  password       String
+  createdAt      DateTime       @default(now())
+  admin          Boolean        @default(false)
+  totalPrints    Decimal        @default(0)
+  totalPurchases Decimal        @default(0)
+  Notification   Notification[]
+  PrintOrder     PrintOrder[]
 
   @@map("users")
 }
@@ -58,6 +60,7 @@ enum PrintOrderStatus {
 
 model PrintOrder {
   id        String           @id @default(cuid())
+  number    Decimal
   status    PrintOrderStatus @default(WAITING)
   user      User             @relation(fields: [userId], references: [id])
   userId    String
