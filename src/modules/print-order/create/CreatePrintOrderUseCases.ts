@@ -32,8 +32,8 @@ export class CreatePrintOrderUseCases {
       throw new BadRequestError('Nenhuma foto para revelação foi enviada');
     }
 
-    const userExists = await this.usersRepository.listById(userId);
-    if(!userExists) {
+    const user = await this.usersRepository.listById(userId);
+    if(!user) {
       throw new UserNotFoundError();
     }
 
@@ -50,9 +50,13 @@ export class CreatePrintOrderUseCases {
       throw new DetailedError(400, { reasons }, 'Nenhuma foto para revelação possui seus campos corretos ou preenchidos');
     }
 
+    const number = user.totalPrints + 1;
+
     const printOrder = await this.printOrdersRepository.create({
-      userId, prints: acceptedPrints,
+      number, userId, prints: acceptedPrints,
     });
+
+    await this.usersRepository.update(userId, { totalPrints: number }, false);
 
     return { printOrder, rejectedPrints: isEmpty(rejectedPrints) ? undefined : rejectedPrints };
   }

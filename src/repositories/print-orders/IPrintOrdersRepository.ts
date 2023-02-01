@@ -9,7 +9,7 @@ export interface IPrintOrdersRepository {
 
   listByUserIdAndStatus(userId: string, status: PrintOrderStatus): Promise<IPrintOrder[]>;
 
-  create({ prints, userId }: IPrintOrderCreation): Promise<IPrintOrder>;
+  create({ number, prints, userId }: IPrintOrderCreation): Promise<IPrintOrder>;
 
   updateStatus(id: string, newStatus: PrintOrderStatus): Promise<IPrintOrder>;
 

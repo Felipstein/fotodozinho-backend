@@ -54,6 +54,7 @@ describe('Create Print Order', () => {
 
     expect(printOrder).toEqual({
       id: printOrder.id,
+      number: printOrder.number,
       prints: [
         {
           id: printOrder.prints[0].id,
@@ -72,6 +73,74 @@ describe('Create Print Order', () => {
       userId,
       createdAt: printOrder.createdAt,
     } as IPrintOrder);
+  });
+
+  it('should create a print with number equals to total user prints + 1', async () => {
+    const { id: userId } = await usersRepository.create({
+      name: 'User Test',
+      email: 'test@test.com',
+      password: '123456',
+      phone: '99999999999',
+      admin: false,
+    });
+
+    const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
+    const color = await colorsRepository.create({ color: 'red' });
+
+    const prints: IPrintCreation[] = [
+      {
+        imageName: 'Image Name Test.jpeg',
+        imageUrl: 'http://example.com/key-image-name-test.jpeg',
+        key: 'key-image-name-test.jpeg',
+        printPriceId: printPrice.id,
+        border: false,
+        colorId: color.id,
+        quantity: 1,
+      },
+    ];
+
+    const { totalPrints: totalUserPrints } = await usersRepository.listById(userId);
+
+    const { printOrder } = await createPrintOrderUseCases.execute({
+      prints, userId,
+    }, true);
+
+    expect(printOrder.number).toBe(totalUserPrints + 1);
+  });
+
+  it('should add one more to total user impressions when creating a print order', async () => {
+    const { id: userId } = await usersRepository.create({
+      name: 'User Test',
+      email: 'test@test.com',
+      password: '123456',
+      phone: '99999999999',
+      admin: false,
+    });
+
+    const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
+    const color = await colorsRepository.create({ color: 'red' });
+
+    const prints: IPrintCreation[] = [
+      {
+        imageName: 'Image Name Test.jpeg',
+        imageUrl: 'http://example.com/key-image-name-test.jpeg',
+        key: 'key-image-name-test.jpeg',
+        printPriceId: printPrice.id,
+        border: false,
+        colorId: color.id,
+        quantity: 1,
+      },
+    ];
+
+    const { totalPrints: beforeTotalPrints } = await usersRepository.listById(userId);
+
+    await createPrintOrderUseCases.execute({
+      prints, userId,
+    }, true);
+
+    const { totalPrints: afterTotalPrints } = await usersRepository.listById(userId);
+
+    expect(afterTotalPrints).toBe(beforeTotalPrints + 1);
   });
 
   it('should create a print order and not return rejected prints', async () => {

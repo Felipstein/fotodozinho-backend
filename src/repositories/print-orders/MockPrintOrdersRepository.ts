@@ -20,7 +20,7 @@ export class MockPrintOrdersRepository implements IPrintOrdersRepository {
     return this.printOrders.filter(printOrder => printOrder.userId === userId && printOrder.status === status);
   }
 
-  async create({ prints, userId }: IPrintOrderCreation): Promise<IPrintOrder> {
+  async create({ number, prints, userId }: IPrintOrderCreation): Promise<IPrintOrder> {
     const id = uuidProvider.generateCUID();
     const date = new Date();
 
@@ -30,7 +30,7 @@ export class MockPrintOrdersRepository implements IPrintOrdersRepository {
     } as IPrint));
 
     const printOrder: IPrintOrder = {
-      id, prints: printsMapped, userId, status: 'WAITING', createdAt: date
+      id, number, prints: printsMapped, userId, status: 'WAITING', createdAt: date
     };
 
     this.printOrders.push(printOrder);

@@ -54,8 +54,8 @@ describe('List all Print Orders', () => {
       },
     ];
 
-    await printOrdersRepository.create({ prints, userId });
-    await printOrdersRepository.create({ prints, userId });
+    await printOrdersRepository.create({ number: 1, prints, userId });
+    await printOrdersRepository.create({ number: 2, prints, userId });
 
     const printOrdersListed = await listPrintOrdersUseCases.execute();
 

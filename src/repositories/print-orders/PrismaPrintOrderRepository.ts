@@ -17,9 +17,7 @@ const include = {
 export class PrismaPrintOrderRepository implements IPrintOrdersRepository {
 
   async listAll(): Promise<IPrintOrder[]> {
-    const printOrders = await prisma.printOrder.findMany({
-      include,
-    });
+    const printOrders = await prisma.printOrder.findMany({ include });
 
     return printOrders.map(printOrderMapper.toDomain);
   }
@@ -42,9 +40,10 @@ export class PrismaPrintOrderRepository implements IPrintOrdersRepository {
     return printOrders.map(printOrderMapper.toDomain);
   }
 
-  async create({ prints, userId }: IPrintOrderCreation): Promise<IPrintOrder> {
+  async create({ number, prints, userId }: IPrintOrderCreation): Promise<IPrintOrder> {
     const printOrder = await prisma.printOrder.create({
       data: {
+        number,
         userId,
         Print: {
           create: prints.map(printCreationMapper.toPersistence),
