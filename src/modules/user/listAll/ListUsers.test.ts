@@ -55,6 +55,7 @@ describe('List all Users', () => {
       admin: false,
       createdAt: expect.any(Date),
       totalPrints: 0,
+      totalPrintOrders: 0,
       totalPurchases: 0,
       ...user1,
       password: undefined,
@@ -64,6 +65,7 @@ describe('List all Users', () => {
       admin: false,
       createdAt: expect.any(Date),
       totalPrints: 0,
+      totalPrintOrders: 0,
       totalPurchases: 0,
       ...user2,
       password: undefined
