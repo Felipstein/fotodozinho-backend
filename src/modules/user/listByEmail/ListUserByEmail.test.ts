@@ -30,6 +30,7 @@ describe('List User by Email', () => {
       admin: false,
       createdAt: expect.any(Date),
       totalPrints: 0,
+      totalPrintOrders: 0,
       totalPurchases: 0,
       ...user,
     });
