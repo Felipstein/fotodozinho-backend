@@ -47,6 +47,10 @@ export class PrismaUsersRepository implements IUsersRepository {
       select: selectWithoutPassword,
     });
 
+    if(!user) {
+      return null;
+    }
+
     return userViewMapper.toDomain(user);
   }
 
