@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { createPrintOrderFactory } from '../modules/print-order/create';
+import { deletePrintOrderFactory } from '../modules/print-order/delete';
 import { listPrintOrdersFactory } from '../modules/print-order/listAll';
 import { listPrintOrderByIdFactory } from '../modules/print-order/listById';
 import { listPrintOrdersByUserIdFactory } from '../modules/print-order/listByUserId';
@@ -30,6 +31,10 @@ route.post('/', (req, res) => {
 
 route.patch('/:id', (req, res) => {
   return updatePrintOrderStatusFactory().controller.handle(req, res);
+});
+
+route.delete('/:id', (req, res) => {
+  return deletePrintOrderFactory().controller.handle(req, res);
 });
 
 export { route as printOrderRoutes };
