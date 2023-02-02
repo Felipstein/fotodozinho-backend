@@ -1,5 +1,6 @@
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
 import { PrintCreateRequest } from '../../../entities/print-order/print/dtos/PrintCreateRequest';
+import { PrintOrderNotFound } from '../../../errors/PrintOrderNotFoundError';
 import { MockColorsRepository } from '../../../repositories/colors/MockColorsRepository';
 import { MockPrintOrdersRepository } from '../../../repositories/print-orders/MockPrintOrdersRepository';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
@@ -68,6 +69,11 @@ describe('List Print Order by ID', () => {
       userId,
       createdAt,
     } as IPrintOrder);
+  });
+
+  it('should throw an error when list print order that does not exists', async () => {
+
+    expect(() => listPrintOrderByIdUseCases.execute('fake-print-order-id')).rejects.toThrow(PrintOrderNotFound);
   });
 
 });
