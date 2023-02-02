@@ -4,6 +4,7 @@ import { listPrintOrdersFactory } from '../modules/print-order/listAll';
 import { listPrintOrderByIdFactory } from '../modules/print-order/listById';
 import { listPrintOrdersByUserIdFactory } from '../modules/print-order/listByUserId';
 import { listPrintOrdersByUserIdStatusFactory } from '../modules/print-order/listByUserIdStatus';
+import { updatePrintOrderStatusFactory } from '../modules/print-order/updateStatus';
 
 const route = Router();
 
@@ -25,6 +26,10 @@ route.get('/user/:userId/:status', (req, res) => {
 
 route.post('/', (req, res) => {
   return createPrintOrderFactory().controller.handle(req, res);
+});
+
+route.patch('/:id', (req, res) => {
+  return updatePrintOrderStatusFactory().controller.handle(req, res);
 });
 
 export { route as printOrderRoutes };
