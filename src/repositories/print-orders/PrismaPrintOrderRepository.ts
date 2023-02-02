@@ -22,6 +22,19 @@ export class PrismaPrintOrderRepository implements IPrintOrdersRepository {
     return printOrders.map(printOrderMapper.toDomain);
   }
 
+  async listById(id: string): Promise<IPrintOrder> {
+    const printOrder = await prisma.printOrder.findFirst({
+      where: { id },
+      include,
+    });
+
+    if(!printOrder) {
+      return null;
+    }
+
+    return printOrderMapper.toDomain(printOrder);
+  }
+
   async listByUserId(userId: string): Promise<IPrintOrder[]> {
     const printOrders = await prisma.printOrder.findMany({
       where: { userId },

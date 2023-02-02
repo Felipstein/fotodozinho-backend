@@ -5,6 +5,8 @@ export interface IPrintOrdersRepository {
 
   listAll(): Promise<IPrintOrder[]>;
 
+  listById(id: string): Promise<IPrintOrder>;
+
   listByUserId(userId: string): Promise<IPrintOrder[]>;
 
   listByUserIdAndStatus(userId: string, status: PrintOrderStatus): Promise<IPrintOrder[]>;

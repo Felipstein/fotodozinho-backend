@@ -12,6 +12,10 @@ export class MockPrintOrdersRepository implements IPrintOrdersRepository {
     return [...this.printOrders];
   }
 
+  async listById(id: string): Promise<IPrintOrder> {
+    return this.printOrders.find(printOrder => printOrder.id === id);
+  }
+
   async listByUserId(userId: string): Promise<IPrintOrder[]> {
     return this.printOrders.filter(printOrder => printOrder.userId === userId);
   }
