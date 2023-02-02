@@ -1,8 +1,8 @@
 import { BadRequestError } from './../../../errors/BadRequestError';
 import { UserNotFoundError } from './../../../errors/UserNotFoundError';
-import { IUserCreation } from '../../../entities/user/IUserCreation';
 import { UpdateUserUseCases } from './UpdateUserUseCases';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
+import { UserCreateRequest } from '../../../entities/user/dtos/UserCreateRequest';
 
 describe('Update User', () => {
 
@@ -14,7 +14,7 @@ describe('Update User', () => {
   });
 
   it('should keep updates user attributes', async () => {
-    const user: IUserCreation = {
+    const user: UserCreateRequest = {
       name: 'User Test',
       email: 'usertest@hotmail.com',
       phone: '99999999999',

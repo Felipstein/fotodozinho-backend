@@ -3,7 +3,7 @@ import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { PrintOrderNotFound } from '../../../errors/PrintOrderNotFoundError';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 
-export class PrintOrderLIstByIdUseCases {
+export class ListPrintOrderByIdUseCases {
 
   constructor(
     private printOrdersRepository: IPrintOrdersRepository,

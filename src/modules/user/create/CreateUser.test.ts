@@ -1,6 +1,6 @@
+import { UserCreateRequest } from '../../../entities/user/dtos/UserCreateRequest';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
-import { IUserCreation } from './../../../entities/user/IUserCreation';
 import { BadRequestError } from './../../../errors/BadRequestError';
 import { CreateUserUseCases } from './CreateUserUseCases';
 
@@ -14,7 +14,7 @@ describe('Create User', () => {
   });
 
   it('should create new user', async () => {
-    const user: IUserCreation = {
+    const user: UserCreateRequest = {
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       phone: '99999999999',
@@ -52,7 +52,7 @@ describe('Create User', () => {
   });
 
   it('should not return the password when creating a new user', async () => {
-    const user: IUserCreation = {
+    const user: UserCreateRequest = {
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       phone: '99999999999',
@@ -122,7 +122,7 @@ describe('Create User', () => {
   });
 
   it('should create user with total 0 prints, 0 print orders and 0 purchases', async () => {
-    const user: IUserCreation = {
+    const user: UserCreateRequest = {
       name: 'User Test',
       email: 'emailtest@hotmail.com',
       phone: '99999999999',
