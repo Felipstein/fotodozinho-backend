@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { createPrintOrderFactory } from '../modules/print-order/create';
 import { listPrintOrdersFactory } from '../modules/print-order/listAll';
 import { listPrintOrderByIdFactory } from '../modules/print-order/listById';
+import { listPrintOrdersByUserIdFactory } from '../modules/print-order/listByUserId';
+import { listPrintOrdersByUserIdStatusFactory } from '../modules/print-order/listByUserIdStatus';
 
 const route = Router();
 
@@ -11,6 +13,14 @@ route.get('/', (req, res) => {
 
 route.get('/id/:id', (req, res) => {
   return listPrintOrderByIdFactory().controller.handle(req, res);
+});
+
+route.get('/user/:userId', (req, res) => {
+  return listPrintOrdersByUserIdFactory().controller.handle(req, res);
+});
+
+route.get('/user/:userId/:status', (req, res) => {
+  return listPrintOrdersByUserIdStatusFactory().controller.handle(req, res);
 });
 
 route.post('/', (req, res) => {
