@@ -1,4 +1,4 @@
-export interface IPrintCreation {
+export interface PrintCreateRequest {
   imageName: string;
   imageUrl: string;
   key: string;
