@@ -5,6 +5,14 @@ export class MockPrintsRepository implements IPrintsRepository {
 
   private prints: IPrint[] = [];
 
+  async listPrintByImageUrl(imageUrl: string): Promise<IPrint> {
+    return this.prints.find(print => print.imageUrl === imageUrl);
+  }
+
+  async listPrintByKey(key: string): Promise<IPrint> {
+    return this.prints.find(print => print.key === key);
+  }
+
   async listByPrintOrderId(printOrderId: string): Promise<IPrint[]> {
     return this.prints.filter(print => print.printOrderId === printOrderId);
   }

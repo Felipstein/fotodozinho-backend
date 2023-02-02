@@ -10,6 +10,26 @@ const include = {
 
 export class PrismaPrintsRepository implements IPrintsRepository {
 
+  async listPrintByImageUrl(imageUrl: string): Promise<IPrint> {
+    const print = await prisma.print.findFirst({ where: { imageUrl } });
+
+    if(!print) {
+      return null;
+    }
+
+    return printMapper.toDomain(print);
+  }
+
+  async listPrintByKey(key: string): Promise<IPrint> {
+    const print = await prisma.print.findFirst({ where: { key } });
+
+    if(!print) {
+      return null;
+    }
+
+    return printMapper.toDomain(print);
+  }
+
   async listByPrintOrderId(printOrderId: string): Promise<IPrint[]> {
     const prints = await prisma.print.findMany({
       where: { printOrderId },

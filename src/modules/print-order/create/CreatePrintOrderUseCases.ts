@@ -116,12 +116,4 @@ export class CreatePrintOrderUseCases {
     return { acceptedPrints, rejectedPrints };
   }
 
-  private listPrintByImageUrl(imageUrl: string) {
-    return prisma.print.findFirst({ where: { imageUrl } });
-  }
-
-  private listPrintByKey(key: string) {
-    return prisma.print.findFirst({ where: { key } });
-  }
-
 }

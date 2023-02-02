@@ -1,0 +1,2 @@
+- Terminar de corrigir o repositório de prints (erro nos mappers)
+- Colocar o CASCADE no schema do prisma para deletar algumas tabelas filhas quando o pai relacionado é apagado (por exemplo: quando apagar user, apagar todas tabelas de printOrder e notifications relacionada ao User)

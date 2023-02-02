@@ -19,8 +19,6 @@ export class DeletePrintOrderUseCases {
     }
 
     await this.printOrdersRepository.delete(id);
-    // remover todos prints relacionados a essa ordem
-    // verificar se na remoçãõ do usuário está sendo removido todos pedidos de impressão
   }
 
 }
