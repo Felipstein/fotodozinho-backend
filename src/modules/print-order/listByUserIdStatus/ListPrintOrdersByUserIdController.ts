@@ -12,7 +12,7 @@ export class ListPrintOrdersByUserIdStatusController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { userId, status } = req.params;
 
-    if(!isPrintOrderStatus(status)) {
+    if(!status || !isPrintOrderStatus(status)) {
       throw new BadRequestError('Esse tipo de status não existe. Os tipos de status são: "WAITING", "IN_PRODUCTION" ou "DONE".');
     }
 
