@@ -13,7 +13,7 @@ export class ListPrintOrdersByUserIdStatusController {
     const { userId, status } = req.params;
 
     if(!isPrintOrderStatus(status)) {
-      throw new BadRequestError('O campo status só pode ter três tipos de valores: "WAITING", "IN_PRODUCTION" ou "DONE".');
+      throw new BadRequestError('Esse tipo de status não existe. Os tipos de status são: "WAITING", "IN_PRODUCTION" ou "DONE".');
     }
 
     const printOrders = await this.listPrintOrdersByUserIdStatusUseCases.execute(userId, convertPrintOrderStatus(status));
