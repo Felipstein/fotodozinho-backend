@@ -1,5 +1,5 @@
+import { NotificationCreateRequest } from '../../entities/notification/dtos/NotificationCreateRequest';
 import { INotification } from '../../entities/notification/INotification';
-import { INotificationCreation } from '../../entities/notification/INotificationCreation';
 
 export interface INotificationsRepository {
 
@@ -9,7 +9,7 @@ export interface INotificationsRepository {
 
   listByUserId(userId: string): Promise<INotification[]>;
 
-  create({ title, message, userId }: INotificationCreation): Promise<INotification>;
+  create({ title, message, userId }: NotificationCreateRequest): Promise<INotification>;
 
   updateRead(id: string, isRead: boolean): Promise<INotification>;
 

@@ -1,10 +1,10 @@
+import { PrintPriceCreateRequest } from '../../../entities/print-price/dtos/PrintPriceCreateRequest';
 import { IPrintPrice } from '../../../entities/print-price/IPrintPrice';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
-import { CreatePrintPriceDTO } from './CreatePrintPriceDTO';
 
 export class CreatePrintPriceUseCases {
 
@@ -12,7 +12,7 @@ export class CreatePrintPriceUseCases {
     private printPricesRepository: IPrintPricesRepository,
   ) { }
 
-  async execute({ length, price }: CreatePrintPriceDTO): Promise<IPrintPrice> {
+  async execute({ length, price }: PrintPriceCreateRequest): Promise<IPrintPrice> {
 
     if(someIsNullOrUndefined(length, price)) {
       throw new RequiredFieldsError('Tamanho/tipo', 'Preço');

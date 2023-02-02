@@ -1,8 +1,8 @@
-import { CreateColorDTO } from './CreateColorDTO';
 import { IColor } from '../../../entities/colors/IColor';
 import { IColorsRepository } from '../../../repositories/colors/IColorsRepository';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { ColorCreateRequest } from '../../../entities/colors/dtos/ColorCreateRequest';
 
 export class CreateColorUseCases {
 
@@ -10,7 +10,7 @@ export class CreateColorUseCases {
     private colorsRepository: IColorsRepository,
   ) { }
 
-  async execute({ color }: CreateColorDTO): Promise<IColor> {
+  async execute({ color }: ColorCreateRequest): Promise<IColor> {
     if(!color) {
       throw new RequiredFieldsError('Cor/descrição');
     }

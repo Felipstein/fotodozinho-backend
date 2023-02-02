@@ -1,5 +1,5 @@
+import { ColorCreateRequest } from '../../entities/colors/dtos/ColorCreateRequest';
 import { IColor } from '../../entities/colors/IColor';
-import { IColorCreation } from '../../entities/colors/IColorCreation';
 
 export interface IColorsRepository {
 
@@ -9,7 +9,7 @@ export interface IColorsRepository {
 
   listByColor(color: string): Promise<IColor>;
 
-  create({ color }: IColorCreation): Promise<IColor>;
+  create({ color }: ColorCreateRequest): Promise<IColor>;
 
   delete(id: string): Promise<void>;
 

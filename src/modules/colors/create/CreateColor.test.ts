@@ -1,8 +1,8 @@
-import { IColorCreation } from './../../../entities/colors/IColorCreation';
 import { MockColorsRepository } from '../../../repositories/colors/MockColorsRepository';
 import { CreateColorUseCases } from './CreateColorUseCases';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { ColorCreateRequest } from '../../../entities/colors/dtos/ColorCreateRequest';
 
 describe('Create Color', () => {
 
@@ -14,7 +14,7 @@ describe('Create Color', () => {
   });
 
   it('should create a new color', async () => {
-    const color: IColorCreation = {
+    const color: ColorCreateRequest = {
       color: 'red',
     };
 

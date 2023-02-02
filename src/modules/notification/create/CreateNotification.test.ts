@@ -1,5 +1,5 @@
+import { NotificationCreateRequest } from '../../../entities/notification/dtos/NotificationCreateRequest';
 import { INotification } from '../../../entities/notification/INotification';
-import { INotificationCreation } from '../../../entities/notification/INotificationCreation';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { MockNotificationsRepository } from '../../../repositories/notifications/MockNotificationsRepository';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
@@ -25,7 +25,7 @@ describe('Create Notification', () => {
       admin: false,
     });
 
-    const notification: INotificationCreation = {
+    const notification: NotificationCreateRequest = {
       title: 'Title Notification',
       message: 'Body Notification',
       userId
@@ -45,7 +45,7 @@ describe('Create Notification', () => {
   });
 
   it('should throw an error when creating notification with id of user that does not exists', async () => {
-    const notification: INotificationCreation = {
+    const notification: NotificationCreateRequest = {
       title: 'Title Notification',
       message: 'Body Notification',
       userId: 'fake-user-id',

@@ -1,5 +1,5 @@
+import { PrintOrderCreateRequest } from '../../entities/print-order/dtos/PrintOrderCreateRequest';
 import { IPrintOrder, PrintOrderStatus } from '../../entities/print-order/IPrintOrder';
-import { IPrintOrderCreation } from '../../entities/print-order/IPrintOrderCreation';
 import { IPrint } from '../../entities/print-order/print/IPrint';
 import { uuidProvider } from '../../providers/UUID';
 import { IPrintOrdersRepository } from './IPrintOrdersRepository';
@@ -20,7 +20,7 @@ export class MockPrintOrdersRepository implements IPrintOrdersRepository {
     return this.printOrders.filter(printOrder => printOrder.userId === userId && printOrder.status === status);
   }
 
-  async create({ number, prints, userId }: IPrintOrderCreation): Promise<IPrintOrder> {
+  async create({ number, prints, userId }: PrintOrderCreateRequest): Promise<IPrintOrder> {
     const id = uuidProvider.generateCUID();
     const date = new Date();
 

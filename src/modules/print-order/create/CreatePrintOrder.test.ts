@@ -1,5 +1,5 @@
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
-import { IPrintCreation } from '../../../entities/print-order/print/IPrintCreation';
+import { PrintCreateRequest } from '../../../entities/print-order/print/dtos/PrintCreateRequest';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { DetailedError } from '../../../errors/DetailedError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
@@ -36,7 +36,7 @@ describe('Create Print Order', () => {
     const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
     const color = await colorsRepository.create({ color: 'red' });
 
-    const prints: IPrintCreation[] = [
+    const prints: PrintCreateRequest[] = [
       {
         imageName: 'Image Name Test.jpeg',
         imageUrl: 'http://example.com/key-image-name-test.jpeg',
@@ -87,7 +87,7 @@ describe('Create Print Order', () => {
     const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
     const color = await colorsRepository.create({ color: 'red' });
 
-    const prints: IPrintCreation[] = [
+    const prints: PrintCreateRequest[] = [
       {
         imageName: 'Image Name Test.jpeg',
         imageUrl: 'http://example.com/key-image-name-test.jpeg',
@@ -120,7 +120,7 @@ describe('Create Print Order', () => {
     const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
     const color = await colorsRepository.create({ color: 'red' });
 
-    const prints: IPrintCreation[] = [
+    const prints: PrintCreateRequest[] = [
       {
         imageName: 'Image Name Test.jpeg',
         imageUrl: 'http://example.com/key-image-name-test.jpeg',
@@ -155,7 +155,7 @@ describe('Create Print Order', () => {
     const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
     const color = await colorsRepository.create({ color: 'red' });
 
-    const prints: IPrintCreation[] = [
+    const prints: PrintCreateRequest[] = [
       {
         imageName: 'Image Name Test.jpeg',
         imageUrl: 'http://example.com/key-image-name-test.jpeg',
@@ -187,7 +187,7 @@ describe('Create Print Order', () => {
     const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
     const color = await colorsRepository.create({ color: 'red' });
 
-    const prints: IPrintCreation[] = [
+    const prints: PrintCreateRequest[] = [
       {
         imageName: 'Image Name.jpeg',
         imageUrl: 'http://example.com/key-image-name.jpeg',

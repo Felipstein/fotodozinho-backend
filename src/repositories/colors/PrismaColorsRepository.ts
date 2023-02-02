@@ -1,6 +1,6 @@
 import { prisma } from '../../database';
+import { ColorCreateRequest } from '../../entities/colors/dtos/ColorCreateRequest';
 import { IColor } from '../../entities/colors/IColor';
-import { IColorCreation } from '../../entities/colors/IColorCreation';
 import { IColorsRepository } from './IColorsRepository';
 
 export class PrismaColorsRepository implements IColorsRepository {
@@ -17,7 +17,7 @@ export class PrismaColorsRepository implements IColorsRepository {
     return prisma.color.findFirst({ where: { color } });
   }
 
-  create({ color }: IColorCreation): Promise<IColor> {
+  create({ color }: ColorCreateRequest): Promise<IColor> {
     return prisma.color.create({
       data: { color },
     });

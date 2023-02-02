@@ -1,4 +1,4 @@
-import { IPrintPriceCreation } from '../../entities/print-price/IPrintPriceCreation';
+import { PrintPriceCreateRequest } from '../../entities/print-price/dtos/PrintPriceCreateRequest';
 import { IPrintPrice } from '../../entities/print-price/IPrintPrice';
 
 export interface IPrintPricesRepository {
@@ -9,7 +9,7 @@ export interface IPrintPricesRepository {
 
   listByLength(length: string): Promise<IPrintPrice>;
 
-  create({ length, price }: IPrintPriceCreation): Promise<IPrintPrice>;
+  create({ length, price }: PrintPriceCreateRequest): Promise<IPrintPrice>;
 
   updatePrice(id: string, newPrice: number): Promise<IPrintPrice>;
 

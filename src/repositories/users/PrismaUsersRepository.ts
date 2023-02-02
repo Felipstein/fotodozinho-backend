@@ -1,9 +1,9 @@
-import { IUserCreation } from './../../entities/user/IUserCreation';
 import { prisma } from '../../database';
 import { IUserView } from '../../entities/user/IUserView';
 import { IUsersRepository } from './IUsersRepository';
-import { IUserUpdating } from '../../entities/user/IUserUpdating';
 import { userViewMapper } from '../../domain/UserViewMapper';
+import { UserCreateRequest } from '../../entities/user/dtos/UserCreateRequest';
+import { UserUpdateRequest } from '../../entities/user/dtos/UserUpdateRequest';
 
 
 const selectWithoutPassword = {
@@ -54,7 +54,7 @@ export class PrismaUsersRepository implements IUsersRepository {
     return userViewMapper.toDomain(user);
   }
 
-  async create({ name, email, phone, password, admin }: IUserCreation): Promise<IUserView> {
+  async create({ name, email, phone, password, admin }: UserCreateRequest): Promise<IUserView> {
     const user = await prisma.user.create({
       data: {
         name, email, phone, password, admin
@@ -65,7 +65,7 @@ export class PrismaUsersRepository implements IUsersRepository {
     return userViewMapper.toDomain(user);
   }
 
-  async update(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases }: IUserUpdating): Promise<IUserView | null> {
+  async update(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases }: UserUpdateRequest): Promise<IUserView | null> {
     const user = await prisma.user.update({
       where: { id },
       data: {

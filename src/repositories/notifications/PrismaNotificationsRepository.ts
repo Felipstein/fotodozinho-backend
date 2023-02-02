@@ -1,6 +1,6 @@
 import { prisma } from '../../database';
+import { NotificationCreateRequest } from '../../entities/notification/dtos/NotificationCreateRequest';
 import { INotification } from '../../entities/notification/INotification';
-import { INotificationCreation } from '../../entities/notification/INotificationCreation';
 import { INotificationsRepository } from './INotificationsRepository';
 
 export class PrismaNotificationsRepository implements INotificationsRepository {
@@ -17,7 +17,7 @@ export class PrismaNotificationsRepository implements INotificationsRepository {
     return prisma.notification.findMany({ where: { userId } });
   }
 
-  create({ title, message, userId }: INotificationCreation): Promise<INotification> {
+  create({ title, message, userId }: NotificationCreateRequest): Promise<INotification> {
     return prisma.notification.create({
       data: { title, message, userId }
     });

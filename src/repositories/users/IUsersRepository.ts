@@ -1,5 +1,5 @@
-import { IUserCreation } from '../../entities/user/IUserCreation';
-import { IUserUpdating } from '../../entities/user/IUserUpdating';
+import { UserCreateRequest } from '../../entities/user/dtos/UserCreateRequest';
+import { UserUpdateRequest } from '../../entities/user/dtos/UserUpdateRequest';
 import { IUserView } from '../../entities/user/IUserView';
 
 export interface IUsersRepository {
@@ -10,9 +10,9 @@ export interface IUsersRepository {
 
   listByEmail(email: string): Promise<IUserView | null>;
 
-  create({ name, email, phone, password, admin }: IUserCreation, isTest: boolean): Promise<IUserView>;
+  create({ name, email, phone, password, admin }: UserCreateRequest, isTest: boolean): Promise<IUserView>;
 
-  update(id: string, { name, phone, password, admin }: IUserUpdating, isTest: boolean): Promise<IUserView | null>;
+  update(id: string, { name, phone, password, admin }: UserUpdateRequest, isTest: boolean): Promise<IUserView | null>;
 
   delete(id: string): Promise<void>;
 

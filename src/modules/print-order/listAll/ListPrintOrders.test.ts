@@ -1,5 +1,4 @@
-import { IPrint } from '../../../entities/print-order/print/IPrint';
-import { IPrintCreation } from '../../../entities/print-order/print/IPrintCreation';
+import { PrintCreateRequest } from '../../../entities/print-order/print/dtos/PrintCreateRequest';
 import { MockColorsRepository } from '../../../repositories/colors/MockColorsRepository';
 import { MockPrintOrdersRepository } from '../../../repositories/print-orders/MockPrintOrdersRepository';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
@@ -33,7 +32,7 @@ describe('List all Print Orders', () => {
     const printPrice = await printPricesRepository.create({ length: '10x15', price: 5 });
     const color = await colorsRepository.create({ color: 'red' });
 
-    const prints: IPrintCreation[] = [
+    const prints: PrintCreateRequest[] = [
       {
         imageName: 'Image Name Test.jpeg',
         imageUrl: 'http://example.com/key-image-name-test.jpeg',

@@ -1,7 +1,7 @@
 import { Print, Prisma } from '@prisma/client';
-import { IPrintCreation } from '../entities/print-order/print/IPrintCreation';
+import { PrintCreateRequest } from '../entities/print-order/print/dtos/PrintCreateRequest';
 
-type PrintCreationDomain = IPrintCreation;
+type PrintCreationDomain = PrintCreateRequest;
 type PrintCreationPersistence = Omit<Print, 'id' | 'printOrderId'>;
 
 class PrintCreationMapper {

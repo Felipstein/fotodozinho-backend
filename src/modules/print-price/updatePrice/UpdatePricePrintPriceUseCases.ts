@@ -1,11 +1,10 @@
+import { PrintPriceUpdateRequest } from '../../../entities/print-price/dtos/PrintPriceUpdateRequest';
 import { IPrintPrice } from '../../../entities/print-price/IPrintPrice';
-import { BadRequestError } from '../../../errors/BadRequestError';
 import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { PrintPriceNotFound } from '../../../errors/PrintPriceNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
-import { UpdatePricePrintPriceDTO } from './UpdatePricePrintPriceDTO';
 
 export class UpdatePricePrintPriceUseCases {
 
@@ -13,7 +12,7 @@ export class UpdatePricePrintPriceUseCases {
     private printPricesRepository: IPrintPricesRepository,
   ) { }
 
-  async execute(id: string, { price }: UpdatePricePrintPriceDTO): Promise<IPrintPrice> {
+  async execute(id: string, { price }: PrintPriceUpdateRequest): Promise<IPrintPrice> {
     if(!id) {
       throw new IDNotGivenError();
     }

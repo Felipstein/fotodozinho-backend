@@ -1,16 +1,16 @@
+import { NotificationUpdateReadRequest } from '../../../entities/notification/dtos/NotificationUpdateReadRequest';
 import { INotification } from '../../../entities/notification/INotification';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { NotificationNotFoundError } from '../../../errors/NotificationNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { INotificationsRepository } from './../../../repositories/notifications/INotificationsRepository';
-import { UpdateReadNotificationDTO } from './UpdateReadNotificationDTO';
 export class UpdateReadNotificationUseCases {
 
   constructor(
     private notificationsRepository: INotificationsRepository,
   ) { }
 
-  async execute(id: string, { read }: UpdateReadNotificationDTO): Promise<INotification> {
+  async execute(id: string, { read }: NotificationUpdateReadRequest): Promise<INotification> {
     if(!id) {
       throw new IDNotGivenError();
     }

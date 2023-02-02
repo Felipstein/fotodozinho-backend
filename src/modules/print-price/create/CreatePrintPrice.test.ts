@@ -1,8 +1,8 @@
+import { PrintPriceCreateRequest } from '../../../entities/print-price/dtos/PrintPriceCreateRequest';
 import { APIError } from '../../../errors/APIError';
 import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
-import { CreatePrintPriceDTO } from './CreatePrintPriceDTO';
 import { CreatePrintPriceUseCases } from './CreatePrintPriceUseCases';
 
 describe('Create Print Price', () => {
@@ -15,7 +15,7 @@ describe('Create Print Price', () => {
   });
 
   it('should create new print price', async () => {
-    const printPrice: CreatePrintPriceDTO = {
+    const printPrice: PrintPriceCreateRequest = {
       length: '10x15',
       price: 5,
     };

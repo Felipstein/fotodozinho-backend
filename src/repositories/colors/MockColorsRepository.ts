@@ -1,5 +1,5 @@
+import { ColorCreateRequest } from '../../entities/colors/dtos/ColorCreateRequest';
 import { IColor } from '../../entities/colors/IColor';
-import { IColorCreation } from '../../entities/colors/IColorCreation';
 import { uuidProvider } from '../../providers/UUID';
 import { IColorsRepository } from './IColorsRepository';
 
@@ -19,7 +19,7 @@ export class MockColorsRepository implements IColorsRepository {
     return this.colors.find(colorObj => colorObj.color === color);
   }
 
-  async create({ color }: IColorCreation): Promise<IColor> {
+  async create({ color }: ColorCreateRequest): Promise<IColor> {
     const id = uuidProvider.generateCUID();
     const newColor = { id, color };
 

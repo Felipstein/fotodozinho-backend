@@ -1,5 +1,5 @@
+import { NotificationCreateRequest } from '../../entities/notification/dtos/NotificationCreateRequest';
 import { INotification } from '../../entities/notification/INotification';
-import { INotificationCreation } from '../../entities/notification/INotificationCreation';
 import { uuidProvider } from '../../providers/UUID';
 import { INotificationsRepository } from './INotificationsRepository';
 
@@ -19,7 +19,7 @@ export class MockNotificationsRepository implements INotificationsRepository {
     return this.notifications.filter(notification => notification.userId === userId);
   }
 
-  async create({ title, message, userId }: INotificationCreation): Promise<INotification> {
+  async create({ title, message, userId }: NotificationCreateRequest): Promise<INotification> {
     const id = uuidProvider.generateCUID();
     const date = new Date();
 

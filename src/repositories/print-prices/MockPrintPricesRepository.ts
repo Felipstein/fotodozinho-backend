@@ -1,5 +1,5 @@
+import { PrintPriceCreateRequest } from '../../entities/print-price/dtos/PrintPriceCreateRequest';
 import { IPrintPrice } from '../../entities/print-price/IPrintPrice';
-import { IPrintPriceCreation } from '../../entities/print-price/IPrintPriceCreation';
 import { uuidProvider } from '../../providers/UUID';
 import { IPrintPricesRepository } from './IPrintPricesRepository';
 
@@ -19,7 +19,7 @@ export class MockPrintPricesRepository implements IPrintPricesRepository {
     return this.printPrices.find(printPrice => printPrice.length === length);
   }
 
-  async create({ length, price }: IPrintPriceCreation): Promise<IPrintPrice> {
+  async create({ length, price }: PrintPriceCreateRequest): Promise<IPrintPrice> {
     const id = uuidProvider.generateCUID();
     const printPrice: IPrintPrice = { id, length, price };
 

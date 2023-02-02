@@ -1,7 +1,8 @@
 import { isEmpty } from 'lodash';
 import { prisma } from '../../../database';
+import { PrintOrderCreateRequest } from '../../../entities/print-order/dtos/PrintOrderCreateRequest';
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
-import { IPrintCreation } from '../../../entities/print-order/print/IPrintCreation';
+import { PrintCreateRequest } from '../../../entities/print-order/print/dtos/PrintCreateRequest';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { DetailedError } from '../../../errors/DetailedError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
@@ -11,7 +12,6 @@ import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrin
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
-import { CreatePrintOrderDTO } from './CreatePrintOrderDTO';
 import { RejectedPrintResponse } from './RejectedPrintResponse';
 
 export class CreatePrintOrderUseCases {
@@ -23,7 +23,7 @@ export class CreatePrintOrderUseCases {
     private colorsRepository: IColorsRepository,
   ) { }
 
-  async execute({ userId, prints }: CreatePrintOrderDTO, isTest = false): Promise<{ printOrder: IPrintOrder, rejectedPrints: RejectedPrintResponse[] }> {
+  async execute({ userId, prints }: PrintOrderCreateRequest, isTest = false): Promise<{ printOrder: IPrintOrder, rejectedPrints: RejectedPrintResponse[] }> {
     if(someIsNullOrUndefined(userId, prints)) {
       throw new RequiredFieldsError('Usuário', 'Fotos para revelação');
     }
@@ -61,8 +61,8 @@ export class CreatePrintOrderUseCases {
     return { printOrder, rejectedPrints: isEmpty(rejectedPrints) ? undefined : rejectedPrints };
   }
 
-  private async validatePrints(prints: IPrintCreation[]): Promise<{ acceptedPrints: IPrintCreation[], rejectedPrints: RejectedPrintResponse[] }> {
-    const acceptedPrints: IPrintCreation[] = [];
+  private async validatePrints(prints: PrintCreateRequest[]): Promise<{ acceptedPrints: PrintCreateRequest[], rejectedPrints: RejectedPrintResponse[] }> {
+    const acceptedPrints: PrintCreateRequest[] = [];
     const rejectedPrints: RejectedPrintResponse[] = [];
 
     const promises = prints.map(async print => {
