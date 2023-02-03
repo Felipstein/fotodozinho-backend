@@ -1,11 +1,13 @@
 import { PrintPriceNotFound } from '../../../errors/PrintPriceNotFoundError';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
+import { MockPrintsRepository } from '../../../repositories/prints/MockPrintsRepository';
 import { DeletePrintPriceUseCases } from './DeletePrintPriceUseCases';
 
 describe('Delete Print Price', () => {
 
   const printPricesRepository = new MockPrintPricesRepository();
-  const deletePrintPriceUseCases = new DeletePrintPriceUseCases(printPricesRepository);
+  const printsRepository = new MockPrintsRepository();
+  const deletePrintPriceUseCases = new DeletePrintPriceUseCases(printPricesRepository, printsRepository);
 
   afterEach(() => {
     printPricesRepository.cleanRepository();
