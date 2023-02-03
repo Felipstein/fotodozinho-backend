@@ -1,6 +1,6 @@
-import { IPrintCreation } from '../../../entities/print-order/print/IPrintCreation';
+import { PrintCreateRequest } from '../../../entities/print-order/print/dtos/PrintCreateRequest';
 
 export interface RejectedPrintResponse {
-  print: IPrintCreation;
+  print: PrintCreateRequest;
   reason: string;
 }

@@ -10,6 +10,7 @@ import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IColorsRepository } from '../../../repositories/colors/IColorsRepository';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
+import { IPrintsRepository } from '../../../repositories/prints/IPrintsRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
 import { RejectedPrintResponse } from './RejectedPrintResponse';
@@ -20,6 +21,7 @@ export class CreatePrintOrderUseCases {
     private printOrdersRepository: IPrintOrdersRepository,
     private usersRepository: IUsersRepository,
     private printPricesRepository: IPrintPricesRepository,
+    private printsRepository: IPrintsRepository,
     private colorsRepository: IColorsRepository,
   ) { }
 
@@ -40,7 +42,15 @@ export class CreatePrintOrderUseCases {
     const { acceptedPrints, rejectedPrints } = await this.validatePrints(prints);
 
     if(acceptedPrints.length === 0) {
-      const reasons = rejectedPrints.map(({ print, reason }) => ({ printName: print.imageName, reason }));
+      const reasons = rejectedPrints.map(({ print, reason }) => {
+        let printName = print.imageName;
+
+        if(!printName) {
+          printName = print.key;
+        }
+
+        return { printName, reason };
+      });
 
       if(isTest) {
         const correctReason = reasons.map(({ printName, reason }) => `${printName}: ${reason}`);
@@ -96,13 +106,13 @@ export class CreatePrintOrderUseCases {
         return;
       }
 
-      const imageUrlAlreadyExists = await this.listPrintByImageUrl(print.imageUrl);
+      const imageUrlAlreadyExists = await this.printsRepository.listPrintByImageUrl(print.imageUrl);
       if(imageUrlAlreadyExists) {
         rejectedPrints.push({ print, reason: 'O URL da foto já existe' });
         return;
       }
 
-      const keyAlreadyExists = await this.listPrintByKey(print.key);
+      const keyAlreadyExists = await this.printsRepository.listPrintByKey(print.key);
       if(keyAlreadyExists) {
         rejectedPrints.push({ print, reason: 'A chave da foto já existe' });
         return;
