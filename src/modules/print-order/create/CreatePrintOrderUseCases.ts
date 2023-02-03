@@ -25,7 +25,7 @@ export class CreatePrintOrderUseCases {
     private colorsRepository: IColorsRepository,
   ) { }
 
-  async execute({ userId, prints }: PrintOrderCreateRequest, isTest = false): Promise<{ printOrder: IPrintOrder, rejectedPrints: RejectedPrintResponse[] }> {
+  async execute({ userId, prints }: Omit<PrintOrderCreateRequest, 'number'>, isTest = false): Promise<{ printOrder: IPrintOrder, rejectedPrints: RejectedPrintResponse[] }> {
     if(someIsNullOrUndefined(userId, prints)) {
       throw new RequiredFieldsError('Usuário', 'Fotos para revelação');
     }

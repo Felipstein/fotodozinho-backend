@@ -1,4 +1,4 @@
-import { currentColorsRepository, currentPrintOrdersRepository, currentPrintPricesRepository, currentUsersRepository } from '../../../repositories';
+import { currentColorsRepository, currentPrintOrdersRepository, currentPrintPricesRepository, currentPrintsRepository, currentUsersRepository } from '../../../repositories';
 import { CreatePrintOrderController } from './CreatePrintOrderController';
 import { CreatePrintOrderUseCases } from './CreatePrintOrderUseCases';
 
@@ -7,6 +7,7 @@ export function createPrintOrderFactory() {
     currentPrintOrdersRepository,
     currentUsersRepository,
     currentPrintPricesRepository,
+    currentPrintsRepository,
     currentColorsRepository,
   );
   const createPrintOrderController = new CreatePrintOrderController(createPrintOrderUseCases);

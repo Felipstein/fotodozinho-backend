@@ -50,9 +50,7 @@ describe('Create Print Order', () => {
       },
     ];
 
-    const { printOrder } = await createPrintOrderUseCases.execute({
-      number: 1, prints, userId,
-    }, true);
+    const { printOrder } = await createPrintOrderUseCases.execute({ prints, userId }, true);
 
     expect(printOrder).toEqual({
       id: printOrder.id,
@@ -103,9 +101,7 @@ describe('Create Print Order', () => {
 
     const { totalPrintOrders: totalUserPrintOrders } = await usersRepository.listById(userId);
 
-    const { printOrder } = await createPrintOrderUseCases.execute({
-      number: 1, prints, userId,
-    }, true);
+    const { printOrder } = await createPrintOrderUseCases.execute({ prints, userId }, true);
 
     expect(printOrder.number).toBe(totalUserPrintOrders + 1);
   });
@@ -136,9 +132,7 @@ describe('Create Print Order', () => {
 
     const { totalPrintOrders: beforeTotalPrintOrders } = await usersRepository.listById(userId);
 
-    await createPrintOrderUseCases.execute({
-      number: 1, prints, userId,
-    }, true);
+    await createPrintOrderUseCases.execute({ prints, userId }, true);
 
     const { totalPrintOrders: afterTotalPrintOrders } = await usersRepository.listById(userId);
 
@@ -178,9 +172,7 @@ describe('Create Print Order', () => {
       },
     ];
 
-    const { rejectedPrints } = await createPrintOrderUseCases.execute({
-      number: 1, prints, userId,
-    }, true);
+    const { rejectedPrints } = await createPrintOrderUseCases.execute({ prints, userId }, true);
 
     expect(rejectedPrints).toBeUndefined();
   });
@@ -201,7 +193,7 @@ describe('Create Print Order', () => {
       },
     ];
 
-    expect(() => createPrintOrderUseCases.execute({ number: 1, prints, userId: 'fake-user-id' })).rejects.toThrow(UserNotFoundError);
+    expect(() => createPrintOrderUseCases.execute({ prints, userId: 'fake-user-id' })).rejects.toThrow(UserNotFoundError);
   });
 
   it('should throw an error when create print order without prints', async () => {
@@ -213,7 +205,7 @@ describe('Create Print Order', () => {
       admin: false,
     });
 
-    const createPrintOrder = () => createPrintOrderUseCases.execute({ number: 1, prints: [], userId });
+    const createPrintOrder = () => createPrintOrderUseCases.execute({ prints: [], userId });
 
     expect(createPrintOrder).rejects.toThrow(BadRequestError);
     expect(createPrintOrder).rejects.toThrow('Nenhuma foto para revelação foi enviada');
