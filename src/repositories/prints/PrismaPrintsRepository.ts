@@ -11,7 +11,10 @@ const include = {
 export class PrismaPrintsRepository implements IPrintsRepository {
 
   async listPrintByImageUrl(imageUrl: string): Promise<IPrint> {
-    const print = await prisma.print.findFirst({ where: { imageUrl } });
+    const print = await prisma.print.findFirst({
+      where: { imageUrl },
+      include,
+    });
 
     if(!print) {
       return null;
@@ -21,7 +24,10 @@ export class PrismaPrintsRepository implements IPrintsRepository {
   }
 
   async listPrintByKey(key: string): Promise<IPrint> {
-    const print = await prisma.print.findFirst({ where: { key } });
+    const print = await prisma.print.findFirst({
+      where: { key },
+      include,
+    });
 
     if(!print) {
       return null;
