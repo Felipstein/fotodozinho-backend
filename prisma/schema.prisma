@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id               String         @id @default(cuid())
-  name             String         @db.VarChar(32)
+  name             String
   email            String         @unique
   phone            String?
   password         String
@@ -47,7 +47,7 @@ model Notification {
   message   String
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 
   @@map("notifications")
@@ -63,7 +63,7 @@ model PrintOrder {
   id        String           @id @default(cuid())
   number    Decimal
   status    PrintOrderStatus @default(WAITING)
-  user      User             @relation(fields: [userId], references: [id])
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   createdAt DateTime         @default(now())
   Print     Print[]
@@ -82,7 +82,7 @@ model Print {
   color        Color      @relation(fields: [colorId], references: [id])
   colorId      String
   quantity     Decimal
-  printOrder   PrintOrder @relation(fields: [printOrderId], references: [id])
+  printOrder   PrintOrder @relation(fields: [printOrderId], references: [id], onDelete: Cascade)
   printOrderId String
 
   @@map("prints")
