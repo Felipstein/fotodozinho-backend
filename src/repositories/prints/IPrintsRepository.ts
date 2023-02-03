@@ -8,6 +8,10 @@ export interface IPrintsRepository {
 
   listByPrintOrderId(printOrderId: string): Promise<IPrint[]>;
 
+  listByColorId(colorId: string): Promise<IPrint[]>;
+
+  listByPrintPriceId(printPriceId: string): Promise<IPrint[]>;
+
   deleteByPrintOrderId(printOrderId: string): Promise<void>;
 
   cleanRepository(): void;

@@ -45,6 +45,24 @@ export class PrismaPrintsRepository implements IPrintsRepository {
     return prints.map(printMapper.toDomain);
   }
 
+  async listByColorId(colorId: string): Promise<IPrint[]> {
+    const prints = await prisma.print.findMany({
+      where: { colorId },
+      include,
+    });
+
+    return prints.map(printMapper.toDomain);
+  }
+
+  async listByPrintPriceId(printPriceId: string): Promise<IPrint[]> {
+    const prints = await prisma.print.findMany({
+      where: { printPriceId },
+      include,
+    });
+
+    return prints.map(printMapper.toDomain);
+  }
+
   async deleteByPrintOrderId(printOrderId: string): Promise<void> {
     await prisma.print.deleteMany({ where: { printOrderId } });
   }

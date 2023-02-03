@@ -1,11 +1,13 @@
 import { MockColorsRepository } from '../../../repositories/colors/MockColorsRepository';
 import { DeleteColorUseCases } from './DeleteColorUseCases';
 import { ColorNotFoundError } from '../../../errors/ColorNotFoundError';
+import { MockPrintsRepository } from '../../../repositories/prints/MockPrintsRepository';
 
 describe('Delete Color', () => {
 
   const colorsRepository = new MockColorsRepository();
-  const deleteColorUseCases = new DeleteColorUseCases(colorsRepository);
+  const printsRepository = new MockPrintsRepository();
+  const deleteColorUseCases = new DeleteColorUseCases(colorsRepository, printsRepository);
 
   afterEach(() => {
     colorsRepository.cleanRepository();
