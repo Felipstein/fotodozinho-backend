@@ -23,7 +23,7 @@ export class DeleteColorUseCases {
 
     const prints = await this.printsRepository.listByColorId(id);
     if(prints.length > 0) {
-      throw new ConflictRequestError('Não é possível deletar esse tipo de cor. Existe uma ou mais fotos para serem impressas que utilizam essa cor.');
+      throw new ConflictRequestError('Não é possível deletar esse tipo de cor. Existe uma ou mais fotos para serem impressas que a utilizam.');
     }
 
     await this.colorsRepository.delete(id);
