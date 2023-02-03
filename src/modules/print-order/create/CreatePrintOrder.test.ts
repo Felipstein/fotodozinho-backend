@@ -6,6 +6,7 @@ import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { MockColorsRepository } from '../../../repositories/colors/MockColorsRepository';
 import { MockPrintOrdersRepository } from '../../../repositories/print-orders/MockPrintOrdersRepository';
 import { MockPrintPricesRepository } from '../../../repositories/print-prices/MockPrintPricesRepository';
+import { MockPrintsRepository } from '../../../repositories/prints/MockPrintsRepository';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
 import { CreatePrintOrderUseCases } from './CreatePrintOrderUseCases';
 
@@ -14,8 +15,9 @@ describe('Create Print Order', () => {
   const printOrdersRepository = new MockPrintOrdersRepository();
   const usersRepository = new MockUserRepository();
   const printPricesRepository = new MockPrintPricesRepository();
+  const printsRepository = new MockPrintsRepository();
   const colorsRepository = new MockColorsRepository();
-  const createPrintOrderUseCases = new CreatePrintOrderUseCases(printOrdersRepository, usersRepository, printPricesRepository, colorsRepository);
+  const createPrintOrderUseCases = new CreatePrintOrderUseCases(printOrdersRepository, usersRepository, printPricesRepository, printsRepository, colorsRepository);
 
   afterEach(() => {
     printOrdersRepository.cleanRepository();
