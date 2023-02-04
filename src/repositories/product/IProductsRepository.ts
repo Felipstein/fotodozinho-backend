@@ -12,7 +12,7 @@ export interface IProductsRepository {
 
   create({ name, description, price, categoryId }: ProductCreateRequest): Promise<IProduct>;
 
-  update({ name, description, rated, price, categoryId }: ProductUpdateRequest): Promise<IProduct>;
+  update(id: string, { name, description, rated, price, categoryId }: ProductUpdateRequest): Promise<IProduct>;
 
   delete(id: string): Promise<void>;
 
