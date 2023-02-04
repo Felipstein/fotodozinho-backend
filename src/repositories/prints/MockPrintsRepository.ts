@@ -19,11 +19,11 @@ export class MockPrintsRepository implements IPrintsRepository {
   }
 
   async listByColorId(colorId: string): Promise<IPrint[]> {
-    throw new Error('This feature is not available here');
+    return [];
   }
 
   async listByPrintPriceId(printPriceId: string): Promise<IPrint[]> {
-    throw new Error('This feature is not available here');
+    return [];
   }
 
   async deleteByPrintOrderId(printOrderId: string): Promise<void> {
