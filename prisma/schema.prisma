@@ -131,7 +131,7 @@ model ShoppingCartProduct {
 model ShoppingCart {
   id                  String                @id @default(cuid())
   user                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId              String
+  userId              String                @unique
   ShoppingCartProduct ShoppingCartProduct[]
 
   @@map("shopping_carts")
