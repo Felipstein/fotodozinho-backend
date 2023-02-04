@@ -122,7 +122,7 @@ model ShoppingCartProduct {
   quantity       Decimal      @default(1)
   product        Product      @relation(fields: [productId], references: [id])
   productId      String
-  shoppingCart   ShoppingCart @relation(fields: [shoppingCartId], references: [id])
+  shoppingCart   ShoppingCart @relation(fields: [shoppingCartId], references: [id], onDelete: Cascade)
   shoppingCartId String
 
   @@map("shopping_cart_products")
@@ -130,7 +130,7 @@ model ShoppingCartProduct {
 
 model ShoppingCart {
   id                  String                @id @default(cuid())
-  user                User                  @relation(fields: [userId], references: [id])
+  user                User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId              String
   ShoppingCartProduct ShoppingCartProduct[]
 
