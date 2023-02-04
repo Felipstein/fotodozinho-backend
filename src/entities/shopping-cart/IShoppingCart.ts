@@ -2,5 +2,6 @@ import { IShoppingCartProduct } from '../shopping-cart-product/IShoppingCartProd
 
 export interface IShoppingCart {
   id: string;
+  userId:string;
   products: IShoppingCartProduct[];
 }

@@ -8,7 +8,15 @@ export class PrismaShoppingCartsRepository implements IShoppingCartsRepository {
   listAll(): Promise<IShoppingCart[]> {
     return prisma.shoppingCart.findMany({
       include: {
-        ShoppingCartProduct: true,
+        ShoppingCartProduct: {
+          include: {
+            product: {
+              include: {
+                category: true,
+              }
+            },
+          }
+        },
       },
     });
   }
