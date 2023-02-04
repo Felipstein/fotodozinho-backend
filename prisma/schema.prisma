@@ -20,6 +20,7 @@ model User {
   totalPurchases   Decimal        @default(0)
   Notification     Notification[]
   PrintOrder       PrintOrder[]
+  ShoppingCart     ShoppingCart[]
 
   @@map("users")
 }
@@ -86,4 +87,49 @@ model Print {
   printOrderId String
 
   @@map("prints")
+}
+
+model ProductCategory {
+  id   String @id @default(cuid())
+  name String
+
+  @@map("product_categories")
+}
+
+model PaymentMethod {
+  id   String @id @default(cuid())
+  name String
+
+  @@map("payment_methods")
+}
+
+model Product {
+  id                  String                @id @default(cuid())
+  name                String
+  description         String
+  rated               Decimal               @default(0)
+  price               Decimal
+  ShoppingCartProduct ShoppingCartProduct[]
+
+  @@map("products")
+}
+
+model ShoppingCartProduct {
+  id             String       @id @default(cuid())
+  quantity       Decimal      @default(1)
+  product        Product      @relation(fields: [productId], references: [id])
+  productId      String
+  shoppingCart   ShoppingCart @relation(fields: [shoppingCartId], references: [id])
+  shoppingCartId String
+
+  @@map("shopping_cart_products")
+}
+
+model ShoppingCart {
+  id                  String                @id @default(cuid())
+  user                User                  @relation(fields: [userId], references: [id])
+  userId              String
+  ShoppingCartProduct ShoppingCartProduct[]
+
+  @@map("shopping_carts")
 }
