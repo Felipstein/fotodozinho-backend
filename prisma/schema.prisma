@@ -90,8 +90,9 @@ model Print {
 }
 
 model ProductCategory {
-  id   String @id @default(cuid())
-  name String
+  id      String    @id @default(cuid())
+  name    String
+  Product Product[]
 
   @@map("product_categories")
 }
@@ -106,9 +107,11 @@ model PaymentMethod {
 model Product {
   id                  String                @id @default(cuid())
   name                String
-  description         String
+  description         String?
   rated               Decimal               @default(0)
   price               Decimal
+  category            ProductCategory       @relation(fields: [productCategoryId], references: [id])
+  productCategoryId   String
   ShoppingCartProduct ShoppingCartProduct[]
 
   @@map("products")
