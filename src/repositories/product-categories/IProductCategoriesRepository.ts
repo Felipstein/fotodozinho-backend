@@ -1,5 +1,5 @@
 import { IProductCategory } from '../../entities/product-category/IProductCategory';
-import { ProductCreateRequest } from '../../entities/product/dtos/ProductCreateRequest';
+import { ProductCategoryCreateRequest } from '../../entities/product-category/dtos/ProductCategoryCreateRequest';
 
 export interface IProductCategoriesRepository {
 
@@ -7,7 +7,7 @@ export interface IProductCategoriesRepository {
 
   listById(id: string): Promise<IProductCategory | null>;
 
-  create({ name, price, description, categoryId }: ProductCreateRequest): Promise<IProductCategory>;
+  create({ name }: ProductCategoryCreateRequest): Promise<IProductCategory>;
 
   delete(id: string): Promise<void>;
 

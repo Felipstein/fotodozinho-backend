@@ -4,6 +4,7 @@ import { PrismaPaymentMethodsRepository } from './payment-methods/PrismaPaymentM
 import { PrismaPrintOrderRepository } from './print-orders/PrismaPrintOrderRepository';
 import { PrismaPrintPricesRepository } from './print-prices/PrismaPrintPricesRepository';
 import { PrismaPrintsRepository } from './prints/PrismaPrintsRepository';
+import { PrismaProductCategoriesRepository } from './product-categories/PrismaProductCategoriesRepository';
 import { PrismaUsersRepository } from './users/PrismaUsersRepository';
 
 const currentUsersRepository = new PrismaUsersRepository();
@@ -13,6 +14,7 @@ const currentNotificationsRepository = new PrismaNotificationsRepository();
 const currentPrintOrdersRepository = new PrismaPrintOrderRepository();
 const currentPrintsRepository = new PrismaPrintsRepository();
 const currentPaymentMethodsRepository = new PrismaPaymentMethodsRepository();
+const currentProductCategoriesRepository = new PrismaProductCategoriesRepository();
 
 export {
   currentUsersRepository,
@@ -22,4 +24,5 @@ export {
   currentPrintOrdersRepository,
   currentPrintsRepository,
   currentPaymentMethodsRepository,
+  currentProductCategoriesRepository,
 };
