@@ -1,5 +1,6 @@
 import { PrismaColorsRepository } from './colors/PrismaColorsRepository';
 import { PrismaNotificationsRepository } from './notifications/PrismaNotificationsRepository';
+import { PrismaPaymentMethodsRepository } from './payment-methods/PrismaPaymentMethodsRepository';
 import { PrismaPrintOrderRepository } from './print-orders/PrismaPrintOrderRepository';
 import { PrismaPrintPricesRepository } from './print-prices/PrismaPrintPricesRepository';
 import { PrismaPrintsRepository } from './prints/PrismaPrintsRepository';
@@ -11,6 +12,7 @@ const currentColorsRepository = new PrismaColorsRepository();
 const currentNotificationsRepository = new PrismaNotificationsRepository();
 const currentPrintOrdersRepository = new PrismaPrintOrderRepository();
 const currentPrintsRepository = new PrismaPrintsRepository();
+const currentPaymentMethodsRepository = new PrismaPaymentMethodsRepository();
 
 export {
   currentUsersRepository,
@@ -19,4 +21,5 @@ export {
   currentNotificationsRepository,
   currentPrintOrdersRepository,
   currentPrintsRepository,
+  currentPaymentMethodsRepository,
 };
