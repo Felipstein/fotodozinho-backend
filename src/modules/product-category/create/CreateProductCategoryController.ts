@@ -10,7 +10,7 @@ export class CreateProductCategoryController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { name } = req.body;
 
-    const productCategory = await this.createProductCategoryUseCases.execute(name);
+    const productCategory = await this.createProductCategoryUseCases.execute({ name });
 
     return res.status(201).json(productCategory);
   }

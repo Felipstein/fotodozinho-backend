@@ -3,7 +3,7 @@ import { createProductCategoryFactory } from '../modules/product-category/create
 
 const route = Router();
 
-route.post('/product-categories', (req, res) => {
+route.post('/', (req, res) => {
   return createProductCategoryFactory().controller.handle(req, res);
 });
 
