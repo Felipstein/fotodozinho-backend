@@ -1,5 +1,5 @@
 import { IProductCategory } from '../../entities/product-category/IProductCategory';
-import { ProductCreateRequest } from '../../entities/product/dtos/ProductCreateRequest';
+import { ProductCategoryCreateRequest } from '../../entities/product-category/dtos/ProductCategoryCreateRequest';
 import { uuidProvider } from '../../providers/UUID';
 import { IProductCategoriesRepository } from './IProductCategoriesRepository';
 
@@ -15,7 +15,7 @@ export class MockProductCategoriesRepository implements IProductCategoriesReposi
     return this.productCategories.find(productCategory => productCategory.id === id);
   }
 
-  async create({ name }: ProductCreateRequest): Promise<IProductCategory> {
+  async create({ name }: ProductCategoryCreateRequest): Promise<IProductCategory> {
     const id = uuidProvider.generateCUID();
 
     const productCategory: IProductCategory = {
