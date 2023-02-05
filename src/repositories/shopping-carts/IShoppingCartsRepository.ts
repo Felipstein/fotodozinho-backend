@@ -1,17 +1,20 @@
+import { IShoppingCartProduct } from '../../entities/shopping-cart-product/IShoppingCartProduct';
+import { ShoppingCartProductUpdateRequest } from '../../entities/shopping-cart-product/dtos/ShoppingCartProductUpdateRequest';
 import { IShoppingCart } from '../../entities/shopping-cart/IShoppingCart';
-import { ShoppingCartAddOrRemoveProductRequest } from '../../entities/shopping-cart/dtos/ShoppingCartAddProductRequest';
 
 export interface IShoppingCartsRepository {
 
   listAll(): Promise<IShoppingCart[]>;
 
-  listById(id: string): Promise<IShoppingCart | null>;
-
   listByUserId(userId: string): Promise<IShoppingCart | null>;
 
-  addProduct(id: string, { productId }: ShoppingCartAddOrRemoveProductRequest): Promise<IShoppingCart>;
+  listShoppingCartProduct(userId: string, productId: string): Promise<IShoppingCartProduct | null>;
 
-  removeProduct(id: string, { productId }: ShoppingCartAddOrRemoveProductRequest): Promise<IShoppingCart>;
+  addProduct(userId: string, productId: string): Promise<IShoppingCartProduct>;
+
+  updateProduct(userId: string, productId: string, { quantity }: ShoppingCartProductUpdateRequest): Promise<IShoppingCartProduct>;
+
+  removeProduct(userId: string, productId: string): Promise<void>;
 
   cleanRepository(): void;
 

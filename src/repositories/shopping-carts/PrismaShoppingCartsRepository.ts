@@ -1,40 +1,98 @@
 import { prisma } from '../../database';
+import { shoppingCartMapper } from '../../domain/ShoppingCartMapper';
+import { shoppingCartProductMapper } from '../../domain/ShoppingCartProductMapper';
+import { IShoppingCartProduct } from '../../entities/shopping-cart-product/IShoppingCartProduct';
+import { ShoppingCartProductUpdateRequest } from '../../entities/shopping-cart-product/dtos/ShoppingCartProductUpdateRequest';
 import { IShoppingCart } from '../../entities/shopping-cart/IShoppingCart';
-import { ShoppingCartAddOrRemoveProductRequest } from '../../entities/shopping-cart/dtos/ShoppingCartAddProductRequest';
 import { IShoppingCartsRepository } from './IShoppingCartsRepository';
+
+const shoppingCartProductInclude = {
+  product: {
+    include: {
+      category: true,
+    },
+  },
+};
+
+const shoppingCartInclude = {
+  ShoppingCartProduct: {
+    include: shoppingCartProductInclude,
+  },
+};
 
 export class PrismaShoppingCartsRepository implements IShoppingCartsRepository {
 
-  listAll(): Promise<IShoppingCart[]> {
-    return prisma.shoppingCart.findMany({
-      include: {
-        ShoppingCartProduct: {
-          include: {
-            product: {
-              include: {
-                category: true,
-              }
-            },
-          }
-        },
-      },
+  async listAll(): Promise<IShoppingCart[]> {
+    const shoppingCarts = await prisma.shoppingCart.findMany({ include: shoppingCartInclude });
+
+    return shoppingCarts.map(shoppingCartMapper.toDomain);
+  }
+
+  async listByUserId(userId: string): Promise<IShoppingCart> {
+    const shoppingCart = await prisma.shoppingCart.findFirst({
+      where: { userId },
+      include: shoppingCartInclude,
     });
+
+    return shoppingCartMapper.toDomain(shoppingCart);
   }
 
-  listById(id: string): Promise<IShoppingCart> {
-    throw new Error('Method not implemented.');
+  async listShoppingCartProduct(userId: string, productId: string): Promise<IShoppingCartProduct> {
+    const { id: shoppingCartId } = await prisma.shoppingCart.findFirst({
+      where: { userId },
+    });
+
+    const shoppingCartProduct = await prisma.shoppingCartProduct.findFirst({
+      where: { shoppingCartId, productId },
+      include: shoppingCartProductInclude,
+    });
+
+    return shoppingCartProductMapper.toDomain(shoppingCartProduct);
   }
 
-  listByUserId(userId: string): Promise<IShoppingCart> {
-    throw new Error('Method not implemented.');
+  async addProduct(userId: string, productId: string): Promise<IShoppingCartProduct> {
+    const { id: shoppingCartId } = await prisma.shoppingCart.findFirst({
+      where: { userId },
+    });
+
+    const shoppingCartProduct = await prisma.shoppingCartProduct.create({
+      data: { shoppingCartId, productId },
+      include: shoppingCartProductInclude,
+    });
+
+    return shoppingCartProductMapper.toDomain(shoppingCartProduct);
   }
 
-  addProduct(id: string, { productId }: ShoppingCartAddOrRemoveProductRequest): Promise<IShoppingCart> {
-    throw new Error('Method not implemented.');
+  async updateProduct(userId: string, productId: string, { quantity }: ShoppingCartProductUpdateRequest): Promise<IShoppingCartProduct> {
+    const { id: shoppingCartId } = await prisma.shoppingCart.findFirst({
+      where: { userId },
+    });
+
+    const { id: shoppingCartProductId } = await prisma.shoppingCartProduct.findFirst({
+      where: { shoppingCartId, productId },
+    });
+
+    const shoppingCartProduct = await prisma.shoppingCartProduct.update({
+      where: { id: shoppingCartProductId },
+      data: { quantity },
+      include: shoppingCartProductInclude,
+    });
+
+    return shoppingCartProductMapper.toDomain(shoppingCartProduct);
   }
 
-  removeProduct(id: string, { productId }: ShoppingCartAddOrRemoveProductRequest): Promise<IShoppingCart> {
-    throw new Error('Method not implemented.');
+  async removeProduct(userId: string, productId: string): Promise<void> {
+    const { id: shoppingCartId } = await prisma.shoppingCart.findFirst({
+      where: { userId },
+    });
+
+    const { id: shoppingCartProductId } = await prisma.shoppingCartProduct.findFirst({
+      where: { shoppingCartId, productId },
+    });
+
+    await prisma.shoppingCartProduct.delete({
+      where: { id: shoppingCartProductId },
+    });
   }
 
   cleanRepository(): void {}

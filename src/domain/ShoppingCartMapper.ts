@@ -1,5 +1,6 @@
 import { Product, ProductCategory, ShoppingCart, ShoppingCartProduct } from '@prisma/client';
 import { IShoppingCart } from '../entities/shopping-cart/IShoppingCart';
+import { shoppingCartProductMapper } from './ShoppingCartProductMapper';
 
 type ProductWithCategory = Product & { category: ProductCategory };
 type ShoppingCartProductWithProduct = ShoppingCartProduct & { product: ProductWithCategory };
@@ -13,7 +14,7 @@ class ShoppingCartMapper {
     return {
       id: shoppingCartPersistence.id,
       userId: shoppingCartPersistence.userId,
-      products: shoppingCartPersistence.ShoppingCartProduct,
+      products: shoppingCartPersistence.ShoppingCartProduct.map(shoppingCartProductMapper.toDomain),
     };
   }
 
