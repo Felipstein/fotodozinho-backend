@@ -5,6 +5,7 @@ import { printPriceRoutes } from './print-price.routes';
 import { colorRoutes } from './color.routes';
 import { notificationRoutes } from './notification.routes';
 import { printOrderRoutes } from './print-order.routes';
+import { productCategoryRoutes } from './product-category.routes';
 
 const routes = Router();
 
@@ -13,5 +14,6 @@ routes.use('/print-prices', printPriceRoutes);
 routes.use('/colors', colorRoutes);
 routes.use('/notifications', notificationRoutes);
 routes.use('/print-orders', printOrderRoutes);
+routes.use('/product-categories', productCategoryRoutes);
 
 export { routes };
