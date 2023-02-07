@@ -1,10 +1,10 @@
 import { currentPaymentMethodsRepository } from '../../../repositories';
-import { ListPaymentMethodByIdController } from './ListPaymentMethodByIdController';
-import { ListPaymentMethodByIdUseCases } from './ListPaymentMethodByIdUseCases';
+import { CreatePaymentMethodController } from './CreatePaymentMethodController';
+import { CreatePaymentMethodUseCases } from './CreatePaymentMethodUseCases';
 
-export function listPaymentMethodByIdFactory() {
-  const useCases = new ListPaymentMethodByIdUseCases(currentPaymentMethodsRepository);
-  const controller = new ListPaymentMethodByIdController(useCases);
+export function createPaymentMethodFactory() {
+  const useCases = new CreatePaymentMethodUseCases(currentPaymentMethodsRepository);
+  const controller = new CreatePaymentMethodController(useCases);
 
   return { useCases, controller };
 }
