@@ -13,7 +13,7 @@ route.get('/:id', (req, res) => {
   return listPaymentMethodByIdFactory().controller.handle(req, res);
 });
 
-route.get('/', (req, res) => {
+route.post('/', (req, res) => {
   return createPaymentMethodFactory().controller.handle(req, res);
 });
 
