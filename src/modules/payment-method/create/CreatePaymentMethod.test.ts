@@ -3,7 +3,7 @@ import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { MockPaymentMethodsRepository } from '../../../repositories/payment-methods/MockPaymentMethodsRepository';
 import { CreatePaymentMethodUseCases } from './CreatePaymentMethodUseCases';
 
-describe('List Payment Methods by ID', () => {
+describe('Create Payment Method', () => {
 
   const paymentMethods = new MockPaymentMethodsRepository();
   const createPaymentMethodUseCases = new CreatePaymentMethodUseCases(paymentMethods);
