@@ -9,6 +9,11 @@ describe('List all Products', () => {
   const productCategoriesRepository = new MockProductCategoriesRepository();
   const listProductsUseCases = new ListProductsUseCases(productsRepository, productCategoriesRepository);
 
+  afterEach(() => {
+    productsRepository.cleanRepository();
+    productCategoriesRepository.cleanRepository();
+  });
+
   it('should list two products', async () => {
     await productsRepository.create({
       name: 'Product Name',
@@ -30,36 +35,32 @@ describe('List all Products', () => {
   });
 
   it('should list only products related by category', async () => {
+    const { id: categoryId1 } = await productCategoriesRepository.create({ name: 'all' });
+    const { id: categoryId2 } = await productCategoriesRepository.create({ name: 'other' });
+
     await productsRepository.create({
       name: 'Product Name',
       description: 'A description',
       price: 100,
-      categoryId: 'fake-category-id',
+      categoryId: categoryId1,
     });
 
     await productsRepository.create({
       name: 'Other Product',
       description: 'A description',
       price: 50,
-      categoryId: 'fake-category-id',
-    });
-
-    await productsRepository.create({
-      name: 'Product Name',
-      description: 'A description',
-      price: 100,
-      categoryId: 'fake-category-id',
+      categoryId: categoryId1,
     });
 
     await productsRepository.create({
       name: 'Simple Product',
       description: 'A description',
       price: 25,
-      categoryId: 'other-fake-category-id',
+      categoryId: categoryId2,
     });
 
-    const productsListed1 = await listProductsUseCases.execute('fake-category-id');
-    const productsListed2 = await listProductsUseCases.execute('other-fake-category-id');
+    const productsListed1 = await listProductsUseCases.execute(categoryId1);
+    const productsListed2 = await listProductsUseCases.execute(categoryId2);
 
     expect(productsListed1).toHaveLength(2);
     expect(productsListed2).toHaveLength(1);
