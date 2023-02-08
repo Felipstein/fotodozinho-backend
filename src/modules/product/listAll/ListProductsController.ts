@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { ListProductsUseCases } from './ListProductsUseCases';
 
 export class ListProductsController {
@@ -8,7 +9,13 @@ export class ListProductsController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const products = await this.listProductsUseCases.execute();
+    const { categoryId } = req.query;
+
+    if(typeof categoryId !== 'string') {
+      throw new BadRequestError('Tipo de categoria inválido');
+    }
+
+    const products = await this.listProductsUseCases.execute(categoryId);
 
     return res.json(products);
   }
