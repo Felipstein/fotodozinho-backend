@@ -11,7 +11,7 @@ export class ListProductsController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { categoryId } = req.query;
 
-    if(typeof categoryId !== 'string') {
+    if(categoryId !== undefined && typeof categoryId !== 'string') {
       throw new BadRequestError('Tipo de categoria inválido');
     }
 
