@@ -7,6 +7,7 @@ import { notificationRoutes } from './notification.routes';
 import { printOrderRoutes } from './print-order.routes';
 import { productCategoryRoutes } from './product-category.routes';
 import { paymentMethodRoutes } from './payment-method.routes';
+import { productRoutes } from './product.routes';
 
 const routes = Router();
 
@@ -17,5 +18,6 @@ routes.use('/notifications', notificationRoutes);
 routes.use('/print-orders', printOrderRoutes);
 routes.use('/product-categories', productCategoryRoutes);
 routes.use('/payment-methods', paymentMethodRoutes);
+routes.use('/products', productRoutes);
 
 export { routes };
