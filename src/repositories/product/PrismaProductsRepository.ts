@@ -23,6 +23,10 @@ export class PrismaProductsRepository implements IProductsRepository {
       include,
     });
 
+    if(!product) {
+      return null;
+    }
+
     return productMapper.toDomain(product);
   }
 
