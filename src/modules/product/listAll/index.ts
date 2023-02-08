@@ -1,4 +1,4 @@
-import { currentProductsRepository } from '../../repositories';
+import { currentProductsRepository } from '../../../repositories';
 import { ListProductsController } from './ListProductsController';
 import { ListProductsUseCases } from './ListProductsUseCases';
 

@@ -1,5 +1,5 @@
-import { IProduct } from '../../entities/product/IProduct';
-import { IProductsRepository } from '../../repositories/product/IProductsRepository';
+import { IProduct } from '../../../entities/product/IProduct';
+import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
 
 export class ListProductsUseCases {
 
