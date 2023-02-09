@@ -30,7 +30,7 @@ export class MockProductsRepository implements IProductsRepository {
     };
 
     const product: IProduct = {
-      id, name, description, price, rated: 1, category,
+      id, name, description, price, rated: 0, category,
     };
 
     this.products.push(product);
