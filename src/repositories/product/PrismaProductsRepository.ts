@@ -12,7 +12,7 @@ const include = {
 export class PrismaProductsRepository implements IProductsRepository {
 
   async listAll(): Promise<IProduct[]> {
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({ include });
 
     return products.map(productMapper.toDomain);
   }
