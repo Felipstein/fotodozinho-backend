@@ -49,7 +49,12 @@ export class MockProductsRepository implements IProductsRepository {
     this.products = this.products.map(product => {
       if(product.id === id) {
         return productUpdated = {
-          id, name, description, rated, price, category,
+          id,
+          name: name === undefined ? product.name : name,
+          description: description === undefined ? product.description : description,
+          rated: rated === undefined ? product.rated : rated,
+          price: price === undefined ? product.price : price,
+          category: category === undefined ? product.category : category,
         };
       }
 

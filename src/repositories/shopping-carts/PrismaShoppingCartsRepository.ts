@@ -31,7 +31,17 @@ export class PrismaShoppingCartsRepository implements IShoppingCartsRepository {
   async listByUserId(userId: string): Promise<IShoppingCart> {
     const shoppingCart = await prisma.shoppingCart.findFirst({
       where: { userId },
-      include: shoppingCartInclude,
+      include: {
+        ShoppingCartProduct: {
+          include: {
+            product: {
+              include: {
+                category: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     return shoppingCartMapper.toDomain(shoppingCart);
