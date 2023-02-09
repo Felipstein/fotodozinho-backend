@@ -17,7 +17,7 @@ describe('Create Product', () => {
   });
 
   it('should create a product', async () => {
-    const category = await productCategoriesRepository.create({ name: 'all' });
+    const category = await productCategoriesRepository.create({ name: 'fake-category' });
 
     const product = await createProductUseCases.execute({
       name: 'Product Name',
