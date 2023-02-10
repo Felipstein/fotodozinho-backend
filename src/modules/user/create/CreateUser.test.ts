@@ -1,5 +1,6 @@
 import { UserCreateRequest } from '../../../entities/user/dtos/UserCreateRequest';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { MockShoppingCartsRepository } from '../../../repositories/shopping-carts/MockShoppingCartsRepository';
 import { MockUserRepository } from '../../../repositories/users/MockUserRepository';
 import { BadRequestError } from './../../../errors/BadRequestError';
 import { CreateUserUseCases } from './CreateUserUseCases';
@@ -7,7 +8,8 @@ import { CreateUserUseCases } from './CreateUserUseCases';
 describe('Create User', () => {
 
   const usersRepository = new MockUserRepository();
-  const createUserUseCases = new CreateUserUseCases(usersRepository);
+  const shoppingCartsRepository = new MockShoppingCartsRepository();
+  const createUserUseCases = new CreateUserUseCases(usersRepository, shoppingCartsRepository);
 
   afterEach(() => {
     usersRepository.cleanRepository();

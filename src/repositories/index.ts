@@ -6,6 +6,7 @@ import { PrismaPrintPricesRepository } from './print-prices/PrismaPrintPricesRep
 import { PrismaPrintsRepository } from './prints/PrismaPrintsRepository';
 import { PrismaProductCategoriesRepository } from './product-categories/PrismaProductCategoriesRepository';
 import { PrismaProductsRepository } from './product/PrismaProductsRepository';
+import { PrismaShoppingCartsRepository } from './shopping-carts/PrismaShoppingCartsRepository';
 import { PrismaUsersRepository } from './users/PrismaUsersRepository';
 
 const currentUsersRepository = new PrismaUsersRepository();
@@ -17,6 +18,7 @@ const currentPrintsRepository = new PrismaPrintsRepository();
 const currentPaymentMethodsRepository = new PrismaPaymentMethodsRepository();
 const currentProductCategoriesRepository = new PrismaProductCategoriesRepository();
 const currentProductsRepository = new PrismaProductsRepository();
+const currentShoppingCartsRepository = new PrismaShoppingCartsRepository();
 
 export {
   currentUsersRepository,
@@ -28,4 +30,5 @@ export {
   currentPaymentMethodsRepository,
   currentProductCategoriesRepository,
   currentProductsRepository,
+  currentShoppingCartsRepository,
 };
