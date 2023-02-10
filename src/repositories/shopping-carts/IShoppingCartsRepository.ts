@@ -10,6 +10,8 @@ export interface IShoppingCartsRepository {
 
   listShoppingCartProduct(userId: string, productId: string): Promise<IShoppingCartProduct | null>;
 
+  create(userId: string): Promise<IShoppingCart>;
+
   addProduct(userId: string, productId: string): Promise<IShoppingCartProduct>;
 
   updateProduct(userId: string, productId: string, { quantity }: ShoppingCartProductUpdateRequest): Promise<IShoppingCartProduct>;

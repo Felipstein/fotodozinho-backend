@@ -5,11 +5,13 @@ import { crypt } from '../../../providers/Crypt';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { IUserView } from '../../../entities/user/IUserView';
+import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
 
 export class CreateUserUseCases {
 
   constructor(
     private usersRepository: IUsersRepository,
+    private shoppingCartsRepository: IShoppingCartsRepository,
   ) { }
 
   async execute({ name, email, phone, password, admin = false }: CreateUserDTO, isTest = false): Promise<IUserView> {
@@ -24,6 +26,8 @@ export class CreateUserUseCases {
 
     const encryptedPassword = await crypt.hash(password);
     const user = await this.usersRepository.create({ name, email, phone, password: encryptedPassword, admin }, isTest);
+
+    await this.shoppingCartsRepository.create(user.id);
 
     return user;
   }

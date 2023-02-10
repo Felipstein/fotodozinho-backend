@@ -60,6 +60,15 @@ export class PrismaShoppingCartsRepository implements IShoppingCartsRepository {
     return shoppingCartProductMapper.toDomain(shoppingCartProduct);
   }
 
+  async create(userId: string): Promise<IShoppingCart> {
+    const shoppingCart = await prisma.shoppingCart.create({
+      data: { userId },
+      include: shoppingCartInclude,
+    });
+
+    return shoppingCartMapper.toDomain(shoppingCart);
+  }
+
   async addProduct(userId: string, productId: string): Promise<IShoppingCartProduct> {
     const { id: shoppingCartId } = await prisma.shoppingCart.findFirst({
       where: { userId },

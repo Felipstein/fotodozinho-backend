@@ -31,6 +31,18 @@ export class MockShoppingCartsRepository implements IShoppingCartsRepository {
     return shoppingCartProduct;
   }
 
+  async create(userId: string): Promise<IShoppingCart> {
+    const id = uuidProvider.generateCUID();
+
+    const shoppingCart: IShoppingCart = {
+      id, products: [], userId,
+    };
+
+    this.shoppingCarts.push(shoppingCart);
+
+    return shoppingCart;
+  }
+
   async addProduct(userId: string, productId: string): Promise<IShoppingCartProduct> {
     const shoppingCart = this.shoppingCarts.find(shoppingCart => shoppingCart.userId === userId);
 
