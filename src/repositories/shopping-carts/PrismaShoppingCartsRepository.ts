@@ -44,6 +44,10 @@ export class PrismaShoppingCartsRepository implements IShoppingCartsRepository {
       },
     });
 
+    if(!shoppingCart) {
+      return null;
+    }
+
     return shoppingCartMapper.toDomain(shoppingCart);
   }
 
