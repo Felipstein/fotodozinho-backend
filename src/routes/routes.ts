@@ -13,7 +13,7 @@ import { listShoppingCartsFactory } from '../modules/shopping-cart/listAll';
 import { ensureShoppingCartUser } from '../middlewares/ensureShoppingCartUser';
 import { currentShoppingCartsRepository, currentUsersRepository } from '../repositories';
 
-const injectShoppingCart = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
+const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
 const routes = Router();
 
@@ -29,7 +29,7 @@ routes.use('/payment-methods', paymentMethodRoutes);
 routes.use('/product-categories', productCategoryRoutes);
 routes.use('/products', productRoutes);
 
-routes.use('/users/:userId/shopping-carts', injectShoppingCart, shoppingCartRoutes);
+routes.use('/users/:userId/shopping-carts', injectUserId, shoppingCartRoutes);
 routes.get('/shopping-carts', (req, res) => {
   return listShoppingCartsFactory().controller.handle(req, res);
 });

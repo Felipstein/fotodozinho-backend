@@ -2,7 +2,7 @@ import { currentShoppingCartsRepository, currentUsersRepository } from '../../..
 import { ListShoppingCartByUserIdController } from './ListShoppingCartByUserIdController';
 import { ListShoppingCartByUserIdUseCases } from './ListShoppingCartByUserIdUseCases';
 
-export function ListShoppingCartByUserIdFactory() {
+export function listShoppingCartByUserIdFactory() {
   const useCases = new ListShoppingCartByUserIdUseCases(currentShoppingCartsRepository, currentUsersRepository);
   const controller = new ListShoppingCartByUserIdController(useCases);
 

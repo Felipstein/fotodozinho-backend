@@ -11,7 +11,7 @@ export class ListShoppingCartProductUseCases {
   ) { }
 
   async execute(userId: string, productId: string): Promise<IShoppingCartProduct> {
-    if(!someIsNullOrUndefined(userId, productId)) {
+    if(someIsNullOrUndefined(userId, productId)) {
       throw new RequiredFieldsError('Usuário', 'Produto');
     }
 

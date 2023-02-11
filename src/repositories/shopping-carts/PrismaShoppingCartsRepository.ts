@@ -61,6 +61,10 @@ export class PrismaShoppingCartsRepository implements IShoppingCartsRepository {
       include: shoppingCartProductInclude,
     });
 
+    if(!shoppingCartProduct) {
+      return null;
+    }
+
     return shoppingCartProductMapper.toDomain(shoppingCartProduct);
   }
 
