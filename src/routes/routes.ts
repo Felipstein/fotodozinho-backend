@@ -11,9 +11,9 @@ import { productRoutes } from './product.routes';
 import { shoppingCartRoutes } from './shopping-cart.routes';
 import { listShoppingCartsFactory } from '../modules/shopping-cart/listAll';
 import { ensureShoppingCartUser } from '../middlewares/ensureShoppingCartUser';
-import { currentUsersRepository } from '../repositories';
+import { currentShoppingCartsRepository, currentUsersRepository } from '../repositories';
 
-const shoppingCartUserMiddleware = ensureShoppingCartUser(currentUsersRepository);
+const injectShoppingCart = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
 const routes = Router();
 
@@ -29,7 +29,7 @@ routes.use('/payment-methods', paymentMethodRoutes);
 routes.use('/product-categories', productCategoryRoutes);
 routes.use('/products', productRoutes);
 
-routes.use('/users/:userId/shopping-carts', shoppingCartUserMiddleware, shoppingCartRoutes);
+routes.use('/users/:userId/shopping-carts', injectShoppingCart, shoppingCartRoutes);
 routes.get('/shopping-carts', (req, res) => {
   return listShoppingCartsFactory().controller.handle(req, res);
 });
