@@ -16,7 +16,9 @@ export interface IShoppingCartsRepository {
 
   updateProduct(userId: string, productId: string, { quantity }: ShoppingCartProductUpdateRequest): Promise<IShoppingCartProduct>;
 
-  removeProduct(userId: string, productId: string): Promise<void>;
+  removeProducts(userId: string, productsId: string[]): Promise<void>;
+
+  removeAllProducts(userId: string): Promise<void>;
 
   cleanRepository(): void;
 

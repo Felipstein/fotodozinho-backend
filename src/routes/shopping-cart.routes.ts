@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { listShoppingCartByUserIdFactory } from '../modules/shopping-cart/listByUserId';
 import { listShoppingCartProductFactory } from '../modules/shopping-cart/listShoppingCartProduct';
 import { addShoppingCartProductFactory } from '../modules/shopping-cart/addShoppingCartProduct';
+import { deleteShoppingCartProductsFactory } from '../modules/shopping-cart/deleteShoppingCartProducts';
 
 const route = Router();
 
@@ -15,6 +16,10 @@ route.get('/:productId', (req, res) => {
 
 route.post('/', (req, res) => {
   return addShoppingCartProductFactory().controller.handle(req, res);
+});
+
+route.delete('/', (req, res) => {
+  return deleteShoppingCartProductsFactory().controller.handle(req, res);
 });
 
 export { route as shoppingCartRoutes };

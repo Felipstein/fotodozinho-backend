@@ -75,10 +75,16 @@ export class MockShoppingCartsRepository implements IShoppingCartsRepository {
     return shoppingCartProduct;
   }
 
-  async removeProduct(userId: string, productId: string): Promise<void> {
+  async removeProducts(userId: string, productsId: string[]): Promise<void> {
     const shoppingCart = this.shoppingCarts.find(shoppingCart => shoppingCart.userId === userId);
 
-    shoppingCart.products = shoppingCart.products.filter(product => product.id !== productId);
+    shoppingCart.products = shoppingCart.products.filter(product => productsId.includes(product.id));
+  }
+
+  async removeAllProducts(userId: string): Promise<void> {
+    const shoppingCart = this.shoppingCarts.find(shoppingCart => shoppingCart.userId === userId);
+
+    shoppingCart.products = [];
   }
 
   cleanRepository(): void {}

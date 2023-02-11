@@ -108,17 +108,28 @@ export class PrismaShoppingCartsRepository implements IShoppingCartsRepository {
     return shoppingCartProductMapper.toDomain(shoppingCartProduct);
   }
 
-  async removeProduct(userId: string, productId: string): Promise<void> {
+  async removeProducts(userId: string, productsId: string[]): Promise<void> {
     const { id: shoppingCartId } = await prisma.shoppingCart.findFirst({
       where: { userId },
     });
 
-    const { id: shoppingCartProductId } = await prisma.shoppingCartProduct.findFirst({
-      where: { shoppingCartId, productId },
+    await prisma.shoppingCartProduct.deleteMany({
+      where: {
+        shoppingCartId,
+        productId: {
+          in: productsId,
+        }
+      }
+    });
+  }
+
+  async removeAllProducts(userId: string): Promise<void> {
+    const { id: shoppingCartId } = await prisma.shoppingCart.findFirst({
+      where: { userId },
     });
 
-    await prisma.shoppingCartProduct.delete({
-      where: { id: shoppingCartProductId },
+    await prisma.shoppingCartProduct.deleteMany({
+      where: { shoppingCartId },
     });
   }
 
