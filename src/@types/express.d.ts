@@ -1,7 +1,10 @@
-declare namespace Express {
+import { IShoppingCart } from '../entities/shopping-cart/IShoppingCart';
 
-  export interface Request {
-    userId: string;
+declare global {
+  namespace Express {
+    export interface Request {
+      shoppingCart: IShoppingCart;
+    }
+
   }
-
 }

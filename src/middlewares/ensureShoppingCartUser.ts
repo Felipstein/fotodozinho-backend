@@ -8,7 +8,7 @@ export function ensureShoppingCartUser(shoppingCartsRepository: IShoppingCartsRe
     throw new Error('Users or Shopping Carts repository is null');
   }
 
-  async function ensure(req: Request, res: Response, next: NextFunction) {
+  async function injectShoppingCart(req: Request, res: Response, next: NextFunction) {
     const { userId } = req.params;
 
     const userExists = await usersRepository.listById(userId);
@@ -16,10 +16,15 @@ export function ensureShoppingCartUser(shoppingCartsRepository: IShoppingCartsRe
       throw new UserNotFoundError();
     }
 
-    req.userId = userId;
+    let shoppingCart = await shoppingCartsRepository.listByUserId(userId);
+    if(!shoppingCart) {
+      shoppingCart = await shoppingCartsRepository.create(userId);
+    }
+
+    req.shoppingCart = shoppingCart;
 
     next();
   }
 
-  return ensure;
+  return injectShoppingCart;
 }
