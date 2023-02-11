@@ -1,5 +1,4 @@
 # A fazer:
-- Setar o shopping cart no req em ensure shopping cart product
 - Criar CRUD de Carrinho de Compras
 - Criar schema/entidade/CRUD de Pedido de Compras
 - Criar os testes de integração de cada rota
