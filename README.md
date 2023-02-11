@@ -1,5 +1,4 @@
 # A fazer:
-- Criar CRUD de Carrinho de Compras
 - Criar schema/entidade/CRUD de Pedido de Compras
 - Criar os testes de integração de cada rota
 - Configurar o multer (para upload de imagens no S3 da aws)
