@@ -8,6 +8,10 @@ export class ListShoppingCartByUserIdController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
+    if(req.shoppingCart) {
+      return res.json(req.shoppingCart);
+    }
+
     const { userId } = req.params;
 
     const shoppingCart = await this.listShoppingCartByUserIdUseCases.execute(userId);
