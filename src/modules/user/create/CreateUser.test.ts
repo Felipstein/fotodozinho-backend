@@ -36,6 +36,7 @@ describe('Create User', () => {
       totalPrints: 0,
       totalPrintOrders: 0,
       totalPurchases: 0,
+      totalPurchaseOrders: 0,
       createdAt: expect.any(Date),
     });
   });

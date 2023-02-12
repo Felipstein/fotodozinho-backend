@@ -31,6 +31,7 @@ describe('Update User', () => {
       totalPrints: 10,
       totalPrintOrders: 2,
       totalPurchases: 5,
+      totalPurchaseOrders: 2,
     });
 
     const userListed = await usersRepository.listById(id);
@@ -44,6 +45,7 @@ describe('Update User', () => {
       totalPrints: 10,
       totalPrintOrders: 2,
       totalPurchases: 5,
+      totalPurchaseOrders: 2,
       createdAt: expect.any(Date),
     });
   });

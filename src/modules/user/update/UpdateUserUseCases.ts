@@ -1,11 +1,11 @@
 import { IUserView } from '../../../entities/user/IUserView';
+import { UserUpdateRequest } from '../../../entities/user/dtos/UserUpdateRequest';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { crypt } from '../../../providers/Crypt';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { someIsNull } from '../../../utils/Validate';
-import { UpdateUserDTO } from './UpdateUserDTO';
 
 export class UpdateUserUseCases {
 
@@ -13,7 +13,7 @@ export class UpdateUserUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases }: UpdateUserDTO, isTest = false): Promise<IUserView> {
+  async execute(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases , totalPurchaseOrders}: UserUpdateRequest, isTest = false): Promise<IUserView> {
     if(!id) {
       throw new IDNotGivenError();
     }

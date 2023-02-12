@@ -57,6 +57,7 @@ describe('List all Users', () => {
       totalPrints: 0,
       totalPrintOrders: 0,
       totalPurchases: 0,
+      totalPurchaseOrders: 0,
       ...user1,
       password: undefined,
     });
@@ -67,6 +68,7 @@ describe('List all Users', () => {
       totalPrints: 0,
       totalPrintOrders: 0,
       totalPurchases: 0,
+      totalPurchaseOrders: 0,
       ...user2,
       password: undefined
     });
