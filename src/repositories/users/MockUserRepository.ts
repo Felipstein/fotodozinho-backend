@@ -48,7 +48,7 @@ export class MockUserRepository implements IUsersRepository {
   async create({ name, email, phone, password, admin = false }: UserCreateRequest, isTest = false): Promise<IUserView> {
     const id = uuidProvider.generateCUID();
     const date = new Date();
-    const user: IUser = { id, name, email, phone, password, createdAt: date, admin, totalPrints: 0, totalPrintOrders: 0, totalPurchases: 0 };
+    const user: IUser = { id, name, email, phone, password, createdAt: date, admin, totalPrints: 0, totalPrintOrders: 0, totalPurchases: 0, totalPurchaseOrders: 0 };
 
     this.users.push(user);
 

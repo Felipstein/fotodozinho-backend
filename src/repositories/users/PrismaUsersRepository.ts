@@ -15,7 +15,8 @@ const selectWithoutPassword = {
   admin: true,
   totalPrints: true,
   totalPrintOrders: true,
-  totalPurchases: true
+  totalPurchases: true,
+  totalPurchaseOrders: true,
 };
 
 export class PrismaUsersRepository implements IUsersRepository {
