@@ -8,20 +8,21 @@ datasource db {
 }
 
 model User {
-  id               String          @id @default(cuid())
-  name             String
-  email            String          @unique
-  phone            String?
-  password         String
-  createdAt        DateTime        @default(now())
-  admin            Boolean         @default(false)
-  totalPrints      Decimal         @default(0)
-  totalPrintOrders Decimal         @default(0)
-  totalPurchases   Decimal         @default(0)
-  Notification     Notification[]
-  PrintOrder       PrintOrder[]
-  ShoppingCart     ShoppingCart[]
-  PurchaseOrder    PurchaseOrder[]
+  id                  String          @id @default(cuid())
+  name                String
+  email               String          @unique
+  phone               String?
+  password            String
+  createdAt           DateTime        @default(now())
+  admin               Boolean         @default(false)
+  totalPrints         Decimal         @default(0)
+  totalPrintOrders    Decimal         @default(0)
+  totalPurchases      Decimal         @default(0)
+  totalPurchaseOrders Decimal         @default(0)
+  Notification        Notification[]
+  PrintOrder          PrintOrder[]
+  ShoppingCart        ShoppingCart[]
+  PurchaseOrder       PurchaseOrder[]
 
   @@map("users")
 }
