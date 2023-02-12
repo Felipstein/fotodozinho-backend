@@ -13,7 +13,7 @@ export class UpdateUserUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases , totalPurchaseOrders}: UserUpdateRequest, isTest = false): Promise<IUserView> {
+  async execute(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders }: UserUpdateRequest, isTest = false): Promise<IUserView> {
     if(!id) {
       throw new IDNotGivenError();
     }
@@ -36,6 +36,7 @@ export class UpdateUserUseCases {
       totalPrints,
       totalPrintOrders,
       totalPurchases,
+      totalPurchaseOrders,
     }, isTest);
 
     return userUpdated;

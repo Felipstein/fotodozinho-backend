@@ -62,9 +62,9 @@ export class MockUserRepository implements IUsersRepository {
     return userWithoutPassword;
   }
 
-  async update(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases }: UserUpdateRequest, isTest: boolean): Promise<IUserView | null> {
+  async update(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders }: UserUpdateRequest, isTest: boolean): Promise<IUserView | null> {
     const date = new Date();
-    const newUser = { id, name, phone, password, createdAt: date, admin, totalPrints, totalPrintOrders, totalPurchases };
+    const newUser = { id, name, phone, password, createdAt: date, admin, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders };
 
     let userUpdated: IUser;
 
