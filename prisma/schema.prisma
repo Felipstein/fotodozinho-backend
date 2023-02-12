@@ -8,19 +8,20 @@ datasource db {
 }
 
 model User {
-  id               String         @id @default(cuid())
+  id               String          @id @default(cuid())
   name             String
-  email            String         @unique
+  email            String          @unique
   phone            String?
   password         String
-  createdAt        DateTime       @default(now())
-  admin            Boolean        @default(false)
-  totalPrints      Decimal        @default(0)
-  totalPrintOrders Decimal        @default(0)
-  totalPurchases   Decimal        @default(0)
+  createdAt        DateTime        @default(now())
+  admin            Boolean         @default(false)
+  totalPrints      Decimal         @default(0)
+  totalPrintOrders Decimal         @default(0)
+  totalPurchases   Decimal         @default(0)
   Notification     Notification[]
   PrintOrder       PrintOrder[]
   ShoppingCart     ShoppingCart[]
+  PurchaseOrder    PurchaseOrder[]
 
   @@map("users")
 }
@@ -98,8 +99,9 @@ model ProductCategory {
 }
 
 model PaymentMethod {
-  id   String @id @default(cuid())
-  name String
+  id            String          @id @default(cuid())
+  name          String
+  PurchaseOrder PurchaseOrder[]
 
   @@map("payment_methods")
 }
@@ -135,4 +137,25 @@ model ShoppingCart {
   ShoppingCartProduct ShoppingCartProduct[]
 
   @@map("shopping_carts")
+}
+
+enum PurchaseOrderStatus {
+  WAITING_PAYMENT
+  IN_TRANSIT
+  DONE
+}
+
+model PurchaseOrder {
+  id              String              @id @default(cuid())
+  number          Decimal
+  status          PurchaseOrderStatus
+  paymentMethod   PaymentMethod       @relation(fields: [paymentMethodId], references: [id])
+  freight         Decimal
+  discount        Decimal             @default(0)
+  user            User                @relation(fields: [userId], references: [id])
+  createdAt       DateTime
+  userId          String
+  paymentMethodId String
+
+  @@map("purchase_orders")
 }
