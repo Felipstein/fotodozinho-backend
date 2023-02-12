@@ -149,12 +149,12 @@ enum PurchaseOrderStatus {
 model PurchaseOrder {
   id                   String                 @id @default(cuid())
   number               Decimal
-  status               PurchaseOrderStatus
+  status               PurchaseOrderStatus    @default(WAITING_PAYMENT)
   paymentMethod        PaymentMethod          @relation(fields: [paymentMethodId], references: [id])
   freight              Decimal
   discount             Decimal                @default(0)
-  user                 User                   @relation(fields: [userId], references: [id])
-  createdAt            DateTime
+  user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt            DateTime               @default(now())
   userId               String
   paymentMethodId      String
   PurchaseOrderProduct PurchaseOrderProduct[]
@@ -165,7 +165,7 @@ model PurchaseOrder {
 model PurchaseOrderProduct {
   id              String        @id @default(cuid())
   product         Product       @relation(fields: [productId], references: [id])
-  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
   quantity        Decimal       @default(1)
   productId       String
   purchaseOrderId String
