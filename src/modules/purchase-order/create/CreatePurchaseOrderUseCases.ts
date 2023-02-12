@@ -9,6 +9,7 @@ import { IPurchaseOrdersRepository } from '../../../repositories/purchase-order/
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { someIsNullOrUndefined } from '../../../utils/Validate';
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
 
 export class CreatePurchaseOrderUseCases {
 
@@ -16,6 +17,7 @@ export class CreatePurchaseOrderUseCases {
     private purchaseOrdersRepository: IPurchaseOrdersRepository,
     private paymentMethodsRepository: IPaymentMethodsRepository,
     private usersRepository: IUsersRepository,
+    private productsRepository: IProductsRepository,
   ) { }
 
   async execute({ paymentMethodId, products, userId }: Omit<PurchaseOrderCreateRequest, 'number'>): Promise<IPurchaseOrder> {
@@ -23,7 +25,15 @@ export class CreatePurchaseOrderUseCases {
       throw new RequiredFieldsError('Método de pagamento', 'Produtos', 'Usuário');
     }
 
-    if(!isArray(products) || products.length === 0) {
+    if(!isArray(products)) {
+      throw new BadRequestError('Nenhum produto informado');
+    }
+
+    const validProductsIds = (await this.productsRepository.listByIds(products.map(product => product.productId))).map(product => product.id);
+
+    const validProducts = products.filter(product => validProductsIds.includes(product.productId));
+
+    if(validProducts.length === 0) {
       throw new BadRequestError('Nenhum produto informado');
     }
 
@@ -38,7 +48,7 @@ export class CreatePurchaseOrderUseCases {
     }
 
     const purchaseOrder = await this.purchaseOrdersRepository.create({
-      number: 32, paymentMethodId, products, userId,
+      number: 32, paymentMethodId, products: validProducts, userId,
     });
 
     return purchaseOrder;

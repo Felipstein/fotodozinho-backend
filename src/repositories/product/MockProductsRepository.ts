@@ -13,6 +13,10 @@ export class MockProductsRepository implements IProductsRepository {
     return [...this.products];
   }
 
+  async listByIds(ids: string[]): Promise<IProduct[]> {
+    return this.products.filter(product => ids.includes(product.id));
+  }
+
   async listById(id: string): Promise<IProduct> {
     return this.products.find(product => product.id === id);
   }

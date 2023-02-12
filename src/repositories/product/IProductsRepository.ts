@@ -6,6 +6,8 @@ export interface IProductsRepository {
 
   listAll(): Promise<IProduct[]>;
 
+  listByIds(ids: string[]): Promise<IProduct[]>;
+
   listById(id: string): Promise<IProduct | null>;
 
   listByCategoryId(categoryId: string): Promise<IProduct[]>;
