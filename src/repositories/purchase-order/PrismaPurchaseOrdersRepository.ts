@@ -44,7 +44,7 @@ export class PrismaPurchaseOrdersRepository implements IPurchaseOrdersRepository
       include,
     });
 
-    if(purchaseOrder) {
+    if(!purchaseOrder) {
       return null;
     }
 
