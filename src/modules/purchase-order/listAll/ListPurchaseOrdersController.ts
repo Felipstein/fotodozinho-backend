@@ -8,7 +8,9 @@ export class ListPurchaseOrdersController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const purchaseOrders = await this.listPurchaseOrdersUseCases.execute();
+    const userId = req.query.userId as string | undefined;
+
+    const purchaseOrders = await this.listPurchaseOrdersUseCases.execute(userId);
 
     return res.json(purchaseOrders);
   }
