@@ -107,14 +107,15 @@ model PaymentMethod {
 }
 
 model Product {
-  id                  String                @id @default(cuid())
-  name                String
-  description         String?
-  rated               Decimal               @default(0)
-  price               Decimal
-  category            ProductCategory       @relation(fields: [productCategoryId], references: [id])
-  productCategoryId   String
-  ShoppingCartProduct ShoppingCartProduct[]
+  id                   String                 @id @default(cuid())
+  name                 String
+  description          String?
+  rated                Decimal                @default(0)
+  price                Decimal
+  category             ProductCategory        @relation(fields: [productCategoryId], references: [id])
+  productCategoryId    String
+  ShoppingCartProduct  ShoppingCartProduct[]
+  PurchaseOrderProduct PurchaseOrderProduct[]
 
   @@map("products")
 }
@@ -146,16 +147,28 @@ enum PurchaseOrderStatus {
 }
 
 model PurchaseOrder {
-  id              String              @id @default(cuid())
-  number          Decimal
-  status          PurchaseOrderStatus
-  paymentMethod   PaymentMethod       @relation(fields: [paymentMethodId], references: [id])
-  freight         Decimal
-  discount        Decimal             @default(0)
-  user            User                @relation(fields: [userId], references: [id])
-  createdAt       DateTime
-  userId          String
-  paymentMethodId String
+  id                   String                 @id @default(cuid())
+  number               Decimal
+  status               PurchaseOrderStatus
+  paymentMethod        PaymentMethod          @relation(fields: [paymentMethodId], references: [id])
+  freight              Decimal
+  discount             Decimal                @default(0)
+  user                 User                   @relation(fields: [userId], references: [id])
+  createdAt            DateTime
+  userId               String
+  paymentMethodId      String
+  PurchaseOrderProduct PurchaseOrderProduct[]
 
   @@map("purchase_orders")
+}
+
+model PurchaseOrderProduct {
+  id              String        @id @default(cuid())
+  product         Product       @relation(fields: [productId], references: [id])
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
+  quantity        Decimal       @default(1)
+  productId       String
+  purchaseOrderId String
+
+  @@map("purchase_order_products")
 }
