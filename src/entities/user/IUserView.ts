@@ -8,4 +8,5 @@ export interface IUserView {
   totalPrints: number;
   totalPrintOrders: number;
   totalPurchases: number;
+  totalPurchaseOrders: number;
 }

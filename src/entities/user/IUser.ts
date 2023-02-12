@@ -9,4 +9,5 @@ export interface IUser {
   totalPrints: number;
   totalPrintOrders: number;
   totalPurchases: number;
+  totalPurchaseOrders: number;
 }

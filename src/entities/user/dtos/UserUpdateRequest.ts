@@ -6,4 +6,5 @@ export interface UserUpdateRequest {
   totalPrints?: number;
   totalPrintOrders?: number;
   totalPurchases?: number;
+  totalPurchaseOrders?: number;
 }
