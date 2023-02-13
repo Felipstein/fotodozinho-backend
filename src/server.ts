@@ -1,6 +1,6 @@
 import { app } from './app';
 import { prisma } from './database';
-import EnvProvider from './utils/EnvProvider';
+import { EnvProvider } from './services/env-provider';
 
 async function main() {
   try {

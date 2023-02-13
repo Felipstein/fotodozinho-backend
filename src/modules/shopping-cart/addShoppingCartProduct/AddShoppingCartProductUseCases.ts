@@ -7,7 +7,7 @@ import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { ShoppingCartNotFoundError } from '../../../errors/ShoppingCartNotFoundError';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
 import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
-import { someIsNullOrUndefined } from '../../../utils/Validate';
+import { ValidateService } from '../../../services/Validate';
 
 export class AddShoppingCartProductUseCases {
 
@@ -17,7 +17,7 @@ export class AddShoppingCartProductUseCases {
   ) { }
 
   async execute(userId: string, { productId, quantity }: ShoppingCartProductCreateRequest): Promise<IShoppingCartProduct> {
-    if(someIsNullOrUndefined(userId, productId)) {
+    if(ValidateService.someIsNullOrUndefined(userId, productId)) {
       throw new RequiredFieldsError('Usuário', 'Produto');
     }
 

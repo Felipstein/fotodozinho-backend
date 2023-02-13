@@ -1,10 +1,10 @@
 import { INotification } from '../../../entities/notification/INotification';
 import { INotificationsRepository } from '../../../repositories/notifications/INotificationsRepository';
-import { someIsNullOrUndefined } from '../../../utils/Validate';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { NotificationCreateRequest } from '../../../entities/notification/dtos/NotificationCreateRequest';
+import { ValidateService } from '../../../services/Validate';
 
 export class CreateNotificationUseCases {
 
@@ -14,7 +14,7 @@ export class CreateNotificationUseCases {
   ) { }
 
   async execute({ title, message, userId }: NotificationCreateRequest): Promise<INotification> {
-    if(someIsNullOrUndefined(title, message, userId)) {
+    if(ValidateService.someIsNullOrUndefined(title, message, userId)) {
       throw new RequiredFieldsError('Título', 'Mensagem', 'Usuário');
     }
 

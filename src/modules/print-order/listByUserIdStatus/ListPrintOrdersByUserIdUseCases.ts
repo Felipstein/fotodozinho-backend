@@ -3,7 +3,7 @@ import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
-import { someIsNullOrUndefined } from '../../../utils/Validate';
+import { ValidateService } from '../../../services/Validate';
 
 export class ListPrintOrdersByUserIdStatusUseCases {
 
@@ -13,7 +13,7 @@ export class ListPrintOrdersByUserIdStatusUseCases {
   ) { }
 
   async execute(userId: string, status: PrintOrderStatus): Promise<IPrintOrder[]> {
-    if(someIsNullOrUndefined(status)) {
+    if(ValidateService.someIsNullOrUndefined(status)) {
       throw new RequiredFieldsError('Usuário', 'Status');
     }
 

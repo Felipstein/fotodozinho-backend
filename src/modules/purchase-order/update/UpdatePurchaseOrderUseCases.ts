@@ -5,7 +5,7 @@ import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { NumberValidationError } from '../../../errors/NumberValidationError';
 import { PurchaseOrderNotFoundError } from '../../../errors/PurchaseOrderNotFoundError';
 import { IPurchaseOrdersRepository } from '../../../repositories/purchase-order/IPurchaseOrdersRepository';
-import { someIsNull } from '../../../utils/Validate';
+import { ValidateService } from '../../../services/Validate';
 
 export class UpdatePurchaseOrderUseCases {
 
@@ -18,7 +18,7 @@ export class UpdatePurchaseOrderUseCases {
       throw new IDNotGivenError();
     }
 
-    if(someIsNull(status, freight, discount)) {
+    if(ValidateService.someIsNull(status, freight, discount)) {
       throw new BadRequestError('Os campos status, frete e desconto não podem ter valores em branco');
     }
 

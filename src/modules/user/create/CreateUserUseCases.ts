@@ -1,11 +1,11 @@
 import { BadRequestError } from './../../../errors/BadRequestError';
-import { someIsNullOrUndefined } from '../../../utils/Validate';
-import { CreateUserDTO } from './CreateUserDTO';
 import { crypt } from '../../../providers/Crypt';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { IUserView } from '../../../entities/user/IUserView';
 import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
+import { ValidateService } from '../../../services/Validate';
+import { UserCreateRequest } from '../../../entities/user/dtos/UserCreateRequest';
 
 export class CreateUserUseCases {
 
@@ -14,8 +14,8 @@ export class CreateUserUseCases {
     private shoppingCartsRepository: IShoppingCartsRepository,
   ) { }
 
-  async execute({ name, email, phone, password, admin = false }: CreateUserDTO, isTest = false): Promise<IUserView> {
-    if(someIsNullOrUndefined(name, email, password)) {
+  async execute({ name, email, phone, password, admin = false }: UserCreateRequest, isTest = false): Promise<IUserView> {
+    if(ValidateService.someIsNullOrUndefined(name, email, password)) {
       throw new RequiredFieldsError('Nome', 'E-mail', 'Senha');
     }
 

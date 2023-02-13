@@ -1,15 +1,17 @@
 /* eslint-disable no-empty */
+import { s3ClientService } from '../../../config/multer.config';
 import { ProductUpdateRequest } from '../../../entities/product/dtos/ProductUpdateRequest';
-import { convertStorageTypeFormat, IProduct } from '../../../entities/product/IProduct';
+import { IProduct } from '../../../entities/product/IProduct';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { NumberValidationError } from '../../../errors/NumberValidationError';
 import { ProductCategoryNotFoundError } from '../../../errors/ProductCategoryNotFoundError';
 import { ProductNotFoundError } from '../../../errors/ProductNotFoundError';
 import { IProductCategoriesRepository } from '../../../repositories/product-categories/IProductCategoriesRepository';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
-import { deleteLocalImage, deleteS3Image } from '../../../utils/DeleteImage';
-import EnvProvider from '../../../utils/EnvProvider';
-import { someIsNull } from '../../../utils/Validate';
+import { EnvProvider } from '../../../services/env-provider';
+import { ImageStoragedService } from '../../../services/image-storaged-type';
+import { LocalFileManagerService } from '../../../services/local-image-manager';
+import { ValidateService } from '../../../services/Validate';
 
 export class UpdateProductUseCases {
 
@@ -19,7 +21,7 @@ export class UpdateProductUseCases {
   ) { }
 
   async execute(id: string, { name, description, price, rated, imageName, imageUrl, key, categoryId }: Omit<ProductUpdateRequest, 'imageStoragedType'>): Promise<IProduct> {
-    if(someIsNull(name, price, rated, categoryId)) {
+    if(ValidateService.someIsNull(name, price, rated, categoryId)) {
       throw new BadRequestError('Os campos nome, preço, avaliação ou categoria não podem ter valores em branco');
     }
 
@@ -45,13 +47,13 @@ export class UpdateProductUseCases {
 
     try {
       if(oldImageStoragedType === 's3') {
-        deleteS3Image(productExists.key);
+        await s3ClientService.deleteFile(EnvProvider.aws.bucketName, productExists.key);
       } else {
-        deleteLocalImage(productExists.key);
+        await LocalFileManagerService.deleteImage(productExists.key);
       }
     } catch {}
 
-    const imageStoragedType = convertStorageTypeFormat(EnvProvider.storageType);
+    const imageStoragedType = ImageStoragedService.convertStorageTypeFormat(EnvProvider.storageType);
 
     const product = await this.productsRepository.update(id, {
       name, description, price, rated, imageName, imageUrl, key, categoryId, imageStoragedType,

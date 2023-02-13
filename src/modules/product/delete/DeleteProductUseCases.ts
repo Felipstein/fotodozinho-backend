@@ -1,9 +1,10 @@
+import { s3ClientService } from '../../../config/multer.config';
 import { ConflictRequestError } from '../../../errors/ConflictRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { ProductNotFoundError } from '../../../errors/ProductNotFoundError';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
-import { deleteLocalImage, deleteS3Image } from '../../../utils/DeleteImage';
-
+import { EnvProvider } from '../../../services/env-provider';
+import { LocalFileManagerService } from '../../../services/local-image-manager';
 export class DeleteProductUseCases {
 
   constructor(
@@ -24,9 +25,9 @@ export class DeleteProductUseCases {
 
     try {
       if(storagedType === 's3') {
-        await deleteS3Image(product.key);
+        await s3ClientService.deleteFile(EnvProvider.aws.bucketName, product.key);
       } else {
-        await deleteLocalImage(product.key);
+        await LocalFileManagerService.deleteImage(product.key);
       }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {

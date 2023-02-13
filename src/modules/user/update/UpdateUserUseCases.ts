@@ -5,7 +5,7 @@ import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { crypt } from '../../../providers/Crypt';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
-import { someIsNull } from '../../../utils/Validate';
+import { ValidateService } from '../../../services/Validate';
 
 export class UpdateUserUseCases {
 
@@ -18,7 +18,7 @@ export class UpdateUserUseCases {
       throw new IDNotGivenError();
     }
 
-    if(someIsNull(name, password)) {
+    if(ValidateService.someIsNull(name, password)) {
       throw new BadRequestError('Nome e senha não podem ter valores em branco');
     }
 

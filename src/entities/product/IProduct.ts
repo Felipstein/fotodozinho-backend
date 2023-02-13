@@ -1,4 +1,4 @@
-import { StorageType } from '../../config/multer.config';
+import { StorageType } from '../../services/image-storaged-type';
 import { IProductCategory } from '../product-category/IProductCategory';
 
 export interface IProduct {

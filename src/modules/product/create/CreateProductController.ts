@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { CreateProductUseCases } from './CreateProductUseCases';
-import EnvProvider from '../../../utils/EnvProvider';
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { EnvProvider } from '../../../services/env-provider';
 
 export class CreateProductController {
 

@@ -1,9 +1,10 @@
 import { prisma } from '../../database';
 import { productMapper } from '../../domain/ProductMapper';
-import { IProduct, convertStorageTypePrismaFormat } from '../../entities/product/IProduct';
+import { IProduct } from '../../entities/product/IProduct';
 import { ProductCreateRequest } from '../../entities/product/dtos/ProductCreateRequest';
 import { ProductUpdateRequest } from '../../entities/product/dtos/ProductUpdateRequest';
 import { IProductsRepository } from './IProductsRepository';
+import { ImageStoragedService } from '../../services/image-storaged-type';
 
 const include = {
   category: true,
@@ -53,8 +54,10 @@ export class PrismaProductsRepository implements IProductsRepository {
   }
 
   async create({ name, description, price, imageName, imageUrl, key, imageStoragedType, categoryId }: ProductCreateRequest): Promise<IProduct> {
+    const imageStoragedTypeConverted = ImageStoragedService.convertStorageTypePrismaFormat(imageStoragedType);
+
     const product = await prisma.product.create({
-      data: { name, description, price, imageName, imageUrl, key, imageStoragedType: convertStorageTypePrismaFormat(imageStoragedType), productCategoryId: categoryId },
+      data: { name, description, price, imageName, imageUrl, key, imageStoragedType: imageStoragedTypeConverted, productCategoryId: categoryId },
       include,
     });
 
@@ -62,9 +65,11 @@ export class PrismaProductsRepository implements IProductsRepository {
   }
 
   async update(id: string, { name, description, rated, price, imageName, imageUrl, key, imageStoragedType, categoryId }: ProductUpdateRequest): Promise<IProduct> {
+    const imageStoragedTypeConverted = ImageStoragedService.convertStorageTypePrismaFormat(imageStoragedType);
+
     const product = await prisma.product.update({
       where: { id },
-      data: { name, description, rated, price, imageName, imageUrl, key, productCategoryId: categoryId, imageStoragedType: convertStorageTypePrismaFormat(imageStoragedType) },
+      data: { name, description, rated, price, imageName, imageUrl, key, productCategoryId: categoryId, imageStoragedType: imageStoragedTypeConverted },
       include,
     });
 

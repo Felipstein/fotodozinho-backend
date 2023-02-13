@@ -1,4 +1,4 @@
-export default {
+const EnvProvider = {
   host: process.env.HOST,
   port: process.env.PORT,
   storageType: process.env.STORAGE_TYPE,
@@ -9,3 +9,5 @@ export default {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 };
+
+export { EnvProvider };

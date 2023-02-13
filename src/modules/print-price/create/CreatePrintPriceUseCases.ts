@@ -4,7 +4,7 @@ import { BadRequestError } from '../../../errors/BadRequestError';
 import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
-import { someIsNullOrUndefined } from '../../../utils/Validate';
+import { ValidateService } from '../../../services/Validate';
 
 export class CreatePrintPriceUseCases {
 
@@ -14,7 +14,7 @@ export class CreatePrintPriceUseCases {
 
   async execute({ length, price }: PrintPriceCreateRequest): Promise<IPrintPrice> {
 
-    if(someIsNullOrUndefined(length, price)) {
+    if(ValidateService.someIsNullOrUndefined(length, price)) {
       throw new RequiredFieldsError('Tamanho/tipo', 'Preço');
     }
 

@@ -4,13 +4,13 @@ import crypto from 'crypto';
 import multerS3 from 'multer-s3';
 import { BadRequestError } from '../errors/BadRequestError';
 import { InternalServerError } from '../errors/InternalServerError';
-import EnvProvider from '../utils/EnvProvider';
-import { ImageStoragedService } from '../utils/ImageStoragedType';
-import { S3ClientService } from '../utils/s3';
+import { S3ClientService } from '../services/s3';
+import { EnvProvider } from '../services/env-provider';
+import { ImageStoragedService } from '../services/image-storaged-type';
 
 const localPath = path.resolve(__dirname, '..', '..', 'tmp', 'uploads');
 
-const { client } = new S3ClientService(
+export const s3ClientService = new S3ClientService(
   EnvProvider.aws.region,
   EnvProvider.aws.accessKeyId,
   EnvProvider.aws.secretAccessKey,
@@ -38,7 +38,7 @@ const storageType = {
   }),
 
   s3: multerS3({
-    s3: client,
+    s3: s3ClientService.client,
 
     bucket: EnvProvider.aws.bucketName,
 

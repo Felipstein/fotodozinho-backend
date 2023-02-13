@@ -1,5 +1,4 @@
 import { isEmpty } from 'lodash';
-import { prisma } from '../../../database';
 import { PrintOrderCreateRequest } from '../../../entities/print-order/dtos/PrintOrderCreateRequest';
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
 import { PrintCreateRequest } from '../../../entities/print-order/print/dtos/PrintCreateRequest';
@@ -12,8 +11,8 @@ import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrin
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
 import { IPrintsRepository } from '../../../repositories/prints/IPrintsRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
-import { someIsNullOrUndefined } from '../../../utils/Validate';
-import { RejectedPrintResponse } from './RejectedPrintResponse';
+import { ValidateService } from '../../../services/Validate';
+import { RejectedPrintResponse } from './dtos/RejectedPrintResponse';
 
 export class CreatePrintOrderUseCases {
 
@@ -26,7 +25,7 @@ export class CreatePrintOrderUseCases {
   ) { }
 
   async execute({ userId, prints }: Omit<PrintOrderCreateRequest, 'number'>, isTest = false): Promise<{ printOrder: IPrintOrder, rejectedPrints: RejectedPrintResponse[] }> {
-    if(someIsNullOrUndefined(userId, prints)) {
+    if(ValidateService.someIsNullOrUndefined(userId, prints)) {
       throw new RequiredFieldsError('Usuário', 'Fotos para revelação');
     }
 
@@ -76,7 +75,7 @@ export class CreatePrintOrderUseCases {
     const rejectedPrints: RejectedPrintResponse[] = [];
 
     const promises = prints.map(async print => {
-      if(someIsNullOrUndefined(
+      if(ValidateService.someIsNullOrUndefined(
         print.imageName,
         print.imageUrl,
         print.key,

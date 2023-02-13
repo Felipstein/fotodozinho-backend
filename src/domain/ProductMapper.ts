@@ -1,5 +1,6 @@
 import { Product, ProductCategory } from '@prisma/client';
-import { IProduct, convertStorageTypeFormat } from '../entities/product/IProduct';
+import { IProduct } from '../entities/product/IProduct';
+import { ImageStoragedService } from '../services/image-storaged-type';
 
 type ProductDomain = IProduct;
 type ProductPersistence = Product & { category: ProductCategory } ;
@@ -17,7 +18,7 @@ class ProductMapper {
       imageUrl: productPersistence.imageUrl,
       key: productPersistence.key,
       category: productPersistence.category,
-      imageStoragedType: convertStorageTypeFormat(productPersistence.imageStoragedType),
+      imageStoragedType: ImageStoragedService.convertStorageTypeFormat(productPersistence.imageStoragedType),
     };
   }
 

@@ -7,9 +7,9 @@ import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IPaymentMethodsRepository } from '../../../repositories/payment-methods/IPaymentMethodsRepository';
 import { IPurchaseOrdersRepository } from '../../../repositories/purchase-order/IPurchaseOrdersRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
-import { someIsNullOrUndefined } from '../../../utils/Validate';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
+import { ValidateService } from '../../../services/Validate';
 
 export class CreatePurchaseOrderUseCases {
 
@@ -21,7 +21,7 @@ export class CreatePurchaseOrderUseCases {
   ) { }
 
   async execute({ paymentMethodId, products, userId }: Omit<PurchaseOrderCreateRequest, 'number'>): Promise<IPurchaseOrder> {
-    if(someIsNullOrUndefined(paymentMethodId, products, userId)) {
+    if(ValidateService.someIsNullOrUndefined(paymentMethodId, products, userId)) {
       throw new RequiredFieldsError('Método de pagamento', 'Produtos', 'Usuário');
     }
 
