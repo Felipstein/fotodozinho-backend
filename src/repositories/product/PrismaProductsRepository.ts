@@ -1,6 +1,6 @@
 import { prisma } from '../../database';
 import { productMapper } from '../../domain/ProductMapper';
-import { IProduct } from '../../entities/product/IProduct';
+import { IProduct, convertStorageTypePrismaFormat } from '../../entities/product/IProduct';
 import { ProductCreateRequest } from '../../entities/product/dtos/ProductCreateRequest';
 import { ProductUpdateRequest } from '../../entities/product/dtos/ProductUpdateRequest';
 import { IProductsRepository } from './IProductsRepository';
@@ -52,9 +52,9 @@ export class PrismaProductsRepository implements IProductsRepository {
     return products.map(productMapper.toDomain);
   }
 
-  async create({ name, description, price, imageName, imageUrl, key, categoryId }: ProductCreateRequest): Promise<IProduct> {
+  async create({ name, description, price, imageName, imageUrl, key, imageStoragedType, categoryId }: ProductCreateRequest): Promise<IProduct> {
     const product = await prisma.product.create({
-      data: { name, description, price, imageName, imageUrl, key, productCategoryId: categoryId },
+      data: { name, description, price, imageName, imageUrl, key, imageStoragedType: convertStorageTypePrismaFormat(imageStoragedType), productCategoryId: categoryId },
       include,
     });
 

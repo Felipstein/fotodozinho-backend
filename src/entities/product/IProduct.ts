@@ -11,10 +11,18 @@ export function convertStorageTypeFormat(storageType: string): StorageType {
     throw new TypeError();
   }
 
-  const storageTypeFormatted = storageType.toUpperCase().replace(' ', '_');
+  const storageTypeFormatted = storageType.toLowerCase();
 
   // @ts-ignore
   return storageTypeFormatted;
+}
+
+export function convertStorageTypePrismaFormat(storageType: StorageType): ImageStoragedTypeProduct {
+  if(storageType === 'local') {
+    return 'LOCAL';
+  } else {
+    return 'S3';
+  }
 }
 
 export interface IProduct {
