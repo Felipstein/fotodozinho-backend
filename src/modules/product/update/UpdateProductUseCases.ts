@@ -1,5 +1,4 @@
 /* eslint-disable no-empty */
-import { s3ClientService } from '../../../config/multer.config';
 import { ProductUpdateRequest } from '../../../entities/product/dtos/ProductUpdateRequest';
 import { IProduct } from '../../../entities/product/IProduct';
 import { BadRequestError } from '../../../errors/BadRequestError';
@@ -11,7 +10,6 @@ import { IProductsRepository } from '../../../repositories/product/IProductsRepo
 import { EnvProvider } from '../../../services/env-provider';
 import { ImageDeleteService } from '../../../services/image-delete';
 import { ImageStoragedService } from '../../../services/image-storaged-type';
-import { LocalFileManagerService } from '../../../services/local-image-manager';
 import { ValidateService } from '../../../services/Validate';
 
 export class UpdateProductUseCases {

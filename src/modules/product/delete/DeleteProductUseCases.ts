@@ -1,11 +1,8 @@
-import { s3ClientService } from '../../../config/multer.config';
 import { ConflictRequestError } from '../../../errors/ConflictRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { ProductNotFoundError } from '../../../errors/ProductNotFoundError';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
-import { EnvProvider } from '../../../services/env-provider';
 import { ImageDeleteService } from '../../../services/image-delete';
-import { LocalFileManagerService } from '../../../services/local-image-manager';
 export class DeleteProductUseCases {
 
   constructor(
