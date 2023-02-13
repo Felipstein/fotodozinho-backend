@@ -10,7 +10,15 @@ import { S3Client } from '@aws-sdk/client-s3';
 
 const localPath = path.resolve(__dirname, '..', '..', 'tmp', 'uploads');
 
-type StorageType = 'local' | 's3';
+export type StorageType = 'local' | 's3';
+
+export const s3Client = new S3Client({
+  region: EnvProvider.aws.region,
+  credentials: {
+    accessKeyId: EnvProvider.aws.accessKeyId,
+    secretAccessKey: EnvProvider.aws.secretAccessKey,
+  },
+});
 
 function checkStorageType(storageType: string): StorageType {
   if(['local', 's3'].includes(storageType)) {
@@ -43,13 +51,7 @@ const storageType = {
   }),
 
   s3: multerS3({
-    s3: new S3Client({
-      region: EnvProvider.aws.region,
-      credentials: {
-        accessKeyId: EnvProvider.aws.accessKeyId,
-        secretAccessKey: EnvProvider.aws.secretAccessKey,
-      },
-    }),
+    s3: s3Client,
 
     bucket: EnvProvider.aws.bucketName,
 

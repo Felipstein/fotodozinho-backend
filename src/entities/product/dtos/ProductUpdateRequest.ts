@@ -1,3 +1,5 @@
+import { StorageType } from '../../../config/multer.config';
+
 export interface ProductUpdateRequest {
   name?: string;
   description?: string | null;
@@ -6,5 +8,6 @@ export interface ProductUpdateRequest {
   imageName?: string;
   imageUrl?: string;
   key?: string;
+  imageStoragedType?: StorageType;
   categoryId?: string;
 }
