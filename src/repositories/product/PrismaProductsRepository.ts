@@ -52,19 +52,19 @@ export class PrismaProductsRepository implements IProductsRepository {
     return products.map(productMapper.toDomain);
   }
 
-  async create({ name, description, price, categoryId }: ProductCreateRequest): Promise<IProduct> {
+  async create({ name, description, price, imageName, imageUrl, key, categoryId }: ProductCreateRequest): Promise<IProduct> {
     const product = await prisma.product.create({
-      data: { name, description, price, productCategoryId: categoryId },
+      data: { name, description, price, imageName, imageUrl, key, productCategoryId: categoryId },
       include,
     });
 
     return productMapper.toDomain(product);
   }
 
-  async update(id: string, { name, description, rated, price, categoryId }: ProductUpdateRequest): Promise<IProduct> {
+  async update(id: string, { name, description, rated, price, imageName, imageUrl, key, categoryId }: ProductUpdateRequest): Promise<IProduct> {
     const product = await prisma.product.update({
       where: { id },
-      data: { name, description, rated, price, productCategoryId: categoryId },
+      data: { name, description, rated, price, imageName, imageUrl, key, productCategoryId: categoryId },
       include,
     });
 

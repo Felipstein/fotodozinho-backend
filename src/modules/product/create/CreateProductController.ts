@@ -9,8 +9,13 @@ export class CreateProductController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { name, description, price, categoryId } = req.body;
+    const { originalname: imageName, filename: keyLocal } = req.file;
 
-    const product = await this.createProductUseCases.execute({ name, description, price, categoryId });
+    const key = keyLocal;
+
+    const imageUrl = '';
+
+    const product = await this.createProductUseCases.execute({ name, description, price, imageName, imageUrl, key, categoryId });
 
     return res.status(201).json(product);
   }
