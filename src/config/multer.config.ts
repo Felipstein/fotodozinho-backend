@@ -2,15 +2,13 @@ import path from 'path';
 import multer from 'multer';
 import crypto from 'crypto';
 import multerS3 from 'multer-s3';
-
+import { S3Client } from '@aws-sdk/client-s3';
 import { BadRequestError } from '../errors/BadRequestError';
 import { InternalServerError } from '../errors/InternalServerError';
 import EnvProvider from '../utils/EnvProvider';
-import { S3Client } from '@aws-sdk/client-s3';
+import { ImageStoragedService } from '../utils/ImageStoragedType';
 
 const localPath = path.resolve(__dirname, '..', '..', 'tmp', 'uploads');
-
-export type StorageType = 'local' | 's3';
 
 export const s3Client = new S3Client({
   region: EnvProvider.aws.region,
@@ -19,15 +17,6 @@ export const s3Client = new S3Client({
     secretAccessKey: EnvProvider.aws.secretAccessKey,
   },
 });
-
-function checkStorageType(storageType: string): StorageType {
-  if(['local', 's3'].includes(storageType)) {
-    //@ts-ignore
-    return storageType;
-  }
-
-  return null;
-}
 
 const storageType = {
   local: multer.diskStorage({
@@ -77,7 +66,7 @@ const storageType = {
 export default {
   dest: localPath,
 
-  storage: storageType[checkStorageType(EnvProvider.storageType) || 'local'],
+  storage: storageType[ImageStoragedService.convertStorageTypeFormat(EnvProvider.storageType) || 'local'],
 
   fileFilter(req, file, callback) {
     const mimeType = /image\/.+/;
