@@ -114,6 +114,9 @@ model Product {
   rated                Decimal                @default(0)
   price                Decimal
   category             ProductCategory        @relation(fields: [productCategoryId], references: [id])
+  imageName            String
+  imageUrl             String                 @unique
+  key                  String                 @unique
   productCategoryId    String
   ShoppingCartProduct  ShoppingCartProduct[]
   PurchaseOrderProduct PurchaseOrderProduct[]
@@ -124,7 +127,7 @@ model Product {
 model ShoppingCartProduct {
   id             String       @id @default(cuid())
   quantity       Decimal      @default(1)
-  product        Product      @relation(fields: [productId], references: [id])
+  product        Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId      String
   shoppingCart   ShoppingCart @relation(fields: [shoppingCartId], references: [id], onDelete: Cascade)
   shoppingCartId String
@@ -165,7 +168,7 @@ model PurchaseOrder {
 
 model PurchaseOrderProduct {
   id              String        @id @default(cuid())
-  product         Product       @relation(fields: [productId], references: [id])
+  product         Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
   purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
   quantity        Decimal       @default(1)
   productId       String
