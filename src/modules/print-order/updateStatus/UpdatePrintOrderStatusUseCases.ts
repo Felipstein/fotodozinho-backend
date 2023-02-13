@@ -1,4 +1,5 @@
-import { IPrintOrder, PrintOrderStatus } from '../../../entities/print-order/IPrintOrder';
+import { IPrintOrder, PrintOrderStatus, isPrintOrderStatus } from '../../../entities/print-order/IPrintOrder';
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { PrintOrderNotFound } from '../../../errors/PrintOrderNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
@@ -17,6 +18,10 @@ export class UpdatePrintOrderStatusUseCases {
 
     if(!newStatus) {
       throw new RequiredFieldsError('Status');
+    }
+
+    if(!isPrintOrderStatus(newStatus)) {
+      throw new BadRequestError('O campo status só pode ter três tipos de valores: "WAITING", "IN_PRODUCTION" ou "DONE".');
     }
 
     const printOrderExists = await this.printOrdersRepository.listById(id);

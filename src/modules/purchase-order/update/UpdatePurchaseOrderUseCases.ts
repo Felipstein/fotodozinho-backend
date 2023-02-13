@@ -1,4 +1,4 @@
-import { IPurchaseOrder } from '../../../entities/purchase-order/IPurchaseOrder';
+import { IPurchaseOrder, isPurchaseOrderStatus } from '../../../entities/purchase-order/IPurchaseOrder';
 import { PurchaseOrderUpdateRequest } from '../../../entities/purchase-order/dtos/PurchaseOrderUpdateRequest';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
@@ -28,6 +28,10 @@ export class UpdatePurchaseOrderUseCases {
 
     if(discount && isNaN(discount)) {
       throw new NumberValidationError('Desconto');
+    }
+
+    if(status && !isPurchaseOrderStatus(status)) {
+      throw new BadRequestError('O campo status só pode ter três tipos de valores: "WAITING_PAYMENT", "IN_TRANSIT" ou "DONE".');
     }
 
     const purchaseOrderExists = await this.purchaseOrdersRepository.listById(id);
