@@ -107,16 +107,22 @@ model PaymentMethod {
   @@map("payment_methods")
 }
 
+enum ImageStoragedTypeProduct {
+  LOCAL
+  S3
+}
+
 model Product {
-  id                   String                 @id @default(cuid())
+  id                   String                   @id @default(cuid())
   name                 String
   description          String?
-  rated                Decimal                @default(0)
+  rated                Decimal                  @default(0)
   price                Decimal
-  category             ProductCategory        @relation(fields: [productCategoryId], references: [id])
+  category             ProductCategory          @relation(fields: [productCategoryId], references: [id])
   imageName            String
-  imageUrl             String                 @unique
-  key                  String                 @unique
+  imageUrl             String                   @unique
+  key                  String                   @unique
+  imageStoragedType    ImageStoragedTypeProduct
   productCategoryId    String
   ShoppingCartProduct  ShoppingCartProduct[]
   PurchaseOrderProduct PurchaseOrderProduct[]
