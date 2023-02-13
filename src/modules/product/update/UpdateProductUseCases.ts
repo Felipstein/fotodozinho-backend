@@ -9,6 +9,7 @@ import { ProductNotFoundError } from '../../../errors/ProductNotFoundError';
 import { IProductCategoriesRepository } from '../../../repositories/product-categories/IProductCategoriesRepository';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
 import { EnvProvider } from '../../../services/env-provider';
+import { ImageDeleteService } from '../../../services/image-delete';
 import { ImageStoragedService } from '../../../services/image-storaged-type';
 import { LocalFileManagerService } from '../../../services/local-image-manager';
 import { ValidateService } from '../../../services/Validate';
@@ -46,11 +47,7 @@ export class UpdateProductUseCases {
     const oldImageStoragedType = productExists.imageStoragedType;
 
     try {
-      if(oldImageStoragedType === 's3') {
-        await s3ClientService.deleteFile(EnvProvider.aws.bucketName, productExists.key);
-      } else {
-        await LocalFileManagerService.deleteImage(productExists.key);
-      }
+      await ImageDeleteService.deleteImage(productExists.key, oldImageStoragedType);
     } catch {}
 
     const imageStoragedType = ImageStoragedService.convertStorageTypeFormat(EnvProvider.storageType);
