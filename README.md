@@ -1,7 +1,5 @@
 # A fazer:
-- Configurar o multer (para upload de imagens no S3 da aws)
 - Adicionar o multer na rota da criação de pedido para impressão
-- Adicionar o multer na rota da criação de produtos
 - Criar as rotas para autenticação do usuário
 - Criar o sistema de ensure-auth
 - Criar entidade/CRUD de Refresh Tokens
