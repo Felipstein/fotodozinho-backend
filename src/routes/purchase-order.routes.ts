@@ -4,6 +4,7 @@ import { listPurchaseOrderByIdFactory } from '../modules/purchase-order/listById
 import { createPurchaseOrderFactory } from '../modules/purchase-order/create';
 import { updatePurchaseOrderFactory } from '../modules/purchase-order/update';
 import { updatePurchaseOrderPaymentMethodFactory } from '../modules/purchase-order/updatePaymentMethod';
+import { deletePurchaseOrderFactory } from '../modules/purchase-order/delete';
 
 const route = Router();
 
@@ -25,6 +26,10 @@ route.put('/:id', (req, res) => {
 
 route.patch('/:id', (req, res) => {
   return updatePurchaseOrderPaymentMethodFactory().controller.handle(req, res);
+});
+
+route.delete('/:id', (req, res) => {
+  return deletePurchaseOrderFactory().controller.handle(req, res);
 });
 
 export { route as purchaseOrderRoutes };
