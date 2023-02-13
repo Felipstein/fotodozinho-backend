@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { APIError } from '../errors/APIError';
 import { DetailedError } from '../errors/DetailedError';
+import { InternalServerError } from '../errors/InternalServerError';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function errorHandler(error: Error, req: Request, res: Response, next: NextFunction) {
@@ -17,5 +18,9 @@ export function errorHandler(error: Error, req: Request, res: Response, next: Ne
   console.error(error);
   console.warn('#### UNKNOW ERROR ####');
 
-  return res.status(500).json({ message: 'Um erro interno ocorreu dentro dos nossos servidores. Tente novamente mais tarde' });
+  const message = error instanceof InternalServerError ?
+    error.message :
+    'Desculpe, ocorreu um erro inesperado em nosso servidor. Por favor, tente novamente mais tarde';
+
+  return res.status(500).json({ message });
 }
