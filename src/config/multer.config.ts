@@ -10,10 +10,12 @@ import { ImageStoragedService } from '../services/image-storaged-type';
 
 const localPath = path.resolve(__dirname, '..', '..', 'tmp', 'uploads');
 
-export const s3ClientService = new S3ClientService(
-  EnvProvider.aws.region,
-  EnvProvider.aws.accessKeyId,
-  EnvProvider.aws.secretAccessKey,
+export const s3ClientService = EnvProvider.storageType === 's3' && (
+  new S3ClientService(
+    EnvProvider.aws.region,
+    EnvProvider.aws.accessKeyId,
+    EnvProvider.aws.secretAccessKey,
+  )
 );
 
 const storageType = {
