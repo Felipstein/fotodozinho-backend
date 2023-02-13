@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.267.0",
     "bcrypt": "^5.1.0",
     "cuid": "^2.1.8",
     "dotenv": "^16.0.3",
@@ -17,6 +18,7 @@
     "express-async-errors": "^3.1.1",
     "lodash": "^4.17.21",
     "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -26,6 +28,7 @@
     "@types/jest": "^29.2.5",
     "@types/lodash": "^4.14.191",
     "@types/multer": "^1.4.7",
+    "@types/multer-s3": "^3.0.0",
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",
