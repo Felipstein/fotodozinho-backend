@@ -10,12 +10,12 @@ import { ImageStoragedService } from '../services/image-storaged-type';
 
 const localPath = path.resolve(__dirname, '..', '..', 'tmp', 'uploads');
 
-export const s3ClientService = EnvProvider.storageType === 's3' && (
-  new S3ClientService(
-    EnvProvider.aws.region,
-    EnvProvider.aws.accessKeyId,
-    EnvProvider.aws.secretAccessKey,
-  )
+const isS3StorageType = EnvProvider.storageType === 's3';
+
+export const s3ClientService = isS3StorageType && new S3ClientService(
+  EnvProvider.aws.region,
+  EnvProvider.aws.accessKeyId,
+  EnvProvider.aws.secretAccessKey,
 );
 
 const storageType = {
@@ -39,7 +39,7 @@ const storageType = {
     }
   }),
 
-  s3: multerS3({
+  s3: isS3StorageType && multerS3({
     s3: s3ClientService.client,
 
     bucket: EnvProvider.aws.bucketName,
