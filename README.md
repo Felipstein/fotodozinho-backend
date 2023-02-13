@@ -1,6 +1,4 @@
 # A fazer:
-- Criar D de Pedido de Compras
-- Criar os testes de integração de cada rota
 - Configurar o multer (para upload de imagens no S3 da aws)
 - Adicionar o multer na rota da criação de pedido para impressão
 - Adicionar o multer na rota da criação de produtos
