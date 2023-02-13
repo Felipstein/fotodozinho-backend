@@ -3,6 +3,7 @@ import { listPurchaseOrdersFactory } from '../modules/purchase-order/listAll';
 import { listPurchaseOrderByIdFactory } from '../modules/purchase-order/listById';
 import { createPurchaseOrderFactory } from '../modules/purchase-order/create';
 import { updatePurchaseOrderFactory } from '../modules/purchase-order/update';
+import { updatePurchaseOrderPaymentMethodFactory } from '../modules/purchase-order/updatePaymentMethod';
 
 const route = Router();
 
@@ -20,6 +21,10 @@ route.post('/', (req, res) => {
 
 route.put('/:id', (req, res) => {
   return updatePurchaseOrderFactory().controller.handle(req, res);
+});
+
+route.patch('/:id', (req, res) => {
+  return updatePurchaseOrderPaymentMethodFactory().controller.handle(req, res);
 });
 
 export { route as purchaseOrderRoutes };
