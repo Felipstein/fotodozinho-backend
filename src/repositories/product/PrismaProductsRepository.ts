@@ -61,10 +61,10 @@ export class PrismaProductsRepository implements IProductsRepository {
     return productMapper.toDomain(product);
   }
 
-  async update(id: string, { name, description, rated, price, imageName, imageUrl, key, categoryId }: ProductUpdateRequest): Promise<IProduct> {
+  async update(id: string, { name, description, rated, price, imageName, imageUrl, key, imageStoragedType, categoryId }: ProductUpdateRequest): Promise<IProduct> {
     const product = await prisma.product.update({
       where: { id },
-      data: { name, description, rated, price, imageName, imageUrl, key, productCategoryId: categoryId },
+      data: { name, description, rated, price, imageName, imageUrl, key, productCategoryId: categoryId, imageStoragedType: convertStorageTypePrismaFormat(imageStoragedType) },
       include,
     });
 

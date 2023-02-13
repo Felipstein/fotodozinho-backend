@@ -15,7 +15,7 @@ export class CreateProductUseCases {
     private productCategoriesRepository: IProductCategoriesRepository,
   ) { }
 
-  async execute({ name, description, price, imageName, imageUrl, key, categoryId }: ProductCreateRequest): Promise<IProduct> {
+  async execute({ name, description, price, imageName, imageUrl, key, categoryId }: Omit<ProductCreateRequest, 'imageStoragedType'>): Promise<IProduct> {
     if(someIsNullOrUndefined(name, price, categoryId)) {
       throw new RequiredFieldsError('Nome', 'Preço', 'Categoria');
     }

@@ -12,9 +12,9 @@ export interface IProductsRepository {
 
   listByCategoryId(categoryId: string): Promise<IProduct[]>;
 
-  create({ name, description, price, categoryId }: ProductCreateRequest): Promise<IProduct>;
+  create({ name, description, price, imageName, imageUrl, key, categoryId, imageStoragedType }: ProductCreateRequest): Promise<IProduct>;
 
-  update(id: string, { name, description, rated, price, categoryId }: ProductUpdateRequest): Promise<IProduct>;
+  update(id: string, { name, description, rated, price, imageName, imageUrl, key, categoryId, imageStoragedType }: ProductUpdateRequest): Promise<IProduct>;
 
   delete(id: string): Promise<void>;
 

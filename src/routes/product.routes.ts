@@ -20,7 +20,7 @@ route.post('/', uploadProvider.uploadSingleFile('fileImage'), (req, res) => {
   return createProductFactory().controller.handle(req, res);
 });
 
-route.put('/:id', (req, res) => {
+route.put('/:id', uploadProvider.uploadSingleFile('fileImage'), (req, res) => {
   return updateProductFactory().controller.handle(req, res);
 });
 
