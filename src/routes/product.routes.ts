@@ -4,6 +4,7 @@ import { deleteProductFactory } from '../modules/product/delete';
 import { listProductsFactory } from '../modules/product/listAll';
 import { listProductByIdFactory } from '../modules/product/listById';
 import { updateProductFactory } from '../modules/product/update';
+import { uploadProvider } from '../providers/Upload';
 
 const route = Router();
 
@@ -15,7 +16,7 @@ route.get('/:id', (req, res) => {
   return listProductByIdFactory().controller.handle(req, res);
 });
 
-route.post('/', (req, res) => {
+route.post('/', uploadProvider.uploadSingleFile('fileImage'), (req, res) => {
   return createProductFactory().controller.handle(req, res);
 });
 

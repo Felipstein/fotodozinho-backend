@@ -6,6 +6,7 @@ import { listPrintOrderByIdFactory } from '../modules/print-order/listById';
 import { listPrintOrdersByUserIdFactory } from '../modules/print-order/listByUserId';
 import { listPrintOrdersByUserIdStatusFactory } from '../modules/print-order/listByUserIdStatus';
 import { updatePrintOrderStatusFactory } from '../modules/print-order/updateStatus';
+import { uploadProvider } from '../providers/Upload';
 
 const route = Router();
 
@@ -25,7 +26,7 @@ route.get('/user/:userId/:status', (req, res) => {
   return listPrintOrdersByUserIdStatusFactory().controller.handle(req, res);
 });
 
-route.post('/', (req, res) => {
+route.post('/', uploadProvider.uploadMultiFiles('images'), (req, res) => {
   return createPrintOrderFactory().controller.handle(req, res);
 });
 
