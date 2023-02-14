@@ -1,10 +1,5 @@
 # A fazer:
-- Alterar a criação de pedido para impressão:
-> - Adicionar um novo status para o pedido de impressão: UPLOADING_IMAGES
-> - (Como deve ser feito agora a criação do pedido para impressão):
-> - Criar o pedido de impressão (onde o status se inicia com UPLOADING_IMAGES) passando o userId
-> - Para fazer o upload de cada imagem, será necessário uma rota nova (POST /prints), assim, será possível enviar a imagem específica para fazer upload (uma por vez)
-> - Ainda sobre o upload de cada imagem, será necessário enviar o id do pedido de impressão retornado. Será verificado futuramente se o usuário tem permissão para fazer isso.
+- Finalizra os serviços de pedido para impressão
 - Criar as rotas para autenticação do usuário
 - Criar o sistema de ensure-auth
 - Criar entidade/CRUD de Refresh Tokens
