@@ -1,5 +1,4 @@
 # A fazer:
-- Quando o upload do multer falhar, adicionar em uma tabela de "imagens falhadas" para serem removidas logo
 - Adicionar o multer na rota da criação de pedido para impressão
 - Criar as rotas para autenticação do usuário
 - Criar o sistema de ensure-auth
