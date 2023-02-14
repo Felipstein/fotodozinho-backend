@@ -1,6 +1,8 @@
+import { ConflictRequestError } from '../../../errors/ConflictRequestError';
 import { FailedImageUploadedNotFoundError } from '../../../errors/FailedImageUploadedNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IFailedImageUploadedRepository } from '../../../repositories/failed-images-uploaded/IFailedImagesUploadedRepository';
+import { ImageDeleteService } from '../../../services/image-delete';
 
 export class DeleteFailedImageUploadedByKeyUseCases {
 
@@ -18,7 +20,14 @@ export class DeleteFailedImageUploadedByKeyUseCases {
       throw new FailedImageUploadedNotFoundError();
     }
 
-    await this.failedImagesUploadedRepository.deleteByKey(key);
+    try {
+      await ImageDeleteService.deleteImage(key, failedImageUploadedExists.storagedType);
+
+      await this.failedImagesUploadedRepository.deleteByKey(key);
+    } catch (err: any) {
+      throw new ConflictRequestError('Ainda não foi possível deletar a imagem');
+    }
+
   }
 
 }

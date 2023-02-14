@@ -1,5 +1,7 @@
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { ConflictRequestError } from '../../../errors/ConflictRequestError';
 import { IFailedImageUploadedRepository } from '../../../repositories/failed-images-uploaded/IFailedImagesUploadedRepository';
+import { ImageDeleteService } from '../../../services/image-delete';
 
 export class DeleteFailedImagesUploadedUseCases {
 
@@ -14,7 +16,15 @@ export class DeleteFailedImagesUploadedUseCases {
       throw new BadRequestError('Nenhuma imagem foi deletada');
     }
 
-    await this.failedImagesUploadedRepository.deleteAll();
+    try {
+      failedImagesUploaded.forEach(failedImageUploaded => {
+        ImageDeleteService.deleteImage(failedImageUploaded.key, failedImageUploaded.storagedType);
+      });
+
+      await this.failedImagesUploadedRepository.deleteAll();
+    } catch (err: any) {
+      throw new ConflictRequestError('Ainda não conseguimos deletar algumas imagens');
+    }
   }
 
 }
