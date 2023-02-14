@@ -184,8 +184,9 @@ model PurchaseOrderProduct {
 }
 
 model FailedImageUploaded {
-  id  String @id @default(cuid())
-  key String @unique
+  id           String                   @id @default(cuid())
+  key          String                   @unique
+  storagedType ImageStoragedTypeProduct
 
   @@map("failed_images_uploaded")
 }
