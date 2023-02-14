@@ -1,37 +1,46 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { prisma } from '../../database';
+import { printMapper } from '../../domain/PrintMapper';
+import { PrintCreateRequest } from '../../entities/print-order/print/dtos/PrintCreateRequest';
 import { IPrint } from '../../entities/print-order/print/IPrint';
-import { IPrintsRepository } from './IPrintsRepository';
+import { IPrintsRepository, PrintsListProperties } from './IPrintsRepository';
+
+const include = {
+  printPrice: true,
+  color: true,
+};
 
 export class MockPrintsRepository implements IPrintsRepository {
 
-  private prints: IPrint[] = [];
+  async listManyByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintsListProperties): Promise<IPrint[]> {
+    const prints = await prisma.print.findMany({
+      where: { printOrderId, imageName, imageUrl, key, colorId, printPriceId },
+      include,
+    });
 
-  async listPrintByImageUrl(imageUrl: string): Promise<IPrint> {
-    return this.prints.find(print => print.imageUrl === imageUrl);
+    return prints.map(printMapper.toDomain);
   }
 
-  async listPrintByKey(key: string): Promise<IPrint> {
-    return this.prints.find(print => print.key === key);
+  async listFirstByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintsListProperties): Promise<IPrint> {
+    const print = await prisma.print.findFirst({
+      where: { printOrderId, imageName, imageUrl, key, colorId, printPriceId },
+      include,
+    });
+
+    if(!print) {
+      return null;
+    }
+
+    return printMapper.toDomain(print);
   }
 
-  async listByPrintOrderId(printOrderId: string): Promise<IPrint[]> {
-    return this.prints.filter(print => print.printOrderId === printOrderId);
-  }
+  async create({ imageName, imageUrl, key, border, colorId, printPriceId, quantity, printOrderId }: PrintCreateRequest): Promise<IPrint> {
+    const print = await prisma.print.create({
+      data: { imageName, imageUrl, key, border, colorId, printPriceId, quantity,  printOrderId },
+      include,
+    });
 
-  async listByColorId(colorId: string): Promise<IPrint[]> {
-    return [];
-  }
-
-  async listByPrintPriceId(printPriceId: string): Promise<IPrint[]> {
-    return [];
-  }
-
-  async deleteByPrintOrderId(printOrderId: string): Promise<void> {
-    this.prints = this.prints.filter(print => print.printOrderId !== printOrderId);
-  }
-
-  cleanRepository(): void {
-    this.prints = [];
+    return printMapper.toDomain(print);
   }
 
 }

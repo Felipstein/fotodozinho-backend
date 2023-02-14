@@ -1,19 +1,21 @@
+import { PrintCreateRequest } from '../../entities/print-order/print/dtos/PrintCreateRequest';
 import { IPrint } from '../../entities/print-order/print/IPrint';
+
+export interface PrintsListProperties {
+  printOrderId?: string;
+  imageName?: string;
+  imageUrl?: string;
+  key?: string;
+  colorId?: string;
+  printPriceId?: string;
+}
 
 export interface IPrintsRepository {
 
-  listPrintByImageUrl(imageUrl: string): Promise<IPrint>;
+  listManyByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintsListProperties): Promise<IPrint[]>;
 
-  listPrintByKey(key: string): Promise<IPrint>;
+  listFirstByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintsListProperties): Promise<IPrint>;
 
-  listByPrintOrderId(printOrderId: string): Promise<IPrint[]>;
-
-  listByColorId(colorId: string): Promise<IPrint[]>;
-
-  listByPrintPriceId(printPriceId: string): Promise<IPrint[]>;
-
-  deleteByPrintOrderId(printOrderId: string): Promise<void>;
-
-  cleanRepository(): void;
+  create({ imageName, imageUrl, key, border, colorId, printPriceId, quantity, printOrderId }: PrintCreateRequest): Promise<IPrint>;
 
 }
