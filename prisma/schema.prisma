@@ -75,19 +75,25 @@ model PrintOrder {
   @@map("print_orders")
 }
 
+enum ImageStoragedType {
+  LOCAL
+  S3
+}
+
 model Print {
-  id           String     @id @default(cuid())
-  imageName    String
-  imageUrl     String     @unique
-  key          String     @unique
-  printPrice   PrintPrice @relation(fields: [printPriceId], references: [id])
-  printPriceId String
-  border       Boolean
-  color        Color      @relation(fields: [colorId], references: [id])
-  colorId      String
-  quantity     Decimal
-  printOrder   PrintOrder @relation(fields: [printOrderId], references: [id], onDelete: Cascade)
-  printOrderId String
+  id                String            @id @default(cuid())
+  imageName         String
+  imageUrl          String            @unique
+  key               String            @unique
+  imageStoragedType ImageStoragedType
+  printPrice        PrintPrice        @relation(fields: [printPriceId], references: [id])
+  printPriceId      String
+  border            Boolean
+  color             Color             @relation(fields: [colorId], references: [id])
+  colorId           String
+  quantity          Decimal
+  printOrder        PrintOrder        @relation(fields: [printOrderId], references: [id], onDelete: Cascade)
+  printOrderId      String
 
   @@map("prints")
 }
@@ -108,22 +114,17 @@ model PaymentMethod {
   @@map("payment_methods")
 }
 
-enum ImageStoragedTypeProduct {
-  LOCAL
-  S3
-}
-
 model Product {
-  id                   String                   @id @default(cuid())
+  id                   String                 @id @default(cuid())
   name                 String
   description          String?
-  rated                Decimal                  @default(0)
+  rated                Decimal                @default(0)
   price                Decimal
-  category             ProductCategory          @relation(fields: [productCategoryId], references: [id])
+  category             ProductCategory        @relation(fields: [productCategoryId], references: [id])
   imageName            String
-  imageUrl             String                   @unique
-  key                  String                   @unique
-  imageStoragedType    ImageStoragedTypeProduct
+  imageUrl             String                 @unique
+  key                  String                 @unique
+  imageStoragedType    ImageStoragedType
   productCategoryId    String
   ShoppingCartProduct  ShoppingCartProduct[]
   PurchaseOrderProduct PurchaseOrderProduct[]
@@ -185,9 +186,9 @@ model PurchaseOrderProduct {
 }
 
 model FailedImageUploaded {
-  id           String                   @id @default(cuid())
-  key          String                   @unique
-  storagedType ImageStoragedTypeProduct
+  id           String            @id @default(cuid())
+  key          String            @unique
+  storagedType ImageStoragedType
 
   @@map("failed_images_uploaded")
 }
