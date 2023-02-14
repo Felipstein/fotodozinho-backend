@@ -11,4 +11,6 @@ export interface IFailedImageUploadedRepository {
 
   deleteByKey(key: string): Promise<void>;
 
+  deleteAll(): Promise<void>;
+
 }

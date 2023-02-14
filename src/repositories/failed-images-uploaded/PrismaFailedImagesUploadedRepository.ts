@@ -21,4 +21,8 @@ export class PrismaFailedImagesUploadedRepository implements IFailedImageUploade
     await prisma.failedImageUploaded.delete({ where: { key } });
   }
 
+  async deleteAll(): Promise<void> {
+    await prisma.failedImageUploaded.deleteMany();
+  }
+
 }
