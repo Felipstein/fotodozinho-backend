@@ -1,0 +1,6 @@
+-- AlterEnum
+ALTER TYPE "PrintOrderStatus" ADD VALUE 'UPLOADING_IMAGES';
+COMMIT;
+
+-- AlterTable
+ALTER TABLE "print_orders" ALTER COLUMN "status" SET DEFAULT 'UPLOADING_IMAGES';

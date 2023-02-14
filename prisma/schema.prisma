@@ -57,6 +57,7 @@ model Notification {
 }
 
 enum PrintOrderStatus {
+  UPLOADING_IMAGES
   WAITING
   IN_PRODUCTION
   DONE
@@ -65,7 +66,7 @@ enum PrintOrderStatus {
 model PrintOrder {
   id        String           @id @default(cuid())
   number    Decimal
-  status    PrintOrderStatus @default(WAITING)
+  status    PrintOrderStatus @default(UPLOADING_IMAGES)
   user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   createdAt DateTime         @default(now())
