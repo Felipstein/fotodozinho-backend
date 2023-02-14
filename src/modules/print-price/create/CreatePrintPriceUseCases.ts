@@ -4,7 +4,7 @@ import { BadRequestError } from '../../../errors/BadRequestError';
 import { FieldsMustBeNumericError } from '../../../errors/FieldsMustBeNumericError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 
 export class CreatePrintPriceUseCases {
 

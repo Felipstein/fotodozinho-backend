@@ -4,7 +4,7 @@ import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { IUserView } from '../../../entities/user/IUserView';
 import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 import { UserCreateRequest } from '../../../entities/user/dtos/UserCreateRequest';
 
 export class CreateUserUseCases {

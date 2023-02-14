@@ -11,7 +11,7 @@ import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrin
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
 import { IPrintsRepository } from '../../../repositories/prints/IPrintsRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 import { RejectedPrintResponse } from './dtos/RejectedPrintResponse';
 
 export class CreatePrintOrderUseCases {

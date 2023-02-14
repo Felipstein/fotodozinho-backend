@@ -3,7 +3,7 @@ import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 
 export class ListPrintOrdersByUserIdStatusUseCases {
 

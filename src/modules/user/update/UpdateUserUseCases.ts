@@ -5,7 +5,7 @@ import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { crypt } from '../../../providers/Crypt';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 
 export class UpdateUserUseCases {
 

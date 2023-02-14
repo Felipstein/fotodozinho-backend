@@ -4,7 +4,7 @@ import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { NotificationCreateRequest } from '../../../entities/notification/dtos/NotificationCreateRequest';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 
 export class CreateNotificationUseCases {
 

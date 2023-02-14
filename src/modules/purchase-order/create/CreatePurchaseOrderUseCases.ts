@@ -9,7 +9,7 @@ import { IPurchaseOrdersRepository } from '../../../repositories/purchase-order/
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 
 export class CreatePurchaseOrderUseCases {
 

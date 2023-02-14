@@ -10,7 +10,7 @@ import { IProductsRepository } from '../../../repositories/product/IProductsRepo
 import { EnvProvider } from '../../../services/env-provider';
 import { ImageDeleteService } from '../../../services/image-delete';
 import { ImageStoragedService } from '../../../services/image-storaged-type';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 
 export class UpdateProductUseCases {
 

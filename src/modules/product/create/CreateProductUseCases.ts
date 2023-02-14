@@ -7,7 +7,7 @@ import { IProductCategoriesRepository } from '../../../repositories/product-cate
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
 import { EnvProvider } from '../../../services/env-provider';
 import { ImageStoragedService } from '../../../services/image-storaged-type';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 
 export class CreateProductUseCases {
 

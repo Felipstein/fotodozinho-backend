@@ -5,7 +5,7 @@ import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { NumberValidationError } from '../../../errors/NumberValidationError';
 import { PurchaseOrderNotFoundError } from '../../../errors/PurchaseOrderNotFoundError';
 import { IPurchaseOrdersRepository } from '../../../repositories/purchase-order/IPurchaseOrdersRepository';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 
 export class UpdatePurchaseOrderUseCases {
 

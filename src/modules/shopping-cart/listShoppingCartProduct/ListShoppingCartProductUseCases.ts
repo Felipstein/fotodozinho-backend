@@ -2,7 +2,7 @@ import { IShoppingCartProduct } from '../../../entities/shopping-cart-product/IS
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { ShoppingCartNotFoundError } from '../../../errors/ShoppingCartNotFoundError';
 import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
-import { ValidateService } from '../../../services/Validate';
+import { ValidateService } from '../../../services/validate';
 
 export class ListShoppingCartProductUseCases {
 
