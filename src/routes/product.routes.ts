@@ -5,8 +5,7 @@ import { listProductsFactory } from '../modules/product/listAll';
 import { listProductByIdFactory } from '../modules/product/listById';
 import { updateProductFactory } from '../modules/product/update';
 import { uploadProvider } from '../providers/Upload';
-import { ImageDeleteService } from '../services/image-delete';
-import { StorageType } from '../services/image-storaged-type';
+import { createFailedImageUploadedFactory } from '../modules/failed-images-uploaded/create';
 
 const route = Router();
 
@@ -28,8 +27,7 @@ route.post('/', uploadProvider.uploadSingleFile('fileImage'), (req, res) => {
     const key = keyS3 || keyLocal;
 
     if(key) {
-      ImageDeleteService.deleteImage(key, StorageType.S3);
-      ImageDeleteService.deleteImage(key, StorageType.LOCAL);
+      createFailedImageUploadedFactory().useCases.execute({ key });
     }
   }
 

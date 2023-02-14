@@ -15,7 +15,7 @@ export class CreateFailedImageUploadedUseCases {
       throw new RequiredFieldsError('Nome da imagem');
     }
 
-    const failedImageUploadedExists = this.failedImagesUploadedRepository.listByKey(key);
+    const failedImageUploadedExists = await this.failedImagesUploadedRepository.listByKey(key);
     if(failedImageUploadedExists) {
       throw new BadRequestError('Essa imagem já foi registrada');
     }
