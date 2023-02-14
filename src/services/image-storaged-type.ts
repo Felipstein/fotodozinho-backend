@@ -1,9 +1,9 @@
-import { ImageStoragedTypeProduct } from '@prisma/client';
+import { ImageStoragedType } from '@prisma/client';
 
 class ImageStoragedService {
 
   static isCorrectStorageTypeFormat(value: string) {
-    return value.toUpperCase() in ImageStoragedTypeProduct;
+    return value.toUpperCase() in ImageStoragedType;
   }
 
   static convertStorageTypeFormat(storageType: string): StorageType {
@@ -18,13 +18,13 @@ class ImageStoragedService {
     return null;
   }
 
-  static convertStorageTypePrismaFormat(storageType: string): ImageStoragedTypeProduct {
+  static convertStorageTypePrismaFormat(storageType: string): ImageStoragedType {
     if(storageType.toLowerCase() === 'local') {
-      return ImageStoragedTypeProduct.LOCAL;
+      return ImageStoragedType.LOCAL;
     }
 
     if(storageType.toLowerCase() === 's3') {
-      return ImageStoragedTypeProduct.S3;
+      return ImageStoragedType.S3;
     }
   }
 
