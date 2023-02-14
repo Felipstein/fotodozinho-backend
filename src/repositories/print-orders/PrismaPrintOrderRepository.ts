@@ -1,5 +1,4 @@
 import { prisma } from '../../database';
-import { printCreationMapper } from '../../domain/PrintCreationMapper';
 import { printOrderMapper } from '../../domain/PrintOrderMapper';
 import { PrintOrderCreateRequest } from '../../entities/print-order/dtos/PrintOrderCreateRequest';
 import { IPrintOrder, PrintOrderStatus } from '../../entities/print-order/IPrintOrder';
@@ -53,14 +52,11 @@ export class PrismaPrintOrderRepository implements IPrintOrdersRepository {
     return printOrders.map(printOrderMapper.toDomain);
   }
 
-  async create({ number, prints, userId }: PrintOrderCreateRequest): Promise<IPrintOrder> {
+  async create({ number, userId }: PrintOrderCreateRequest): Promise<IPrintOrder> {
     const printOrder = await prisma.printOrder.create({
       data: {
         number,
         userId,
-        Print: {
-          create: prints.map(printCreationMapper.toPersistence),
-        },
       },
       include,
     });
