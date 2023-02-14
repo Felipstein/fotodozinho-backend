@@ -182,3 +182,10 @@ model PurchaseOrderProduct {
 
   @@map("purchase_order_products")
 }
+
+model FailedImageUploaded {
+  id  String @id @default(cuid())
+  key String @unique
+
+  @@map("failed_images_uploaded")
+}
