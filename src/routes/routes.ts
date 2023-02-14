@@ -13,6 +13,7 @@ import { listShoppingCartsFactory } from '../modules/shopping-cart/listAll';
 import { ensureShoppingCartUser } from '../middlewares/ensureShoppingCartUser';
 import { currentShoppingCartsRepository, currentUsersRepository } from '../repositories';
 import { purchaseOrderRoutes } from './purchase-order.routes';
+import { failedImageUploadedRoutes } from './failed-image-uploaded.routes';
 
 const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
@@ -36,5 +37,7 @@ routes.get('/shopping-carts', (req, res) => {
 });
 
 routes.use('/purchase-orders', purchaseOrderRoutes);
+
+routes.use('/failed-images-uploaded', failedImageUploadedRoutes);
 
 export { routes };
