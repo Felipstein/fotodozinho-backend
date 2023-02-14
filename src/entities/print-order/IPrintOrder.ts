@@ -1,7 +1,7 @@
 import { PrintOrderStatus as PrismaPrintOrderStatus } from '@prisma/client';
 import { IPrint } from './print/IPrint';
 
-export type PrintOrderStatus = 'WAITING' | 'IN_PRODUCTION' | 'DONE';
+export type PrintOrderStatus = 'UPLOADING_IMAGES' | 'WAITING' | 'IN_PRODUCTION' | 'DONE';
 
 export function isPrintOrderStatus(value: string) {
   return value.toUpperCase() in PrismaPrintOrderStatus;
