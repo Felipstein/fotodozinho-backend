@@ -1,6 +1,6 @@
 import { IFailedImageUploaded } from '../../../entities/failed-image-uploaded/IFailedImageUploaded';
+import { FailedImageUploadedNotFoundError } from '../../../errors/FailedImageUploadedNotFoundError';
 import { NotFoundError } from '../../../errors/NotFoundError';
-import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IFailedImageUploadedRepository } from '../../../repositories/failed-images-uploaded/IFailedImagesUploadedRepository';
 
 export class ListFailedImageUploadedByKeyUseCases {
@@ -11,7 +11,7 @@ export class ListFailedImageUploadedByKeyUseCases {
 
   async execute(key: string): Promise<IFailedImageUploaded> {
     if(!key) {
-      throw new RequiredFieldsError('Nome da imagem');
+      throw new FailedImageUploadedNotFoundError();
     }
 
     const failedImageUploaded = await this.failedImagesUploadedRepository.listByKey(key);
