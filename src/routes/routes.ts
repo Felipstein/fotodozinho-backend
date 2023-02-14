@@ -14,6 +14,7 @@ import { ensureShoppingCartUser } from '../middlewares/ensureShoppingCartUser';
 import { currentShoppingCartsRepository, currentUsersRepository } from '../repositories';
 import { purchaseOrderRoutes } from './purchase-order.routes';
 import { failedImageUploadedRoutes } from './failed-image-uploaded.routes';
+import { printRoutes } from './print.routes';
 
 const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
@@ -24,6 +25,7 @@ routes.use('/notifications', notificationRoutes);
 
 routes.use('/print-prices', printPriceRoutes);
 routes.use('/colors', colorRoutes);
+routes.use('/prints', printRoutes);
 routes.use('/print-orders', printOrderRoutes);
 
 routes.use('/payment-methods', paymentMethodRoutes);
