@@ -7,7 +7,7 @@ export interface IFailedImageUploadedRepository {
 
   listByKey(key: string): Promise<IFailedImageUploaded>;
 
-  create({ key }: FailedImageUploadedCreateRequest): Promise<IFailedImageUploaded>;
+  create({ key, storagedType }: FailedImageUploadedCreateRequest): Promise<IFailedImageUploaded>;
 
   deleteByKey(key: string): Promise<void>;
 

@@ -1,20 +1,35 @@
 import { prisma } from '../../database';
 import { IFailedImageUploaded } from '../../entities/failed-image-uploaded/IFailedImageUploaded';
 import { FailedImageUploadedCreateRequest } from '../../entities/failed-image-uploaded/dtos/FailedImageUploadedCreateRequest';
+import { ImageStoragedService } from '../../services/image-storaged-type';
 import { IFailedImageUploadedRepository } from './IFailedImagesUploadedRepository';
 
 export class PrismaFailedImagesUploadedRepository implements IFailedImageUploadedRepository {
 
-  listAll(): Promise<IFailedImageUploaded[]> {
-    return prisma.failedImageUploaded.findMany();
+  async listAll(): Promise<IFailedImageUploaded[]> {
+    const failedImagesUploaded = await prisma.failedImageUploaded.findMany();
+
+    return failedImagesUploaded.map(({ id, key, storagedType }) =>
+      ({ id, key, storagedType: ImageStoragedService.convertStorageTypeFormat(storagedType) })
+    );
   }
 
-  listByKey(key: string): Promise<IFailedImageUploaded> {
-    return prisma.failedImageUploaded.findFirst({ where: { key } });
+  async listByKey(key: string): Promise<IFailedImageUploaded> {
+    const failedImageUploaded = await prisma.failedImageUploaded.findFirst({ where: { key } });
+
+    if(!failedImageUploaded) {
+      return null;
+    }
+
+    return { id: failedImageUploaded.id, key, storagedType: ImageStoragedService.convertStorageTypeFormat(failedImageUploaded.storagedType) };
   }
 
-  create({ key }: FailedImageUploadedCreateRequest): Promise<IFailedImageUploaded> {
-    return prisma.failedImageUploaded.create({ data: { key} });
+  async create({ key, storagedType }: FailedImageUploadedCreateRequest): Promise<IFailedImageUploaded> {
+    const storagedTypeConverted = ImageStoragedService.convertStorageTypePrismaFormat(storagedType);
+
+    const failedImageUploaded = await prisma.failedImageUploaded.create({ data: { key, storagedType: storagedTypeConverted } });
+
+    return { id: failedImageUploaded.id, key, storagedType };
   }
 
   async deleteByKey(key: string): Promise<void> {

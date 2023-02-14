@@ -6,6 +6,8 @@ import { listProductByIdFactory } from '../modules/product/listById';
 import { updateProductFactory } from '../modules/product/update';
 import { uploadProvider } from '../providers/Upload';
 import { createFailedImageUploadedFactory } from '../modules/failed-images-uploaded/create';
+import { EnvProvider } from '../services/env-provider';
+import { ImageStoragedService } from '../services/image-storaged-type';
 
 const route = Router();
 
@@ -27,7 +29,7 @@ route.post('/', uploadProvider.uploadSingleFile('fileImage'), (req, res) => {
     const key = keyS3 || keyLocal;
 
     if(key) {
-      createFailedImageUploadedFactory().useCases.execute({ key });
+      createFailedImageUploadedFactory().useCases.execute({ key, storagedType: ImageStoragedService.convertStorageTypeFormat(EnvProvider.storageType) });
     }
   }
 

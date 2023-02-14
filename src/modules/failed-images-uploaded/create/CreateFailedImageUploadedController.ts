@@ -8,9 +8,9 @@ export class CreateFailedImageUploadedController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { key } = req.body;
+    const { key, storagedType } = req.body;
 
-    const failedImageUploaded = await this.createFailedImageUploadedUseCases.execute({ key });
+    const failedImageUploaded = await this.createFailedImageUploadedUseCases.execute({ key, storagedType });
 
     return res.status(201).json(failedImageUploaded);
   }
