@@ -1,6 +1,13 @@
 import { ImageStoragedType } from '@prisma/client';
+import { EnvProvider } from './env-provider';
 
 class ImageStoragedService {
+
+  static getCurrentStorageType(): StorageType {
+    const storageType = EnvProvider.storageType;
+
+    return this.convertStorageTypeFormat(storageType);
+  }
 
   static isCorrectStorageTypeFormat(value: string) {
     return value.toUpperCase() in ImageStoragedType;

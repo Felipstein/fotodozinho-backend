@@ -7,7 +7,6 @@ import { ProductCategoryNotFoundError } from '../../../errors/ProductCategoryNot
 import { ProductNotFoundError } from '../../../errors/ProductNotFoundError';
 import { IProductCategoriesRepository } from '../../../repositories/product-categories/IProductCategoriesRepository';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
-import { EnvProvider } from '../../../services/env-provider';
 import { ImageDeleteService } from '../../../services/image-delete';
 import { ImageStoragedService } from '../../../services/image-storaged-type';
 import { ValidateService } from '../../../services/validate';
@@ -48,7 +47,7 @@ export class UpdateProductUseCases {
       await ImageDeleteService.deleteImage(productExists.key, oldImageStoragedType);
     } catch {}
 
-    const imageStoragedType = ImageStoragedService.convertStorageTypeFormat(EnvProvider.storageType);
+    const imageStoragedType = ImageStoragedService.getCurrentStorageType();
 
     const product = await this.productsRepository.update(id, {
       name, description, price, rated, imageName, imageUrl, key, categoryId, imageStoragedType,
