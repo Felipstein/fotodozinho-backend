@@ -8,11 +8,11 @@ export class CreatePrintOrderController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { prints, userId } = req.body;
+    const { userId } = req.body;
 
-    const { printOrder, rejectedPrints } = await this.createPrintOrderUseCases.execute({ prints, userId });
+    const printOrder = await this.createPrintOrderUseCases.execute({ userId });
 
-    return res.status(201).json({ printOrder, rejectedPrints });
+    return res.status(201).json(printOrder);
   }
 
 }
