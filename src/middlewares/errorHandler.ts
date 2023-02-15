@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { APIError } from '../errors/APIError';
 import { DetailedError } from '../errors/DetailedError';
 import { InternalServerError } from '../errors/InternalServerError';
+import { PartialContentError } from '../errors/PartialContentError';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function errorHandler(error: Error, req: Request, res: Response, next: NextFunction) {
@@ -9,6 +10,12 @@ export function errorHandler(error: Error, req: Request, res: Response, next: Ne
 
     if(error instanceof DetailedError) {
       return res.status(error.statusCode).json({ message: error.message, details: error.details });
+    }
+
+    if(error instanceof PartialContentError) {
+      console.warn('#### UNKNOW ERROR ####');
+      console.error(error);
+      console.warn('#### UNKNOW ERROR ####');
     }
 
     return res.status(error.statusCode).json({ message: error.message });
