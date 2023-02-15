@@ -4,7 +4,8 @@ import { printMapper } from '../../domain/PrintMapper';
 import { PrintCreateRequest } from '../../entities/print-order/print/dtos/PrintCreateRequest';
 import { IPrint } from '../../entities/print-order/print/IPrint';
 import { ImageStoragedService } from '../../services/image-storaged-type';
-import { IPrintsRepository, PrintsListProperties } from './IPrintsRepository';
+import { PrintFilterProperties } from '../../shared/PrintFilterProperties';
+import { IPrintsRepository } from './IPrintsRepository';
 
 const include = {
   printPrice: true,
@@ -13,7 +14,7 @@ const include = {
 
 export class PrismaPrintsRepository implements IPrintsRepository {
 
-  async listManyByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintsListProperties): Promise<IPrint[]> {
+  async listManyByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintFilterProperties): Promise<IPrint[]> {
     const prints = await prisma.print.findMany({
       where: { printOrderId, imageName, imageUrl, key, colorId, printPriceId },
       include,
@@ -22,7 +23,7 @@ export class PrismaPrintsRepository implements IPrintsRepository {
     return prints.map(printMapper.toDomain);
   }
 
-  async listFirstByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintsListProperties): Promise<IPrint> {
+  async listFirstByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintFilterProperties): Promise<IPrint> {
     const print = await prisma.print.findFirst({
       where: { printOrderId, imageName, imageUrl, key, colorId, printPriceId },
       include,
