@@ -8,11 +8,11 @@ export class ListPrintsController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { imageName, imageUrl, key, colorId, printPriceId, printOrderId } = req.query as {
-      imageName: string, imageUrl: string, key: string, colorId: string, printPriceId: string, printOrderId: string,
+    const { key, printOrderId } = req.query as {
+      key: string, printOrderId: string,
     };
 
-    const prints = await this.listPrintsUseCases.execute({ imageName, imageUrl, key, colorId, printPriceId, printOrderId });
+    const prints = await this.listPrintsUseCases.execute({ key, printOrderId });
 
     return res.json(prints);
   }
