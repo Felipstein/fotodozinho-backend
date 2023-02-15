@@ -1,4 +1,4 @@
-import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, DeleteObjectsCommand, S3Client } from '@aws-sdk/client-s3';
 
 class S3ClientService {
 
@@ -18,6 +18,15 @@ class S3ClientService {
     await this.client.send(new DeleteObjectCommand({
       Bucket: bucketName,
       Key: imageKey,
+    }));
+  }
+
+  async deleteFiles(bucketName: string, imagesKey: string[]) {
+    await this.client.send(new DeleteObjectsCommand({
+      Bucket: bucketName,
+      Delete: {
+        Objects: imagesKey.map(key => ({ Key: key })),
+      }
     }));
   }
 

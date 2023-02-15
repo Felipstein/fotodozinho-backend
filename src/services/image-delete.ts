@@ -20,6 +20,16 @@ class ImageDeleteService {
     throw new Error('Invalid storage type');
   }
 
+  static async deleteImages(images: ({ key: string, storagedType: StorageType })[]) {
+    const getKey = (image: any) => image.key;
+
+    const localImages = images.filter(image => image.storagedType === 'local').map(getKey);
+    const s3Images = images.filter(image => image.storagedType === 's3').map(getKey);
+
+    await LocalFileManagerService.deleteImages(localImages);
+    await s3ClientService.deleteFiles(EnvProvider.aws.bucketName, s3Images);
+  }
+
 }
 
 export { ImageDeleteService };

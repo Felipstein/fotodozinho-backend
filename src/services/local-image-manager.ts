@@ -15,6 +15,18 @@ class LocalFileManagerService {
     await unlink(image);
   }
 
+  static async deleteImages(imagesKey: string[]) {
+    const unlink = promisify(fs.unlink);
+
+    for(const imageKey of imagesKey) {
+      const image = path.resolve(__dirname, '..', '..', 'tmp', 'uploads', imageKey);
+
+      if(fs.existsSync(image)) {
+        await unlink(image);
+      }
+    }
+  }
+
 }
 
 export { LocalFileManagerService };
