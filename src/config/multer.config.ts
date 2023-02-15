@@ -10,13 +10,19 @@ import { ImageStoragedService } from '../services/image-storaged-type';
 
 const localPath = path.resolve(__dirname, '..', '..', 'tmp', 'uploads');
 
-const isS3StorageType = EnvProvider.storageType === 's3';
+function verifyAWSCredentials() {
+  const { region, bucketName, accessKeyId, secretAccessKey } = EnvProvider.aws;
 
-export const s3ClientService = isS3StorageType && new S3ClientService(
+  return Boolean(region && bucketName && accessKeyId && secretAccessKey);
+}
+
+const hasAWSCredentials = verifyAWSCredentials();
+
+export const s3ClientService = hasAWSCredentials ? new S3ClientService(
   EnvProvider.aws.region,
   EnvProvider.aws.accessKeyId,
   EnvProvider.aws.secretAccessKey,
-);
+) : null;
 
 const storageType = {
   local: multer.diskStorage({
@@ -39,7 +45,7 @@ const storageType = {
     }
   }),
 
-  s3: isS3StorageType && multerS3({
+  s3: hasAWSCredentials ? multerS3({
     s3: s3ClientService.client,
 
     bucket: EnvProvider.aws.bucketName,
@@ -60,13 +66,13 @@ const storageType = {
         callback(null, fileName);
       });
     },
-  }),
+  }) : null,
 };
 
 export default {
   dest: localPath,
 
-  storage: storageType[ImageStoragedService.convertStorageTypeFormat(EnvProvider.storageType) || 'local'],
+  storage: storageType[ImageStoragedService.getCurrentStorageType() || 'local'],
 
   fileFilter(req, file, callback) {
     const mimeType = /image\/.+/;

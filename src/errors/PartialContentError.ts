@@ -2,8 +2,11 @@ import { APIError } from './APIError';
 
 export class PartialContentError extends APIError {
 
-  constructor(message: string) {
+  readonly errorOcurred: Error;
+
+  constructor(message: string, errorOcurred: Error) {
     super(206, message);
+    this.errorOcurred = errorOcurred;
   }
 
 }

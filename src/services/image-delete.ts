@@ -12,7 +12,7 @@ class ImageDeleteService {
       return;
     }
 
-    if(storageType === 's3') {
+    if(storageType === 's3' && s3ClientService) {
       await s3ClientService.deleteFile(EnvProvider.aws.bucketName, key);
       return;
     }
@@ -26,8 +26,13 @@ class ImageDeleteService {
     const localImages = images.filter(image => image.storagedType === 'local').map(getKey);
     const s3Images = images.filter(image => image.storagedType === 's3').map(getKey);
 
-    await LocalFileManagerService.deleteImages(localImages);
-    await s3ClientService.deleteFiles(EnvProvider.aws.bucketName, s3Images);
+    if(localImages.length > 0) {
+      await LocalFileManagerService.deleteImages(localImages);
+    }
+
+    if(s3Images.length > 0 && s3ClientService) {
+      await s3ClientService.deleteFiles(EnvProvider.aws.bucketName, s3Images);
+    }
   }
 
 }

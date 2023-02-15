@@ -22,7 +22,8 @@ export class DeletePrintOrderUseCases {
       throw new PrintOrderNotFound();
     }
 
-    const prints = await this.printsRepository.listManyByProperties({ printPriceId: id });
+    const prints = await this.printsRepository.listManyByProperties({ printOrderId: id });
+
     const imagesKey = prints.map(print => ({ key: print.key, storagedType: print.imageStoragedType }));
 
     await this.printOrdersRepository.delete(id);
@@ -30,7 +31,7 @@ export class DeletePrintOrderUseCases {
     try {
       await ImageDeleteService.deleteImages(imagesKey);
     } catch(err: any) {
-      throw new PartialContentError('O pedido de impressão foi deletado com êxito, mas algumas imagens para a impressão podem não ter sido removidas com o mesmo êxito');
+      throw new PartialContentError('O pedido de impressão foi deletado com êxito, mas algumas imagens para a impressão podem não ter sido removidas com o mesmo êxito', err);
     }
   }
 

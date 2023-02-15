@@ -14,7 +14,7 @@ export function errorHandler(error: Error, req: Request, res: Response, next: Ne
 
     if(error instanceof PartialContentError) {
       console.warn('#### UNKNOW ERROR ####');
-      console.error(error);
+      console.error(error.errorOcurred);
       console.warn('#### UNKNOW ERROR ####');
     }
 
