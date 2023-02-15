@@ -42,14 +42,18 @@ export class CreatePurchaseOrderUseCases {
       throw new PaymentMethodNotFoundError();
     }
 
-    const userExists = await this.usersRepository.listById(userId);
-    if(!userExists) {
+    const user = await this.usersRepository.listById(userId);
+    if(!user) {
       throw new UserNotFoundError();
     }
 
+    const number = user.totalPurchaseOrders + 1;
+
     const purchaseOrder = await this.purchaseOrdersRepository.create({
-      number: 32, paymentMethodId, products: validProducts, userId,
+      number, paymentMethodId, products: validProducts, userId,
     });
+
+    await this.usersRepository.update(user.id, { totalPurchaseOrders: number }, false);
 
     return purchaseOrder;
   }
