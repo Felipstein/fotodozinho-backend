@@ -1,4 +1,4 @@
-import { IPrintOrder, PrintOrderStatus, isPrintOrderStatus } from '../../../entities/print-order/IPrintOrder';
+import { IPrintOrder, PrintOrderStatus, isPrintOrderStatus, convertPrintOrderStatus } from '../../../entities/print-order/IPrintOrder';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { PrintOrderNotFound } from '../../../errors/PrintOrderNotFoundError';
@@ -29,7 +29,7 @@ export class UpdatePrintOrderStatusUseCases {
       throw new PrintOrderNotFound();
     }
 
-    const printOrderUpdated = await this.printOrdersRepository.updateStatus(id, newStatus);
+    const printOrderUpdated = await this.printOrdersRepository.updateStatus(id, convertPrintOrderStatus(newStatus));
 
     return printOrderUpdated;
   }
