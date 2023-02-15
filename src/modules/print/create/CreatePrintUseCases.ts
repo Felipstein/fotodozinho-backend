@@ -32,9 +32,13 @@ export class CreatePrintUseCases {
       throw new NumberValidationError('Quantidade');
     }
 
-    const printOrderExists = await this.printOrdersRepository.listById(printOrderId);
-    if(!printOrderExists) {
+    const printOrder = await this.printOrdersRepository.listById(printOrderId);
+    if(!printOrder) {
       throw new PrintOrderNotFound();
+    }
+
+    if(printOrder.status !== 'UPLOADING_IMAGES') {
+      throw new BadRequestError('Não é mais possível enviar novas fotos para esse pedido, pois o pedido está em andamento ou já foi finalizado');
     }
 
     const colorExists = await this.colorsRepository.listById(colorId);
@@ -49,7 +53,7 @@ export class CreatePrintUseCases {
 
     const printExists = await this.printsRepository.listFirstByProperties({ imageUrl, key });
     if(printExists) {
-      throw new BadRequestError('Esse pedido foto já está registrado.');
+      throw new BadRequestError('Esse pedido foto já está registrado');
     }
 
     const imageStoragedType = ImageStoragedService.getCurrentStorageType();
