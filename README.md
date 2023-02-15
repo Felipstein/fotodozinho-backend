@@ -1,5 +1,4 @@
 # A fazer:
-- Finalizra os serviços de pedido para impressão
 - Criar as rotas para autenticação do usuário
 - Criar o sistema de ensure-auth
 - Criar entidade/CRUD de Refresh Tokens
