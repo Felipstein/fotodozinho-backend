@@ -6,6 +6,7 @@ import { listProductByIdFactory } from '../modules/product/listById';
 import { updateProductFactory } from '../modules/product/update';
 import { uploadProvider } from '../providers/Upload';
 import { imageUploadCaptureError } from '../middlewares/imageUploadCaptureError';
+import { imageDataTransform } from '../middlewares/imageDataTransform';
 
 const route = Router();
 
@@ -17,7 +18,7 @@ route.get('/:id', (req, res) => {
   return listProductByIdFactory().controller.handle(req, res);
 });
 
-route.post('/', uploadProvider.uploadSingleFile('fileImage'), (req: Request, res: Response) => {
+route.post('/', uploadProvider.uploadSingleFile('fileImage'), imageDataTransform, (req: Request, res: Response) => {
   return createProductFactory().controller.handle(req, res);
 }, imageUploadCaptureError);
 
