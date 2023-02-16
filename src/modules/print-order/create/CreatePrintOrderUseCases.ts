@@ -1,11 +1,13 @@
 import { PrintOrderCreateRequest } from '../../../entities/print-order/dtos/PrintOrderCreateRequest';
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
 import { ForbiddenError } from '../../../errors/ForbiddenError';
+import { NumberValidationError } from '../../../errors/NumberValidationError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { UnauthorizedError } from '../../../errors/UnauthorizedError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
+import { ValidateService } from '../../../services/validate';
 
 export class CreatePrintOrderUseCases {
 
@@ -14,15 +16,18 @@ export class CreatePrintOrderUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute({ userId }: Omit<PrintOrderCreateRequest, 'number'>, requestingUserId: string): Promise<IPrintOrder> {
-    if(!userId) {
-      throw new RequiredFieldsError('Usuário');
+  async execute({ totalPrintsExpected, userId }: Omit<PrintOrderCreateRequest, 'number'>, requestingUserId: string): Promise<IPrintOrder> {
+    if(!ValidateService.someIsNullOrUndefined(totalPrintsExpected)) {
+      throw new RequiredFieldsError('Total de fotos esperado', 'Usuário');
     }
 
     if(!requestingUserId) {
       throw new UnauthorizedError();
     }
 
+    if(isNaN(totalPrintsExpected)) {
+      throw new NumberValidationError('Total de fotos esperado');
+    }
 
     const user = await this.usersRepository.listById(userId);
     if(!user) {
@@ -36,7 +41,7 @@ export class CreatePrintOrderUseCases {
     const number = user.totalPrintOrders + 1;
 
     const printOrder = await this.printOrdersRepository.create({
-      number, userId,
+      number, totalPrintsExpected, userId,
     });
 
     await this.usersRepository.update(userId, { totalPrintOrders: number }, false);
