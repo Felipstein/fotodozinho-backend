@@ -5,10 +5,12 @@ import { createPurchaseOrderFactory } from '../modules/purchase-order/create';
 import { updatePurchaseOrderFactory } from '../modules/purchase-order/update';
 import { updatePurchaseOrderPaymentMethodFactory } from '../modules/purchase-order/updatePaymentMethod';
 import { deletePurchaseOrderFactory } from '../modules/purchase-order/delete';
+import { ensureAdminUser } from '../middlewares/ensureAdminUser';
+import { ensureAuth } from '../middlewares/ensureAuth';
 
 const route = Router();
 
-route.get('/', (req, res) => {
+route.get('/', ensureAuth, ensureAdminUser, (req, res) => {
   return listPurchaseOrdersFactory().controller.handle(req, res);
 });
 

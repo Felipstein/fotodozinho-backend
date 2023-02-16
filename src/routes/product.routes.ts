@@ -7,8 +7,12 @@ import { updateProductFactory } from '../modules/product/update';
 import { uploadProvider } from '../providers/Upload';
 import { imageUploadCaptureError } from '../middlewares/imageUploadCaptureError';
 import { imageDataTransform } from '../middlewares/imageDataTransform';
+import { ensureAdminUser } from '../middlewares/ensureAdminUser';
+import { ensureAuth } from '../middlewares/ensureAuth';
 
 const route = Router();
+
+route.use(ensureAuth);
 
 route.get('/', (req, res) => {
   return listProductsFactory().controller.handle(req, res);
@@ -17,6 +21,8 @@ route.get('/', (req, res) => {
 route.get('/:id', (req, res) => {
   return listProductByIdFactory().controller.handle(req, res);
 });
+
+route.use(ensureAdminUser);
 
 route.post('/', uploadProvider.uploadSingleFile('fileImage'), imageDataTransform, (req: Request, res: Response) => {
   return createProductFactory().controller.handle(req, res);

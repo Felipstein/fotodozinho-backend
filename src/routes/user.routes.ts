@@ -6,8 +6,12 @@ import { createUserFactory } from '../modules/user/create';
 import { updateUserFactory } from '../modules/user/update';
 import { deleteUserFactory } from '../modules/user/delete';
 import { listUserByEmailFactory } from '../modules/user/listByEmail';
+import { ensureAuth } from '../middlewares/ensureAuth';
+import { ensureAdminUser } from '../middlewares/ensureAdminUser';
 
 const route = Router();
+
+route.use(ensureAuth, ensureAdminUser);
 
 route.get('/', (req, res) => {
   return listUsersFactory().controller.handle(req, res);

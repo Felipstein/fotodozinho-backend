@@ -4,8 +4,12 @@ import { listFailedImagesUploadedFactory } from '../modules/failed-images-upload
 import { listFailedImageUploadedByKeyFactory } from '../modules/failed-images-uploaded/listByKey';
 import { deleteFailedImageUploadedByKeyFactory } from '../modules/failed-images-uploaded/deleteByKey';
 import { deleteFailedImagesUploadedFactory } from '../modules/failed-images-uploaded/deleteAll';
+import { ensureAuth } from '../middlewares/ensureAuth';
+import { ensureAdminUser } from '../middlewares/ensureAdminUser';
 
 const route = Router();
+
+route.use(ensureAuth, ensureAdminUser);
 
 route.get('/', (req, res) => {
   return listFailedImagesUploadedFactory().controller.handle(req, res);
