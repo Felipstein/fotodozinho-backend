@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 
 import { userRoutes } from './user.routes';
 import { printPriceRoutes } from './print-price.routes';
@@ -44,5 +44,13 @@ routes.get('/shopping-carts', (req, res) => {
 routes.use('/purchase-orders', purchaseOrderRoutes);
 
 routes.use('/failed-images-uploaded', failedImageUploadedRoutes);
+
+routes.get('/test', (req, res) => {
+
+  const bearerToken = req.headers.authorization;
+  console.log(bearerToken);
+
+  return res.json({ bearerToken });
+});
 
 export { routes };
