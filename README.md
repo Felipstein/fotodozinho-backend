@@ -1,6 +1,5 @@
 # A fazer:
-- Criar as rotas para autenticação do usuário
-- Criar o sistema de ensure-auth
+- Criar sistema para os controllers das rotas a ROTA AUTENTICADA e ROTA AUTORIZADA, na qual o controller será executado caso o usuário esteja autenticado ou seja autorizado (administrador), respectivamente.
 - Criar entidade/CRUD de Refresh Tokens
 - Configurar algum provedor de e-mails
 - Criar a rota para alteração de senha via usuário
