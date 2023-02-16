@@ -2,6 +2,7 @@ const EnvProvider = {
   host: process.env.HOST,
   port: process.env.PORT,
   secretKey: process.env.SECRET_KEY,
+  adminPassword: process.env.ADMIN_PASSWORD,
   storageType: process.env.STORAGE_TYPE,
   aws: {
     bucketName: process.env.AWS_BUCKET_NAME,
