@@ -11,7 +11,7 @@ export class DeleteShoppingCartProductsController {
     const { userId } = req;
     const { productsId } = req.body;
 
-    await this.deleteShoppingCartProductsUseCases.execute(userId, productsId);
+    await this.deleteShoppingCartProductsUseCases.execute(userId, req.userId, productsId);
 
     return res.sendStatus(204);
   }

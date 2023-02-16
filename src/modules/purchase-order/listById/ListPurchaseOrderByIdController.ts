@@ -10,7 +10,7 @@ export class ListPurchaseOrderByIdController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-    const purchaseOrder = await this.listPurchaseOrderByIdUseCases.execute(id);
+    const purchaseOrder = await this.listPurchaseOrderByIdUseCases.execute(id, req.userId);
 
     return res.json(purchaseOrder);
   }

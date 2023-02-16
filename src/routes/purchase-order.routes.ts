@@ -10,7 +10,9 @@ import { ensureAuth } from '../middlewares/ensureAuth';
 
 const route = Router();
 
-route.get('/', ensureAuth, ensureAdminUser, (req, res) => {
+route.use(ensureAuth);
+
+route.get('/', ensureAdminUser, (req, res) => {
   return listPurchaseOrdersFactory().controller.handle(req, res);
 });
 
@@ -22,7 +24,7 @@ route.post('/', (req, res) => {
   return createPurchaseOrderFactory().controller.handle(req, res);
 });
 
-route.put('/:id', (req, res) => {
+route.put('/:id', ensureAdminUser, (req, res) => {
   return updatePurchaseOrderFactory().controller.handle(req, res);
 });
 

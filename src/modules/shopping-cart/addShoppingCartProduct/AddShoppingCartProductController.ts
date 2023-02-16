@@ -11,7 +11,7 @@ export class AddShoppingCartProductController {
     const { userId } = req;
     const { productId, quantity } = req.body;
 
-    const product = await this.addShoppingCartProductUseCases.execute(userId, { productId, quantity });
+    const product = await this.addShoppingCartProductUseCases.execute(userId, { productId, quantity }, req.userId);
 
     return res.status(201).json(product);
   }

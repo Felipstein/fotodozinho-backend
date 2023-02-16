@@ -3,8 +3,11 @@ import { listShoppingCartByUserIdFactory } from '../modules/shopping-cart/listBy
 import { listShoppingCartProductFactory } from '../modules/shopping-cart/listShoppingCartProduct';
 import { addShoppingCartProductFactory } from '../modules/shopping-cart/addShoppingCartProduct';
 import { deleteShoppingCartProductsFactory } from '../modules/shopping-cart/deleteShoppingCartProducts';
+import { ensureAuth } from '../middlewares/ensureAuth';
 
 const route = Router();
+
+route.use(ensureAuth);
 
 route.get('/', (req, res) => {
   return listShoppingCartByUserIdFactory().controller.handle(req, res);

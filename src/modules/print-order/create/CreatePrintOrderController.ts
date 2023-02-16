@@ -10,7 +10,7 @@ export class CreatePrintOrderController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { userId } = req.body;
 
-    const printOrder = await this.createPrintOrderUseCases.execute({ userId });
+    const printOrder = await this.createPrintOrderUseCases.execute({ userId }, req.userId);
 
     return res.status(201).json(printOrder);
   }

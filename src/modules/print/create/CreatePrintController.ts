@@ -13,7 +13,7 @@ export class CreatePrintController {
 
     const print = await this.createPrintUseCases.execute({
       imageName, imageUrl, key, border, colorId, printPriceId, quantity, printOrderId,
-    });
+    }, req.userId);
 
     return res.status(201).json(print);
   }

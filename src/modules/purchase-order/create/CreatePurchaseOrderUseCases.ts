@@ -10,6 +10,8 @@ import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
 import { ValidateService } from '../../../services/validate';
+import { UnauthorizedError } from '../../../errors/UnauthorizedError';
+import { ForbiddenError } from '../../../errors/ForbiddenError';
 
 export class CreatePurchaseOrderUseCases {
 
@@ -20,9 +22,17 @@ export class CreatePurchaseOrderUseCases {
     private productsRepository: IProductsRepository,
   ) { }
 
-  async execute({ paymentMethodId, products, userId }: Omit<PurchaseOrderCreateRequest, 'number'>): Promise<IPurchaseOrder> {
+  async execute({ paymentMethodId, products, userId }: Omit<PurchaseOrderCreateRequest, 'number'>, requestingUserId: string): Promise<IPurchaseOrder> {
     if(ValidateService.someIsNullOrUndefined(paymentMethodId, products, userId)) {
       throw new RequiredFieldsError('Método de pagamento', 'Produtos', 'Usuário');
+    }
+
+    if(!requestingUserId) {
+      throw new UnauthorizedError();
+    }
+
+    if(requestingUserId !== userId) {
+      throw new ForbiddenError();
     }
 
     if(!isArray(products)) {

@@ -9,12 +9,20 @@ import { uploadProvider } from '../providers/Upload';
 
 const route = Router();
 
-route.get('/', ensureAuth, ensureAdminUser, (req, res) => {
+route.use(ensureAuth);
+
+route.get('/', ensureAdminUser, (req, res) => {
   return listPrintsFactory().controller.handle(req, res);
 });
 
-route.post('/', , uploadProvider.uploadSingleFile('fileImage'), imageDataTransform, (req: Request, res: Response) => {
-  return createPrintFactory().controller.handle(req, res);
-}, imageUploadCaptureError);
+route.post(
+  '/',
+  uploadProvider.uploadSingleFile('fileImage'),
+  imageDataTransform,
+  (req: Request, res: Response) => {
+    return createPrintFactory().controller.handle(req, res);
+  },
+  imageUploadCaptureError
+);
 
 export { route as printRoutes };

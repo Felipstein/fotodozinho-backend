@@ -2,10 +2,12 @@ import { PrintCreateRequest } from '../../../entities/print-order/print/dtos/Pri
 import { IPrint } from '../../../entities/print-order/print/IPrint';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { ColorNotFoundError } from '../../../errors/ColorNotFoundError';
+import { ForbiddenError } from '../../../errors/ForbiddenError';
 import { NumberValidationError } from '../../../errors/NumberValidationError';
 import { PrintOrderNotFound } from '../../../errors/PrintOrderNotFoundError';
 import { PrintPriceNotFound } from '../../../errors/PrintPriceNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { UnauthorizedError } from '../../../errors/UnauthorizedError';
 import { IColorsRepository } from '../../../repositories/colors/IColorsRepository';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
@@ -23,7 +25,23 @@ export class CreatePrintUseCases {
     private printPricesRepository: IPrintPricesRepository,
   ) { }
 
-  async execute({ imageName, imageUrl, key, border, colorId, printPriceId, quantity, printOrderId }: Omit<PrintCreateRequest, 'imageStoragedType'>): Promise<IPrint> {
+  async execute(
+    {
+      imageName,
+      imageUrl,
+      key,
+      border,
+      colorId,
+      printPriceId,
+      quantity,
+      printOrderId
+    }: Omit<PrintCreateRequest, 'imageStoragedType'>,
+    requestingUserId: string,
+  ): Promise<IPrint> {
+    if(!requestingUserId) {
+      throw new UnauthorizedError();
+    }
+
     if(ValidateService.someIsNullOrUndefined(imageName, imageUrl, key, border, colorId, printPriceId, quantity, printOrderId)) {
       throw new RequiredFieldsError('Nome da imagem', 'URL da imagem', 'Imagem', 'Borda', 'Cor/tipo', 'Preço/tamanho', 'Quantidade', 'Identificador do pedido');
     }
@@ -35,6 +53,10 @@ export class CreatePrintUseCases {
     const printOrder = await this.printOrdersRepository.listById(printOrderId);
     if(!printOrder) {
       throw new PrintOrderNotFound();
+    }
+
+    if(requestingUserId !== printOrder.userId) {
+      throw new ForbiddenError();
     }
 
     if(printOrder.status !== 'UPLOADING_IMAGES') {
@@ -51,7 +73,7 @@ export class CreatePrintUseCases {
       throw new PrintPriceNotFound();
     }
 
-    const printExists = await this.printsRepository.listFirstByProperties({ imageUrl, key });
+    const printExists = await this.printsRepository.listFirstByProperties({ key });
     if(printExists) {
       throw new BadRequestError('Esse pedido foto já está registrado');
     }

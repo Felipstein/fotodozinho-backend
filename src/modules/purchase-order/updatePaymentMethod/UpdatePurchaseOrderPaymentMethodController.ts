@@ -11,7 +11,7 @@ export class UpdatePurchaseOrderPaymentMethodController {
     const { id } = req.params;
     const { paymentMethod } = req.body;
 
-    const purchaseOrder = await this.updatePurchaseOrderPaymentMethodUseCases.execute(id, paymentMethod);
+    const purchaseOrder = await this.updatePurchaseOrderPaymentMethodUseCases.execute(id, paymentMethod, req.userId);
 
     return res.json(purchaseOrder);
   }

@@ -10,7 +10,7 @@ export class CreatePurchaseOrderController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { paymentMethodId, products, userId } = req.body;
 
-    const purchaseOrder = await this.createPurchaseOrderUseCases.execute({ paymentMethodId, products, userId });
+    const purchaseOrder = await this.createPurchaseOrderUseCases.execute({ paymentMethodId, products, userId }, req.userId);
 
     return res.status(201).json(purchaseOrder);
   }

@@ -12,7 +12,7 @@ export class ListShoppingCartProductController {
     const { userId } = req;
     const { productId } = req.params;
 
-    const product = await this.listShoppingCartProductUseCases.execute(userId, productId);
+    const product = await this.listShoppingCartProductUseCases.execute(userId, productId, req.userId);
     if(!product) {
       throw new ShoppingCartProductNotFoundError();
     }

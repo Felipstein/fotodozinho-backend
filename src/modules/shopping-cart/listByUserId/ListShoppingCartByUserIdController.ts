@@ -10,7 +10,7 @@ export class ListShoppingCartByUserIdController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { userId } = req;
 
-    const shoppingCart = await this.listShoppingCartByUserIdUseCases.execute(userId);
+    const shoppingCart = await this.listShoppingCartByUserIdUseCases.execute(userId, req.userId);
 
     return res.json(shoppingCart);
   }

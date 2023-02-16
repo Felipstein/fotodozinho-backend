@@ -8,6 +8,8 @@ import { ShoppingCartNotFoundError } from '../../../errors/ShoppingCartNotFoundE
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
 import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
 import { ValidateService } from '../../../services/validate';
+import { UnauthorizedError } from '../../../errors/UnauthorizedError';
+import { ForbiddenError } from '../../../errors/ForbiddenError';
 
 export class AddShoppingCartProductUseCases {
 
@@ -16,9 +18,17 @@ export class AddShoppingCartProductUseCases {
     private productsRepository: IProductsRepository,
   ) { }
 
-  async execute(userId: string, { productId, quantity }: ShoppingCartProductCreateRequest): Promise<IShoppingCartProduct> {
+  async execute(userId: string, { productId, quantity }: ShoppingCartProductCreateRequest, requestingUserId: string): Promise<IShoppingCartProduct> {
+    if(!requestingUserId) {
+      throw new UnauthorizedError();
+    }
+
     if(ValidateService.someIsNullOrUndefined(userId, productId)) {
       throw new RequiredFieldsError('Usuário', 'Produto');
+    }
+
+    if(requestingUserId !== userId) {
+      throw new ForbiddenError();
     }
 
     if(quantity && isNaN(quantity)) {

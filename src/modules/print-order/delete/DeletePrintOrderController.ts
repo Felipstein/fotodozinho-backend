@@ -10,7 +10,7 @@ export class DeletePrintOrderController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-    await this.deletePrintOrderUseCases.execute(id);
+    await this.deletePrintOrderUseCases.execute(id, req.userId);
 
     return res.sendStatus(204);
   }

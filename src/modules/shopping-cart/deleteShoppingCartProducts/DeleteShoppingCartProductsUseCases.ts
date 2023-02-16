@@ -1,5 +1,7 @@
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { ForbiddenError } from '../../../errors/ForbiddenError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { UnauthorizedError } from '../../../errors/UnauthorizedError';
 import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
 
 export class DeleteShoppingCartProductsUseCases {
@@ -8,9 +10,17 @@ export class DeleteShoppingCartProductsUseCases {
     private shoppingCartsRepository: IShoppingCartsRepository,
   ) { }
 
-  async execute(userId: string, productsId?: string[]): Promise<void> {
+  async execute(userId: string, requestingUserId: string, productsId?: string[]): Promise<void> {
+    if(!requestingUserId) {
+      throw new UnauthorizedError();
+    }
+
     if(!userId) {
       throw new RequiredFieldsError('Usuário');
+    }
+
+    if(requestingUserId !== userId) {
+      throw new ForbiddenError();
     }
 
     if(!productsId) {
