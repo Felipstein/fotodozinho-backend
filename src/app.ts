@@ -4,6 +4,7 @@ import 'dotenv/config';
 
 import { routes } from './routes/routes';
 import { errorHandler } from './middlewares/errorHandler';
+import './infra/scheduler';
 
 const app = express();
 
