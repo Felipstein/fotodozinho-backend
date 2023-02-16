@@ -20,6 +20,7 @@ import { UnauthorizedError } from '../errors/UnauthorizedError';
 import { BadRequestError } from '../errors/BadRequestError';
 import { InvalidTokenError } from '../errors/InvalidTokenError';
 import { tokenProvider } from '../providers/Token';
+import { RevokedTokenError } from '../errors/RevokedTokenError';
 
 const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
@@ -66,18 +67,7 @@ routes.get('/test', async (req, res) => {
     throw new InvalidTokenError();
   }
 
-  try {
-    tokenProvider.verify(token);
-  } catch (err: any) {
-    console.log(err);
-    throw new InvalidTokenError();
-  }
-
-  const isRevoked = await currentRevokedTokensRepository.listByToken(token);
-  if(isRevoked) {
-    console.log('revogado');
-    throw new InvalidTokenError();
-  }
+  await tokenProvider.verify(token);
 
   return res.sendStatus(200);
 });
