@@ -16,6 +16,7 @@ class PrintOrderMapper {
     return {
       id: persistencePrintOrder.id,
       status: persistencePrintOrder.status,
+      totalPrintsExpected: Number(persistencePrintOrder.totalPrintsExpected),
       userId: persistencePrintOrder.userId,
       createdAt: persistencePrintOrder.createdAt,
       number: Number(persistencePrintOrder.number),
