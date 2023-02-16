@@ -1,5 +1,4 @@
 # A fazer:
-- Criar o controle sobre fotos para serem feitos upload: quantidade total esperada
 - Criar sistema para os controllers das rotas a ROTA AUTENTICADA e ROTA AUTORIZADA, na qual o controller será executado caso o usuário esteja autenticado ou seja autorizado (administrador), respectivamente.
 - Criar entidade/CRUD de Refresh Tokens
 - Configurar algum provedor de e-mails
