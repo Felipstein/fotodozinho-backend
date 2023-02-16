@@ -64,13 +64,14 @@ enum PrintOrderStatus {
 }
 
 model PrintOrder {
-  id        String           @id @default(cuid())
-  number    Decimal
-  status    PrintOrderStatus @default(UPLOADING_IMAGES)
-  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  createdAt DateTime         @default(now())
-  Print     Print[]
+  id                  String           @id @default(cuid())
+  number              Decimal
+  status              PrintOrderStatus @default(UPLOADING_IMAGES)
+  totalPrintsExpected Decimal
+  user                User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String
+  createdAt           DateTime         @default(now())
+  Print               Print[]
 
   @@map("print_orders")
 }
