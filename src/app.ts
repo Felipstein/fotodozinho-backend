@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import 'express-async-errors';
 import 'dotenv/config';
 
@@ -25,9 +26,8 @@ function main() {
 main();
 
 app.use(express.json());
-
+app.use('/images', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')));
 app.use(routes);
-
 app.use(errorHandler);
 
 export { app };
