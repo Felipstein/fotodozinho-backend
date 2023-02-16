@@ -4,10 +4,10 @@ import { UnauthorizedError } from '../errors/UnauthorizedError';
 import { currentUsersRepository } from '../repositories';
 
 export async function ensureSelfAction(req: Request, res: Response, next: NextFunction) {
-  const { userId: userIdRequesting } = req.params;
-  const { userId: userIdAuthenticated } = req;
+  const { userId: userIdAction } = req.params;
+  const { userId: userIdRequesting } = req;
 
-  if(!userIdAuthenticated) {
+  if(!userIdRequesting) {
     throw new UnauthorizedError();
   }
 
@@ -20,7 +20,7 @@ export async function ensureSelfAction(req: Request, res: Response, next: NextFu
     return next();
   }
 
-  if(userIdRequesting !== userIdAuthenticated) {
+  if(userIdRequesting !== userIdAction) {
     throw new ForbiddenError();
   }
 
