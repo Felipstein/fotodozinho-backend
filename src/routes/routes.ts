@@ -11,11 +11,15 @@ import { productRoutes } from './product.routes';
 import { shoppingCartRoutes } from './shopping-cart.routes';
 import { listShoppingCartsFactory } from '../modules/shopping-cart/listAll';
 import { ensureShoppingCartUser } from '../middlewares/ensureShoppingCartUser';
-import { currentShoppingCartsRepository, currentUsersRepository } from '../repositories';
+import { currentRevokedTokensRepository, currentShoppingCartsRepository, currentUsersRepository } from '../repositories';
 import { purchaseOrderRoutes } from './purchase-order.routes';
 import { failedImageUploadedRoutes } from './failed-image-uploaded.routes';
 import { printRoutes } from './print.routes';
 import { authRoutes } from './auth.routes';
+import { UnauthorizedError } from '../errors/UnauthorizedError';
+import { BadRequestError } from '../errors/BadRequestError';
+import { InvalidTokenError } from '../errors/InvalidTokenError';
+import { tokenProvider } from '../providers/Token';
 
 const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
@@ -45,12 +49,37 @@ routes.use('/purchase-orders', purchaseOrderRoutes);
 
 routes.use('/failed-images-uploaded', failedImageUploadedRoutes);
 
-routes.get('/test', (req, res) => {
+routes.get('/test', async (req, res) => {
 
-  const bearerToken = req.headers.authorization;
-  console.log(bearerToken);
+  const authorization = req.headers.authorization;
+  if(!authorization) {
+    throw new UnauthorizedError();
+  }
 
-  return res.json({ bearerToken });
+  if(typeof authorization !== 'string') {
+    throw new UnauthorizedError();
+  }
+
+  const [bearer, token] = authorization.split(' ');
+
+  if(bearer !== 'Bearer') {
+    throw new InvalidTokenError();
+  }
+
+  try {
+    tokenProvider.verify(token);
+  } catch (err: any) {
+    console.log(err);
+    throw new InvalidTokenError();
+  }
+
+  const isRevoked = await currentRevokedTokensRepository.listByToken(token);
+  if(isRevoked) {
+    console.log('revogado');
+    throw new InvalidTokenError();
+  }
+
+  return res.sendStatus(200);
 });
 
 export { routes };

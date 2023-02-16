@@ -12,11 +12,7 @@ class TokenProvider {
   }
 
   verify(token: string) {
-    try {
-      jwt.verify(token, EnvProvider.secretKey);
-    } catch (err: any) {
-      throw new Error('Invalid token');
-    }
+    jwt.verify(token, EnvProvider.secretKey);
   }
 
   decode(token: string) {
