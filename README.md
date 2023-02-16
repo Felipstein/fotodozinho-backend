@@ -1,6 +1,7 @@
 # A corrigir:
 - Mesmo com o token do administrador, ainda não é possível manipular ações que dependem do próprio usuário (por exemplo criar um pedido de impressão para um usuário)
 - Rotas não autorizadas retornam 204, e não um erro
+- A quantidade de fotos esperadas para serem impressas sempre ultrapassa 1 na verificação
 
 # A fazer:
 - Criar entidade/CRUD de Refresh Tokens
