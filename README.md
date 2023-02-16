@@ -24,7 +24,7 @@
 - Segurança de senhas aprimoradas atráves da **criptografia**
 - Code Style com **ESLint**
 - **Testes unitários** e **testes integrais** garantindo a qualidade do software com **Jest**
-- Autenticação segura de usuários com **Tokens JWT** e **Refresh Tokens**
+- Autenticação segura de usuários com **Tokens JWT**, **Refresh Tokens** e **Tokens Revogados/Invalidados**
 - Suporte ao upload de imagens (tanto local quanto no **Amazon S3** da **AWS**) usando **Multer**
 - Sistema de administração para usuários com permissões especiais
 - Uso do **.env** para armazenação de variáveis de ambientes sensíveis
@@ -33,3 +33,4 @@
 - Envio automatizados de e-mails para usuários com recuperação de senhas, notificações de compras, status de fotos para impressão, etc.
 - Atualização de notificações para os usuários em tempo real atráves de **WebSockets**
 - Código organizado e estruturado seguindo os princípios **SOLID** e **Clean Architecture**
+- Utilizando **node-cron** para **agendamento** na deleção do banco de dados os tokens revogados expirados
