@@ -22,6 +22,7 @@ export interface IPrintOrder {
   id: string;
   number: number;
   status: PrintOrderStatus;
+  totalPrintsExpected: number;
   userId: string;
   prints: IPrint[];
   createdAt: Date;
