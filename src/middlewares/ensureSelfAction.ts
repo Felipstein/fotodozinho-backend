@@ -12,7 +12,7 @@ export async function ensureSelfAction(req: Request, res: Response, next: NextFu
   }
 
   const userRequesting = await currentUsersRepository.listById(userIdRequesting);
-  if(!userIdRequesting) {
+  if(!userRequesting) {
     throw new UnauthorizedError();
   }
 
