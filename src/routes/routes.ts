@@ -15,6 +15,7 @@ import { currentShoppingCartsRepository, currentUsersRepository } from '../repos
 import { purchaseOrderRoutes } from './purchase-order.routes';
 import { failedImageUploadedRoutes } from './failed-image-uploaded.routes';
 import { printRoutes } from './print.routes';
+import { authRoutes } from './auth.routes';
 
 const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
@@ -22,6 +23,8 @@ const routes = Router();
 
 routes.use('/users', userRoutes);
 routes.use('/notifications', notificationRoutes);
+
+routes.use('/auth', authRoutes);
 
 routes.use('/print-prices', printPriceRoutes);
 routes.use('/colors', colorRoutes);
