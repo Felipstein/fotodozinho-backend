@@ -17,7 +17,7 @@ export class CreatePrintOrderUseCases {
   ) { }
 
   async execute({ totalPrintsExpected, userId }: Omit<PrintOrderCreateRequest, 'number'>, requestingUserId: string): Promise<IPrintOrder> {
-    if(!ValidateService.someIsNullOrUndefined(totalPrintsExpected)) {
+    if(ValidateService.someIsNullOrUndefined(totalPrintsExpected)) {
       throw new RequiredFieldsError('Total de fotos esperado', 'Usuário');
     }
 

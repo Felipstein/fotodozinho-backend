@@ -84,6 +84,10 @@ export class CreatePrintUseCases {
       imageName, imageUrl, key, imageStoragedType, border: ParseBoolean.parse(border), colorId, printPriceId, quantity, printOrderId,
     });
 
+    if(printOrder.prints.length >= printOrder.totalPrintsExpected) {
+      await this.printOrdersRepository.updateStatus(printOrder.id, 'WAITING');
+    }
+
     return print;
   }
 
