@@ -8,7 +8,7 @@ export interface IUsersRepository {
 
   listById(id: string): Promise<IUserView | null>;
 
-  listByEmail(email: string): Promise<IUserView | null>;
+  listByEmail(email: string, withPassword?: boolean): Promise<(IUserView & { password?: string }) | null>;
 
   create({ name, email, phone, password, admin }: UserCreateRequest, isTest: boolean): Promise<IUserView>;
 

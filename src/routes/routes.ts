@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Router } from 'express';
 
 import { userRoutes } from './user.routes';
 import { printPriceRoutes } from './print-price.routes';

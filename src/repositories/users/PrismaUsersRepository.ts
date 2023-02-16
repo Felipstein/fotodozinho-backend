@@ -42,17 +42,26 @@ export class PrismaUsersRepository implements IUsersRepository {
     return userViewMapper.toDomain(user);
   }
 
-  async listByEmail(email: string): Promise<IUserView | null> {
-    const user = await prisma.user.findFirst({
-      where: { email },
-      select: selectWithoutPassword,
-    });
+  async listByEmail(email: string, withPassword = false): Promise<(IUserView & { password?: string }) | null> {
+    let user;
+
+    if(withPassword) {
+      user = await prisma.user.findFirst({ where: { email } });
+    } else {
+      user = await prisma.user.findFirst({
+        where: { email },
+        select: selectWithoutPassword,
+      });
+    }
 
     if(!user) {
       return null;
     }
 
-    return userViewMapper.toDomain(user);
+    const userMapped = userViewMapper.toDomain(user);
+
+    // @ts-ignore
+    return withPassword ? { ...userMapped, password: user.password } : userMapped;
   }
 
   async create({ name, email, phone, password, admin }: UserCreateRequest): Promise<IUserView> {
