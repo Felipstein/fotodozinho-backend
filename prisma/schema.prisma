@@ -192,3 +192,11 @@ model FailedImageUploaded {
 
   @@map("failed_images_uploaded")
 }
+
+model RevokedTokens {
+  id        String  @id @default(cuid())
+  token     String
+  expiresIn Decimal
+
+  @@map("revoked_tokens")
+}
