@@ -52,10 +52,11 @@ export class PrismaPrintOrderRepository implements IPrintOrdersRepository {
     return printOrders.map(printOrderMapper.toDomain);
   }
 
-  async create({ number, userId }: PrintOrderCreateRequest): Promise<IPrintOrder> {
+  async create({ number, totalPrintsExpected, userId }: PrintOrderCreateRequest): Promise<IPrintOrder> {
     const printOrder = await prisma.printOrder.create({
       data: {
         number,
+        totalPrintsExpected,
         userId,
       },
       include,
