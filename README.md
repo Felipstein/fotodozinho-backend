@@ -4,6 +4,8 @@
 - A quantidade de fotos esperadas para serem impressas sempre ultrapassa 1 na verificação
 
 # A fazer:
+- Refatorar a parte dos ensures baseados na camada use cases (abstra-los em um service, como por exemplo: ensure-auth-use-cases-layer)
+- Testar todas as rotas
 - Criar entidade/CRUD de Refresh Tokens
 - Configurar algum provedor de e-mails
 - Criar a rota para alteração de senha via usuário

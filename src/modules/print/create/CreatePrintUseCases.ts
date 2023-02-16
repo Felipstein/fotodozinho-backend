@@ -12,6 +12,7 @@ import { IColorsRepository } from '../../../repositories/colors/IColorsRepositor
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
 import { IPrintsRepository } from '../../../repositories/prints/IPrintsRepository';
+import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ImageStoragedService } from '../../../services/image-storaged-type';
 import { ParseBoolean } from '../../../services/parse-boolean';
 import { ValidateService } from '../../../services/validate';
@@ -23,6 +24,7 @@ export class CreatePrintUseCases {
     private printOrdersRepository: IPrintOrdersRepository,
     private colorsRepository: IColorsRepository,
     private printPricesRepository: IPrintPricesRepository,
+    private usersRepository: IUsersRepository,
   ) { }
 
   async execute(
@@ -55,7 +57,12 @@ export class CreatePrintUseCases {
       throw new PrintOrderNotFound();
     }
 
-    if(requestingUserId !== printOrder.userId) {
+    const requestingUser = await this.usersRepository.listById(requestingUserId);
+    if(!requestingUser) {
+      throw new UnauthorizedError();
+    }
+
+    if(!requestingUser.admin && requestingUserId !== printOrder.userId) {
       throw new ForbiddenError();
     }
 

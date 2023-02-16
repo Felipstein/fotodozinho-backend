@@ -31,7 +31,12 @@ export class CreatePurchaseOrderUseCases {
       throw new UnauthorizedError();
     }
 
-    if(requestingUserId !== userId) {
+    const requestingUser = await this.usersRepository.listById(requestingUserId);
+    if(!requestingUser) {
+      throw new UnauthorizedError();
+    }
+
+    if(!requestingUser.admin && requestingUserId !== userId) {
       throw new ForbiddenError();
     }
 
