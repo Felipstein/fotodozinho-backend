@@ -1,4 +1,5 @@
 import { IPurchaseOrder } from '../../../entities/purchase-order/IPurchaseOrder';
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { ForbiddenError } from '../../../errors/ForbiddenError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { PaymentMethodNotFoundError } from '../../../errors/PaymentMethodNotFoundError';
@@ -28,13 +29,17 @@ export class UpdatePurchaseOrderPaymentMethodUseCases {
       throw new RequiredFieldsError('Método de pagamento');
     }
 
-    const purchaseOrderExists = await this.purchaseOrdersRepository.listById(id);
-    if(!purchaseOrderExists) {
+    const purchaseOrder = await this.purchaseOrdersRepository.listById(id);
+    if(!purchaseOrder) {
       throw new PurchaseOrderNotFoundError();
     }
 
-    if(requestingUserId !== purchaseOrderExists.userId) {
+    if(requestingUserId !== purchaseOrder.userId) {
       throw new ForbiddenError();
+    }
+
+    if(purchaseOrder.status !== 'WAITING_PAYMENT') {
+      throw new BadRequestError('Você não pode mais alterar o método de pagamento desse pedido, o pagamento já foi realizado.');
     }
 
     const paymentMethodExists = await this.paymentMethodsRepository.listById(paymentMethodId);
@@ -42,9 +47,9 @@ export class UpdatePurchaseOrderPaymentMethodUseCases {
       throw new PaymentMethodNotFoundError();
     }
 
-    const purchaseOrder = await this.purchaseOrdersRepository.update(id, { paymentMethodId });
+    const purchaseOrderUpdated = await this.purchaseOrdersRepository.update(id, { paymentMethodId });
 
-    return purchaseOrder;
+    return purchaseOrderUpdated;
   }
 
 }
