@@ -1,3 +1,4 @@
+import { crypt } from '../providers/Crypt';
 import { IUsersRepository } from '../repositories/users/IUsersRepository';
 import { EnvProvider } from './env-provider';
 
@@ -16,10 +17,17 @@ export class CreateAdminUserIfNotExistsService {
       return 'ALREADY_EXISTS';
     }
 
+    const password = EnvProvider.adminPassword;
+    if(!password) {
+      throw new Error('Admin passwod has not been set');
+    }
+
+    const encryptedPassword = await crypt.hash(password);
+
     await this.usersRepository.create({
       name: 'Admin',
       email: 'admin@admin',
-      password: EnvProvider.adminPassword,
+      password: encryptedPassword,
       admin: true,
     }, false);
 
