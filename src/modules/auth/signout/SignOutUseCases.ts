@@ -1,5 +1,3 @@
-import { BadRequestError } from '../../../errors/BadRequestError';
-import { InvalidTokenError } from '../../../errors/InvalidTokenError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { tokenProvider } from '../../../providers/Token';
