@@ -1,4 +1,6 @@
 # A fazer:
+- Mudar o sistema de injeção de userId na req no processo de shopping-carts (para não dar conflito com o userId requisicionado e userId afetado)
+- Criar um novo sistema no ensureSelfAction para alterar o param do userId (já que as rotas de usuário aceita o param id e não userId)
 - Refatorar a parte dos ensures baseados na camada use cases (abstra-los em um service, como por exemplo: ensure-auth-use-cases-layer)
 - Testar todas as rotas
 - Criar entidade/CRUD de Refresh Tokens
