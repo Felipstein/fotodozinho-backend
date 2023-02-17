@@ -21,7 +21,7 @@ route.get('/id/:id', ensureAdminUser, (req, res) => {
   return listNotificationByIdFactory().controller.handle(req, res);
 });
 
-route.get('/user/:userId', ensureSelfAction, (req, res) => {
+route.get('/user/:userId', ensureSelfAction(), (req, res) => {
   return listNotificationsByUserIdFactory().controller.handle(req, res);
 });
 
@@ -29,7 +29,7 @@ route.post('/', ensureAdminUser, (req, res) => {
   return createNotificationFactory().controller.handle(req, res);
 });
 
-route.patch('/:id', ensureSelfAction, (req, res) => {
+route.patch('/:id', ensureSelfAction(), (req, res) => {
   return updateReadNotificationFactory().controller.handle(req, res);
 });
 

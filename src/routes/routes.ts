@@ -16,6 +16,8 @@ import { purchaseOrderRoutes } from './purchase-order.routes';
 import { failedImageUploadedRoutes } from './failed-image-uploaded.routes';
 import { printRoutes } from './print.routes';
 import { authRoutes } from './auth.routes';
+import { ensureAuth } from '../middlewares/ensureAuth';
+import { ensureAdminUser } from '../middlewares/ensureAdminUser';
 
 const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
@@ -37,7 +39,7 @@ routes.use('/product-categories', productCategoryRoutes);
 routes.use('/products', productRoutes);
 
 routes.use('/users/:userId/shopping-carts', injectUserId, shoppingCartRoutes);
-routes.get('/shopping-carts', (req, res) => {
+routes.get('/shopping-carts', ensureAuth, ensureAdminUser, (req, res) => {
   return listShoppingCartsFactory().controller.handle(req, res);
 });
 

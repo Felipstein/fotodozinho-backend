@@ -22,11 +22,11 @@ route.get('/id/:id', ensureAdminUser, (req, res) => {
   return listPrintOrderByIdFactory().controller.handle(req, res);
 });
 
-route.get('/user/:userId', ensureSelfAction, (req, res) => {
+route.get('/user/:userId', ensureSelfAction(), (req, res) => {
   return listPrintOrdersByUserIdFactory().controller.handle(req, res);
 });
 
-route.get('/user/:userId/:status', ensureSelfAction, (req, res) => {
+route.get('/user/:userId/:status', ensureSelfAction(), (req, res) => {
   return listPrintOrdersByUserIdStatusFactory().controller.handle(req, res);
 });
 
