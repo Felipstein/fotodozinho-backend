@@ -8,16 +8,17 @@ import { deleteUserFactory } from '../modules/user/delete';
 import { listUserByEmailFactory } from '../modules/user/listByEmail';
 import { ensureAuth } from '../middlewares/ensureAuth';
 import { ensureAdminUser } from '../middlewares/ensureAdminUser';
+import { ensureSelfAction } from '../middlewares/ensureSelfAction';
 
 const route = Router();
 
-route.use(ensureAuth, ensureAdminUser);
+route.use(ensureAuth);
 
-route.get('/', (req, res) => {
+route.get('/', ensureAdminUser, (req, res) => {
   return listUsersFactory().controller.handle(req, res);
 });
 
-route.get('/id/:id', (req, res) => {
+route.get('/id/:id', ensureSelfAction('params', { fieldUserIdName: 'id' }), (req, res) => {
   return listUserByIdFactory().controller.handle(req, res);
 });
 
@@ -25,15 +26,15 @@ route.get('/email/:email', (req, res) => {
   return listUserByEmailFactory().controller.handle(req, res);
 });
 
-route.post('/', (req, res) => {
+route.post('/', ensureAdminUser, (req, res) => {
   return createUserFactory().controller.handle(req, res);
 });
 
-route.put('/:id', (req, res) => {
+route.put('/:id', ensureAdminUser, (req, res) => {
   return updateUserFactory().controller.handle(req, res);
 });
 
-route.delete('/:id', (req, res) => {
+route.delete('/:id', ensureAdminUser, (req, res) => {
   return deleteUserFactory().controller.handle(req, res);
 });
 

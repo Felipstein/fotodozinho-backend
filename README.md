@@ -1,6 +1,4 @@
 # A fazer:
-- Criar um novo sistema no ensureSelfAction para alterar o param do userId (já que as rotas de usuário aceita o param id e não userId)
-- Refatorar a parte dos ensures baseados na camada use cases (abstra-los em um service, como por exemplo: ensure-auth-use-cases-layer)
 - Testar todas as rotas
 - Criar entidade/CRUD de Refresh Tokens
 - Configurar algum provedor de e-mails

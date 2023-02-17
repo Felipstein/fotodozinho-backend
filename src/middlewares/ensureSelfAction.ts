@@ -1,7 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import { verifyUserAuth } from '../services/verify-user-auth';
 
-export function ensureSelfAction(locationOfUserId: 'body' | 'params' = 'params') {
+interface UserIdPropertyOptions {
+  fieldUserIdName: string;
+}
+
+const userIdPropertyOptionsDefaults: UserIdPropertyOptions = {
+  fieldUserIdName: 'userId',
+};
+
+export function ensureSelfAction(locationOfUserId: 'body' | 'params' = 'params', userIdPropertyOptions: UserIdPropertyOptions = userIdPropertyOptionsDefaults) {
   if(!['body', 'params'].includes(locationOfUserId)) {
     throw new Error('Invalid location of userId property: only "body" or "params" options');
   }
@@ -9,10 +17,12 @@ export function ensureSelfAction(locationOfUserId: 'body' | 'params' = 'params')
   return function middleware(req: Request, res: Response, next: NextFunction) {
     let userIdAction;
 
+    const fieldUserIdName = userIdPropertyOptions?.fieldUserIdName || 'userId';
+
     if(locationOfUserId === 'params') {
-      userIdAction = req.params.userId;
+      userIdAction = req.params[fieldUserIdName];
     } else {
-      userIdAction = req.body.userId;
+      userIdAction = req.body[fieldUserIdName];
     }
 
     const { userId: userIdRequesting } = req;
