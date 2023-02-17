@@ -19,17 +19,17 @@ route.get('/:length', (req, res) => {
   return listPrintPriceByLengthFactory().controller.handle(req, res);
 });
 
-route.use(ensureAuth);
+route.use(ensureAuth, ensureAdminUser);
 
-route.post('/', ensureAdminUser, (req, res) => {
+route.post('/', (req, res) => {
   return createPrintPriceFactory().controller.handle(req, res);
 });
 
-route.patch('/:id', ensureAdminUser, (req, res) => {
+route.patch('/:id', (req, res) => {
   return updatePricePrintPriceFactory().controller.handle(req, res);
 });
 
-route.delete('/:id', ensureAdminUser, (req, res) => {
+route.delete('/:id', (req, res) => {
   return deletePrintPriceFactory().controller.handle(req, res);
 });
 
