@@ -1,13 +1,12 @@
 import { PrintOrderCreateRequest } from '../../../entities/print-order/dtos/PrintOrderCreateRequest';
 import { IPrintOrder } from '../../../entities/print-order/IPrintOrder';
-import { ForbiddenError } from '../../../errors/ForbiddenError';
 import { NumberValidationError } from '../../../errors/NumberValidationError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
-import { UnauthorizedError } from '../../../errors/UnauthorizedError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ValidateService } from '../../../services/validate';
+import { verifyUserAuth } from '../../../services/verify-user-auth';
 
 export class CreatePrintOrderUseCases {
 
@@ -21,26 +20,15 @@ export class CreatePrintOrderUseCases {
       throw new RequiredFieldsError('Total de fotos esperado', 'Usuário');
     }
 
-    if(!requestingUserId) {
-      throw new UnauthorizedError();
-    }
-
     if(isNaN(totalPrintsExpected)) {
       throw new NumberValidationError('Total de fotos esperado');
     }
 
+    await verifyUserAuth.execute({ id: requestingUserId }, userId);
+
     const user = await this.usersRepository.listById(userId);
     if(!user) {
       throw new UserNotFoundError();
-    }
-
-    const requestingUser = await this.usersRepository.listById(requestingUserId);
-    if(!requestingUser) {
-      throw new UnauthorizedError();
-    }
-
-    if(!requestingUser.admin && requestingUserId !== userId) {
-      throw new ForbiddenError();
     }
 
     const number = user.totalPrintOrders + 1;

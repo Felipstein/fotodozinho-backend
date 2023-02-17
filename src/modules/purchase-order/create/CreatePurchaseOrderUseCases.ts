@@ -10,8 +10,7 @@ import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
 import { ValidateService } from '../../../services/validate';
-import { UnauthorizedError } from '../../../errors/UnauthorizedError';
-import { ForbiddenError } from '../../../errors/ForbiddenError';
+import { verifyUserAuth } from '../../../services/verify-user-auth';
 
 export class CreatePurchaseOrderUseCases {
 
@@ -27,18 +26,7 @@ export class CreatePurchaseOrderUseCases {
       throw new RequiredFieldsError('Método de pagamento', 'Produtos', 'Usuário');
     }
 
-    if(!requestingUserId) {
-      throw new UnauthorizedError();
-    }
-
-    const requestingUser = await this.usersRepository.listById(requestingUserId);
-    if(!requestingUser) {
-      throw new UnauthorizedError();
-    }
-
-    if(!requestingUser.admin && requestingUserId !== userId) {
-      throw new ForbiddenError();
-    }
+    await verifyUserAuth.execute({ id: requestingUserId }, userId);
 
     if(!isArray(products)) {
       throw new BadRequestError('Nenhum produto informado');
