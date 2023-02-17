@@ -8,10 +8,10 @@ export class AddShoppingCartProductController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { userId } = req;
+    const { userIdOfShoppingCartRequest } = req;
     const { productId, quantity } = req.body;
 
-    const product = await this.addShoppingCartProductUseCases.execute(userId, { productId, quantity }, req.userId);
+    const product = await this.addShoppingCartProductUseCases.execute(userIdOfShoppingCartRequest, { productId, quantity }, req.userId);
 
     return res.status(201).json(product);
   }

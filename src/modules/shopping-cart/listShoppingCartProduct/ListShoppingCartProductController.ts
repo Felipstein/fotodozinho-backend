@@ -9,10 +9,10 @@ export class ListShoppingCartProductController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { userId } = req;
+    const { userIdOfShoppingCartRequest } = req;
     const { productId } = req.params;
 
-    const product = await this.listShoppingCartProductUseCases.execute(userId, productId, req.userId);
+    const product = await this.listShoppingCartProductUseCases.execute(userIdOfShoppingCartRequest, productId, req.userId);
     if(!product) {
       throw new ShoppingCartProductNotFoundError();
     }

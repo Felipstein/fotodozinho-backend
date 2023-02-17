@@ -8,9 +8,9 @@ export class ListShoppingCartByUserIdController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { userId } = req;
+    const { userIdOfShoppingCartRequest } = req;
 
-    const shoppingCart = await this.listShoppingCartByUserIdUseCases.execute(userId, req.userId);
+    const shoppingCart = await this.listShoppingCartByUserIdUseCases.execute(userIdOfShoppingCartRequest, req.userId);
 
     return res.json(shoppingCart);
   }

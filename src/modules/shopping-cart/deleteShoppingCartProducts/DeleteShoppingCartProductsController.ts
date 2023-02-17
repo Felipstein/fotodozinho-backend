@@ -8,10 +8,10 @@ export class DeleteShoppingCartProductsController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { userId } = req;
+    const { userIdOfShoppingCartRequest } = req;
     const { productsId } = req.body;
 
-    await this.deleteShoppingCartProductsUseCases.execute(userId, req.userId, productsId);
+    await this.deleteShoppingCartProductsUseCases.execute(userIdOfShoppingCartRequest, req.userId, productsId);
 
     return res.sendStatus(204);
   }

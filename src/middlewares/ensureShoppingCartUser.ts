@@ -21,7 +21,7 @@ export function ensureShoppingCartUser(shoppingCartsRepository: IShoppingCartsRe
       await shoppingCartsRepository.create(userId);
     }
 
-    req.userId = userId;
+    req.userIdOfShoppingCartRequest = userId;
 
     next();
   }
