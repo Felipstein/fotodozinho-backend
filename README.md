@@ -1,5 +1,4 @@
 # A corrigir:
-- Rotas não autorizadas retornam 204, e não um erro
 - A quantidade de fotos esperadas para serem impressas sempre ultrapassa 1 na verificação
 
 # A fazer:
