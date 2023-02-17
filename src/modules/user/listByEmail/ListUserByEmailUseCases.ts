@@ -2,6 +2,7 @@ import { IUserView } from '../../../entities/user/IUserView';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
+import { verifyUserAuth } from '../../../services/verify-user-auth';
 
 export class ListUserByEmailUseCases {
 
@@ -9,7 +10,7 @@ export class ListUserByEmailUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(email: string): Promise<IUserView> {
+  async execute(email: string, userIdRequesting: string): Promise<IUserView> {
     if(!email) {
       throw new BadRequestError('E-mail é obrigatório');
     }
@@ -18,6 +19,8 @@ export class ListUserByEmailUseCases {
     if(!user) {
       throw new UserNotFoundError();
     }
+
+    await verifyUserAuth.execute({ id: userIdRequesting }, user.id);
 
     return user;
   }
