@@ -30,7 +30,7 @@ route.get('/user/:userId/:status', ensureSelfAction, (req, res) => {
   return listPrintOrdersByUserIdStatusFactory().controller.handle(req, res);
 });
 
-route.post('/', (req, res) => {
+route.post('/', ensureSelfAction('body'), (req, res) => {
   return createPrintOrderFactory().controller.handle(req, res);
 });
 

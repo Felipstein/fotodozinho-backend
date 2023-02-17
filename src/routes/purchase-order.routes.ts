@@ -7,6 +7,7 @@ import { updatePurchaseOrderPaymentMethodFactory } from '../modules/purchase-ord
 import { deletePurchaseOrderFactory } from '../modules/purchase-order/delete';
 import { ensureAdminUser } from '../middlewares/ensureAdminUser';
 import { ensureAuth } from '../middlewares/ensureAuth';
+import { ensureSelfAction } from '../middlewares/ensureSelfAction';
 
 const route = Router();
 
@@ -20,7 +21,7 @@ route.get('/:id', (req, res) => {
   return listPurchaseOrderByIdFactory().controller.handle(req, res);
 });
 
-route.post('/', (req, res) => {
+route.post('/', ensureSelfAction('body'), (req, res) => {
   return createPurchaseOrderFactory().controller.handle(req, res);
 });
 

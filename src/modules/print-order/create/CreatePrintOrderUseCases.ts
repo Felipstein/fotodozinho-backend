@@ -6,7 +6,6 @@ import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ValidateService } from '../../../services/validate';
-import { verifyUserAuth } from '../../../services/verify-user-auth';
 
 export class CreatePrintOrderUseCases {
 
@@ -15,7 +14,7 @@ export class CreatePrintOrderUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute({ totalPrintsExpected, userId }: Omit<PrintOrderCreateRequest, 'number'>, requestingUserId: string): Promise<IPrintOrder> {
+  async execute({ totalPrintsExpected, userId }: Omit<PrintOrderCreateRequest, 'number'>): Promise<IPrintOrder> {
     if(ValidateService.someIsNullOrUndefined(totalPrintsExpected)) {
       throw new RequiredFieldsError('Total de fotos esperado', 'Usuário');
     }
@@ -23,8 +22,6 @@ export class CreatePrintOrderUseCases {
     if(isNaN(totalPrintsExpected)) {
       throw new NumberValidationError('Total de fotos esperado');
     }
-
-    await verifyUserAuth.execute({ id: requestingUserId }, userId);
 
     const user = await this.usersRepository.listById(userId);
     if(!user) {

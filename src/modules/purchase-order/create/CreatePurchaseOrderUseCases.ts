@@ -10,7 +10,6 @@ import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IProductsRepository } from '../../../repositories/product/IProductsRepository';
 import { ValidateService } from '../../../services/validate';
-import { verifyUserAuth } from '../../../services/verify-user-auth';
 
 export class CreatePurchaseOrderUseCases {
 
@@ -21,12 +20,10 @@ export class CreatePurchaseOrderUseCases {
     private productsRepository: IProductsRepository,
   ) { }
 
-  async execute({ paymentMethodId, products, userId }: Omit<PurchaseOrderCreateRequest, 'number'>, requestingUserId: string): Promise<IPurchaseOrder> {
+  async execute({ paymentMethodId, products, userId }: Omit<PurchaseOrderCreateRequest, 'number'>): Promise<IPurchaseOrder> {
     if(ValidateService.someIsNullOrUndefined(paymentMethodId, products, userId)) {
       throw new RequiredFieldsError('Método de pagamento', 'Produtos', 'Usuário');
     }
-
-    await verifyUserAuth.execute({ id: requestingUserId }, userId);
 
     if(!isArray(products)) {
       throw new BadRequestError('Nenhum produto informado');
