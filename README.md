@@ -20,6 +20,7 @@
 
 # Conceitos:
 - Testes E2E para garantir a integração de todos os componentes do sistema
+
 ## Backend:
 - Manipulação/CRUD das entidades completo por meio dos padrões **REST** e **RESTful**
 - **Banco de dados SQL Postgres** para relações mais complexas
