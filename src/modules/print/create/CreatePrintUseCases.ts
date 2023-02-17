@@ -16,6 +16,7 @@ import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ImageStoragedService } from '../../../services/image-storaged-type';
 import { ParseBoolean } from '../../../services/parse-boolean';
 import { ValidateService } from '../../../services/validate';
+import { verifyUserAuth } from '../../../services/verify-user-auth';
 
 export class CreatePrintUseCases {
 
@@ -40,10 +41,6 @@ export class CreatePrintUseCases {
     }: Omit<PrintCreateRequest, 'imageStoragedType'>,
     requestingUserId: string,
   ): Promise<IPrint> {
-    if(!requestingUserId) {
-      throw new UnauthorizedError();
-    }
-
     if(ValidateService.someIsNullOrUndefined(imageName, imageUrl, key, border, colorId, printPriceId, quantity, printOrderId)) {
       throw new RequiredFieldsError('Nome da imagem', 'URL da imagem', 'Imagem', 'Borda', 'Cor/tipo', 'Preço/tamanho', 'Quantidade', 'Identificador do pedido');
     }
@@ -57,14 +54,7 @@ export class CreatePrintUseCases {
       throw new PrintOrderNotFound();
     }
 
-    const requestingUser = await this.usersRepository.listById(requestingUserId);
-    if(!requestingUser) {
-      throw new UnauthorizedError();
-    }
-
-    if(!requestingUser.admin && requestingUserId !== printOrder.userId) {
-      throw new ForbiddenError();
-    }
+    await verifyUserAuth.execute({ id: requestingUserId }, printOrder.userId);
 
     if(printOrder.status !== 'UPLOADING_IMAGES') {
       throw new BadRequestError('Não é mais possível enviar novas fotos para esse pedido, pois o pedido está em andamento ou já foi finalizado');
