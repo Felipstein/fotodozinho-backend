@@ -12,7 +12,7 @@ export class ListShoppingCartProductUseCases {
   ) { }
 
   async execute(userId: string, productId: string, requestingUserId: string): Promise<IShoppingCartProduct> {
-    await verifyUserAuth.execute({ id: requestingUserId }, userId);
+    await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, userId);
 
     if(ValidateService.someIsNullOrUndefined(userId, productId)) {
       throw new RequiredFieldsError('Usuário', 'Produto');

@@ -11,7 +11,7 @@ export class ListShoppingCartByUserIdUseCases {
   ) { }
 
   async execute(userId: string, requestingUserId: string): Promise<IShoppingCart> {
-    await verifyUserAuth.execute({ id: requestingUserId }, userId);
+    await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, userId);
 
     if(!userId) {
       throw new RequiredFieldsError('Usuário');

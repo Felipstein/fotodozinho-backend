@@ -54,7 +54,7 @@ export class CreatePrintUseCases {
       throw new PrintOrderNotFound();
     }
 
-    await verifyUserAuth.execute({ id: requestingUserId }, printOrder.userId);
+    await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, printOrder.userId);
 
     if(printOrder.status !== 'UPLOADING_IMAGES') {
       throw new BadRequestError('Não é mais possível enviar novas fotos para esse pedido, pois o pedido está em andamento ou já foi finalizado');

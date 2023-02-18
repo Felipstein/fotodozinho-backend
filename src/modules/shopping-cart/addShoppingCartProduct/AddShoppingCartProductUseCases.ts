@@ -22,7 +22,7 @@ export class AddShoppingCartProductUseCases {
       throw new RequiredFieldsError('Usuário', 'Produto');
     }
 
-    await verifyUserAuth.execute({ id: requestingUserId }, userId);
+    await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, userId);
 
     if(quantity && isNaN(quantity)) {
       throw new NumberValidationError('Quantidade');

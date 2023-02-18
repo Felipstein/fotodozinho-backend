@@ -13,7 +13,7 @@ const route = Router();
 
 route.use(ensureAuth);
 
-route.get('/', ensureAdminUser, (req, res) => {
+route.get('/', (req, res) => {
   return listPurchaseOrdersFactory().controller.handle(req, res);
 });
 

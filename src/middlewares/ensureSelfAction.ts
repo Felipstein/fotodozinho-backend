@@ -27,7 +27,7 @@ export function ensureSelfAction(locationOfUserId: 'body' | 'params' = 'params',
 
     const { userId: userIdRequesting } = req;
 
-    verifyUserAuth.execute({ id: userIdRequesting }, userIdAction)
+    verifyUserAuth.ensureSelfAction({ id: userIdRequesting }, userIdAction)
       .then(next)
       .catch(next);
   };

@@ -10,7 +10,7 @@ export class DeleteShoppingCartProductsUseCases {
   ) { }
 
   async execute(userId: string, requestingUserId: string, productsId?: string[]): Promise<void> {
-    await verifyUserAuth.execute({ id: requestingUserId }, userId);
+    await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, userId);
 
     if(!userId) {
       throw new RequiredFieldsError('Usuário');

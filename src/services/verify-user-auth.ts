@@ -11,7 +11,7 @@ export class VerifyUserAuthService {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(userRequestingReference: { id?: string, user?: IUser | IUserView }, userIdAction: string) {
+  async ensureSelfAction(userRequestingReference: { id?: string, user?: IUser | IUserView }, userIdAction: string) {
     if(!userRequestingReference?.id && !userRequestingReference?.user) {
       throw new UnauthorizedError();
     }
@@ -33,6 +33,21 @@ export class VerifyUserAuthService {
     }
 
     if(userRequestingReference.id !== userIdAction) {
+      throw new ForbiddenError();
+    }
+  }
+
+  async ensureAdminUser(userRequestingId: string) {
+    if(!userRequestingId) {
+      throw new UnauthorizedError();
+    }
+
+    const user = await currentUsersRepository.listById(userRequestingId);
+    if(!user) {
+      throw new UnauthorizedError();
+    }
+
+    if(!user.admin) {
       throw new ForbiddenError();
     }
   }

@@ -20,7 +20,7 @@ export class ListUserByEmailUseCases {
       throw new UserNotFoundError();
     }
 
-    await verifyUserAuth.execute({ id: userIdRequesting }, user.id);
+    await verifyUserAuth.ensureSelfAction({ id: userIdRequesting }, user.id);
 
     return user;
   }
