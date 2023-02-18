@@ -1,6 +1,6 @@
 # A fazer:
 - Verificar quais propriedades podem estar faltando (olhar o figma algo como por exemplo: top comprados na semana, etc)
-- Testar as rotas que faltam (prints, shopping-carts, purchase-orders, products, product-categories, payment-methods, failed-images-uploaded)
+- Testar as rotas que faltam (shopping-carts, purchase-orders, payment-methods, failed-images-uploaded)
 - Criar entidade/CRUD de Refresh Tokens
 - Configurar algum provedor de e-mails
 - Criar a rota para alteração de senha via usuário
