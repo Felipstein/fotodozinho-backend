@@ -1,8 +1,7 @@
-import { ForbiddenError } from '../../../errors/ForbiddenError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { PurchaseOrderNotFoundError } from '../../../errors/PurchaseOrderNotFoundError';
-import { UnauthorizedError } from '../../../errors/UnauthorizedError';
 import { IPurchaseOrdersRepository } from '../../../repositories/purchase-order/IPurchaseOrdersRepository';
+import { verifyUserAuth } from '../../../services/verify-user-auth';
 
 export class DeletePurchaseOrderUseCases {
 
@@ -15,18 +14,12 @@ export class DeletePurchaseOrderUseCases {
       throw new IDNotGivenError();
     }
 
-    if(!requestingUserId) {
-      throw new UnauthorizedError();
-    }
-
     const purchaseOrder = await this.purchaseOrdersRepository.listById(id);
     if(!purchaseOrder) {
       throw new PurchaseOrderNotFoundError();
     }
 
-    if(requestingUserId !== purchaseOrder.userId) {
-      throw new ForbiddenError();
-    }
+    await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, purchaseOrder.userId);
 
     await this.purchaseOrdersRepository.delete(id);
   }
