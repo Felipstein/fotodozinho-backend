@@ -14,18 +14,18 @@ const include = {
 
 export class PrismaPrintsRepository implements IPrintsRepository {
 
-  async listManyByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintFilterProperties): Promise<IPrint[]> {
+  async listManyByProperties({ printOrderId, colorId, key }: PrintFilterProperties): Promise<IPrint[]> {
     const prints = await prisma.print.findMany({
-      where: { printOrderId, imageName, imageUrl, key, colorId, printPriceId },
+      where: { printOrderId, colorId, key },
       include,
     });
 
     return prints.map(printMapper.toDomain);
   }
 
-  async listFirstByProperties({ printOrderId, imageName, imageUrl, key, colorId, printPriceId }: PrintFilterProperties): Promise<IPrint> {
+  async listFirstByProperties({ printOrderId, colorId, key }: PrintFilterProperties): Promise<IPrint> {
     const print = await prisma.print.findFirst({
-      where: { printOrderId, imageName, imageUrl, key, colorId, printPriceId },
+      where: { printOrderId, colorId, key },
       include,
     });
 
