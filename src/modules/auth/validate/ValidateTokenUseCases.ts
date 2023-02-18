@@ -1,7 +1,7 @@
 import { InvalidTokenError } from '../../../errors/InvalidTokenError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
-import { tokenProvider } from '../../../providers/Token';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
+import { ValidateService } from '../../../services/validate';
 import { ValidateTokenRequest, ValidateTokenResponse } from './ValidateTokenDTO';
 
 export class ValidateTokenUseCases {
@@ -10,16 +10,9 @@ export class ValidateTokenUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute({ token }: ValidateTokenRequest): Promise<ValidateTokenResponse> {
-    if(!token) {
-      throw new RequiredFieldsError('Token');
-    }
-
-    await tokenProvider.verify(token);
-
-    const { userId } = tokenProvider.decode(token);
-    if(!userId) {
-      throw new InvalidTokenError();
+  async execute({ userId, token }: ValidateTokenRequest): Promise<ValidateTokenResponse> {
+    if(ValidateService.someIsNullOrUndefined(userId, token)) {
+      throw new RequiredFieldsError('Usuário', 'Token');
     }
 
     const user = await this.usersRepository.listById(userId);
