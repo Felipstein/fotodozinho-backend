@@ -4,6 +4,7 @@ import { signInFactory } from '../modules/auth/signin';
 import { signOutFactory } from '../modules/auth/signout';
 import { validateTokenFactory } from '../modules/auth/validate';
 import { preventAuthenticatedAccess } from '../middlewares/preventAuthenticatedAccess';
+import { ensureAuth } from '../middlewares/ensureAuth';
 
 const route = Router();
 
@@ -15,7 +16,7 @@ route.post('/signup', preventAuthenticatedAccess, (req, res) => {
   return signUpFactory().controller.handle(req, res);
 });
 
-route.delete('/signout', (req, res) => {
+route.delete('/signout', ensureAuth, (req, res) => {
   return signOutFactory().controller.handle(req, res);
 });
 

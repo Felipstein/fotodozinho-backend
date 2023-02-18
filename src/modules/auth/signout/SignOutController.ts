@@ -8,9 +8,9 @@ export class SignOutController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { userId, token } = req.body;
+    const { userId, tokenRequesting } = req;
 
-    await this.signOutUseCases.execute({ userId, token });
+    await this.signOutUseCases.execute({ userId, token: tokenRequesting });
 
     return res.sendStatus(204);
   }
