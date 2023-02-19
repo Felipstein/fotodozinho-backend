@@ -1,8 +1,5 @@
 # A fazer:
 - Verificar quais propriedades podem estar faltando (olhar o figma algo como por exemplo: top comprados na semana, etc)
-- Finalizar a criação dos Refresh Tokens:
-> - Quando um usuário for criado, automaticamente gerar um refresh token caso a opção de permanecer logado esteja ativado
-> - Finalizar o literal refresh de tokens
 - Configurar algum provedor de e-mails
 - Criar a rota para alteração de senha via usuário
 - Criar a rota para recuperação de senhas
