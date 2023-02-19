@@ -1,5 +1,6 @@
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
+import { refreshTokenProvider } from '../../../providers/RefreshToken';
 import { tokenProvider } from '../../../providers/Token';
 import { IRevokedTokensRepository } from '../../../repositories/revoked-tokens/IRevokedTokensRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
@@ -28,6 +29,7 @@ export class SignOutUseCases {
     const { exp } = tokenProvider.decode(token);
 
     await this.revokedTokensRepository.createOrUpdate({ token, expiresIn: exp * 1000 });
+    await refreshTokenProvider.generate({ userId });
   }
 
 }
