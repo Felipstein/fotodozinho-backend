@@ -4,7 +4,7 @@ import { IUserView } from '../../entities/user/IUserView';
 
 export interface IUsersRepository {
 
-  listAll(): Promise<IUserView[]>;
+  listAll(includeDeletedUsers?: boolean): Promise<IUserView[]>;
 
   listById(id: string): Promise<IUserView | null>;
 

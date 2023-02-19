@@ -23,10 +23,19 @@ const selectWithoutPassword = {
 
 export class PrismaUsersRepository implements IUsersRepository {
 
-  async listAll(): Promise<IUserView[]> {
-    const users = await prisma.user.findMany({
-      select: selectWithoutPassword,
-    });
+  async listAll(includeDeletedUsers = false): Promise<IUserView[]> {
+    let users;
+
+    if(includeDeletedUsers) {
+      users = await prisma.user.findMany({
+        select: selectWithoutPassword,
+      });
+    } else {
+      users = await prisma.user.findMany({
+        where: { deletedAt: null },
+        select: selectWithoutPassword,
+      });
+    }
 
     return users.map(userViewMapper.toDomain);
   }
