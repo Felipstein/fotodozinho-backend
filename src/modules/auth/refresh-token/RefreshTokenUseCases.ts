@@ -1,4 +1,4 @@
-import { RefreshTokenNotFoundError } from '../../../errors/RefreshTokenNotFoundError';
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { refreshTokenProvider } from '../../../providers/RefreshToken';
 import { tokenProvider } from '../../../providers/Token';
@@ -13,7 +13,7 @@ export class RefreshTokenUseCases {
 
     const refreshTokenObj = await refreshTokenProvider.getRefreshTokenBy({ refreshTokenId: refreshToken });
     if(!refreshTokenObj) {
-      throw new RefreshTokenNotFoundError();
+      throw new BadRequestError('Refresh Token inválido');
     }
 
     const { userId } = refreshTokenObj;
