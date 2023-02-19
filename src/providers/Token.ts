@@ -7,7 +7,7 @@ import { RevokedTokenError } from '../errors/RevokedTokenError';
 
 class TokenProvider {
 
-  readonly expiresIn = '1d';
+  readonly expiresIn = EnvProvider.tokensExpirationTime.accessToken;
 
   generate(data: Record<string, any>): string {
     const token = jwt.sign(data, EnvProvider.secretKey, { expiresIn: this.expiresIn });
