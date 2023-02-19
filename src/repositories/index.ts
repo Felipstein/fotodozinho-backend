@@ -1,6 +1,5 @@
 import { PrismaColorsRepository } from './colors/PrismaColorsRepository';
 import { PrismaFailedImagesUploadedRepository } from './failed-images-uploaded/PrismaFailedImagesUploadedRepository';
-import { PrismaInactiveUsersRepository } from './inactive-users/PrismaInactiveUsersRepository';
 import { PrismaNotificationsRepository } from './notifications/PrismaNotificationsRepository';
 import { PrismaPaymentMethodsRepository } from './payment-methods/PrismaPaymentMethodsRepository';
 import { PrismaPrintOrderRepository } from './print-orders/PrismaPrintOrderRepository';
