@@ -7,7 +7,7 @@ export function getBeforeData(when: 'today' | 'lastweek' | 'lastmonth') {
 
   const time = times[when];
   if(!time) {
-    throw new Error('Invalid date name');
+    throw new Error('Valor inválido para o parâmetro "when". Valores permitidos são "today", "lastmonth" e "lastweek"');
   }
 
   const before = Date.now() - time * 24 * 60 * 60 * 1000;
