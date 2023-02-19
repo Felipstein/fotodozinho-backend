@@ -8,9 +8,9 @@ export class SignInController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { email, password } = req.body;
+    const { email, password, rememberMe } = req.body;
 
-    const user = await this.signInUseCases.execute({ email, password });
+    const user = await this.signInUseCases.execute({ email, password, rememberMe });
 
     return res.json(user);
   }

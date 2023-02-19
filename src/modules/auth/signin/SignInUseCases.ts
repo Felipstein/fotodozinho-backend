@@ -1,8 +1,10 @@
 import { InvalidCredentialsError } from '../../../errors/InvalidCredentialsError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { crypt } from '../../../providers/Crypt';
+import { refreshTokenProvider } from '../../../providers/RefreshToken';
 import { tokenProvider } from '../../../providers/Token';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
+import { ParseBoolean } from '../../../services/parse-boolean';
 import { ValidateService } from '../../../services/validate';
 import { SignInRequest, SignInResponse } from './SignInDTO';
 
@@ -12,7 +14,7 @@ export class SignInUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute({ email, password }: SignInRequest): Promise<SignInResponse> {
+  async execute({ email, password, rememberMe }: SignInRequest): Promise<SignInResponse> {
     if(ValidateService.someIsNullOrUndefined(email, password)) {
       throw new RequiredFieldsError('E-mail', 'Senha');
     }
@@ -28,11 +30,16 @@ export class SignInUseCases {
       throw new InvalidCredentialsError();
     }
 
-    const token = tokenProvider.generate({ userId: user.id });
-
     delete user.password;
 
-    return { user, token };
+    const token = tokenProvider.generate({ userId: user.id });
+
+    let refreshToken;
+    if(rememberMe && ParseBoolean.parse(rememberMe)) {
+      refreshToken = (await refreshTokenProvider.generate({ userId: user.id })).userId;
+    }
+
+    return { user, token, refreshToken };
   }
 
 }
