@@ -1,4 +1,4 @@
-export class RefreshTokenFilterProperties {
+export class RefreshTokenFilter {
   refreshTokenId?: string;
   userId?: string;
 }

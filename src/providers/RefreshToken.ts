@@ -4,7 +4,7 @@ import { currentRefreshTokensRepository, currentUsersRepository } from '../repos
 import { IRefreshTokensRepository } from '../repositories/refresh-tokens/IRefreshTokensRepository';
 import { IUsersRepository } from '../repositories/users/IUsersRepository';
 import { EnvProvider } from '../services/env-provider';
-import { RefreshTokenFilterProperties } from '../shared/RefreshTokenFilterProperties';
+import { RefreshTokenFilter } from '../shared/filters/RefreshTokenFilter';
 
 export class RefreshToken {
 
@@ -15,7 +15,7 @@ export class RefreshToken {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async getRefreshTokenBy({ refreshTokenId, userId }: RefreshTokenFilterProperties): Promise<IRefreshToken | null> {
+  async getRefreshTokenBy({ refreshTokenId, userId }: RefreshTokenFilter): Promise<IRefreshToken | null> {
     if(!userId && !refreshTokenId) {
       throw new Error('Params userId or refreshTokenId cannot be null or undefined');
     }

@@ -1,10 +1,10 @@
 import { IRefreshToken } from '../../entities/refresh-token/IRefreshToken';
 import { RefreshTokenCreateRequest } from '../../entities/refresh-token/dtos/RefreshTokenCreateRequest';
-import { RefreshTokenFilterProperties } from '../../shared/RefreshTokenFilterProperties';
+import { RefreshTokenFilter } from '../../shared/filters/RefreshTokenFilter';
 
 export interface IRefreshTokensRepository {
 
-  listByProperties({ refreshTokenId, userId }: RefreshTokenFilterProperties): Promise<IRefreshToken>;
+  listByProperties({ refreshTokenId, userId }: RefreshTokenFilter): Promise<IRefreshToken>;
 
   create({ expiresIn, userId }: RefreshTokenCreateRequest): Promise<IRefreshToken>;
 

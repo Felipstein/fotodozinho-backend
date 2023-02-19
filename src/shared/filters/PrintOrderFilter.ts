@@ -1,4 +1,4 @@
-import { PrintOrderStatus } from '../entities/print-order/IPrintOrder';
+import { PrintOrderStatus } from '../../entities/print-order/IPrintOrder';
 
 export interface PrintOrderFilter {
   status?: PrintOrderStatus;
