@@ -34,6 +34,7 @@ export async function ensureAuth(req: Request, res: Response, next: NextFunction
 
   req.userId = userId;
   req.tokenRequesting = token;
+  req.userIsAdmin = userExists.admin;
 
   next();
 }
