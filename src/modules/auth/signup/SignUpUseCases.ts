@@ -36,9 +36,10 @@ export class SignUpUseCases {
     const user = await this.usersRepository.create({
       name, email, phone, password: encryptedPassword,
     }, false);
+    const userId = user.id;
 
-    const token = tokenProvider.generate({ userId: user.id });
-    const { id: refreshToken } = await refreshTokenProvider.generate({ userId: user.id });
+    const token = tokenProvider.generate({ userId: userId });
+    const { id: refreshToken } = await refreshTokenProvider.generate(userId);
 
     return { user, token, refreshToken };
   }

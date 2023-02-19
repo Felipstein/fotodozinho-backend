@@ -37,7 +37,7 @@ export class SignInUseCases {
 
     let refreshToken;
     if(rememberMe && ParseBoolean.parse(rememberMe)) {
-      const userHasRefreshToken = await refreshTokenProvider.userHasRefreshToken(userId);
+      const userHasRefreshToken = await refreshTokenProvider.getRefreshTokenBy({ userId });
       if(userHasRefreshToken) {
         refreshToken = (await refreshTokenProvider.renewExpiresIn(userId)).userId;
       } else {

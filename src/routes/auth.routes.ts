@@ -5,6 +5,7 @@ import { signOutFactory } from '../modules/auth/signout';
 import { validateTokenFactory } from '../modules/auth/validate';
 import { preventAuthenticatedAccess } from '../middlewares/preventAuthenticatedAccess';
 import { ensureAuth } from '../middlewares/ensureAuth';
+import { refreshTokenFactory } from '../modules/auth/refresh-token';
 
 const route = Router();
 
@@ -22,6 +23,10 @@ route.delete('/signout', ensureAuth, (req, res) => {
 
 route.get('/validate', ensureAuth, (req, res) => {
   return validateTokenFactory().controller.handle(req, res);
+});
+
+route.post('/refresh-token', (req, res) => {
+  return refreshTokenFactory().controller.handle(req, res);
 });
 
 export { route as authRoutes };

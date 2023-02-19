@@ -3,12 +3,15 @@ import { refreshTokenMapper } from '../../domain/RefreshTokenMapper';
 import { RefreshTokenCreateRequest } from '../../entities/refresh-token/dtos/RefreshTokenCreateRequest';
 import { RefreshTokenUpdateRequest } from '../../entities/refresh-token/dtos/RefreshTokenUpdateRequest';
 import { IRefreshToken } from '../../entities/refresh-token/IRefreshToken';
+import { RefreshTokenFilterProperties } from '../../shared/RefreshTokenFilterProperties';
 import { IRefreshTokensRepository } from './IRefreshTokensRepository';
 
 export class PrismaRefreshTokensRepository implements IRefreshTokensRepository {
 
-  async listByUserId(userId: string): Promise<IRefreshToken> {
-    const refreshToken = await prisma.refreshToken.findFirst({ where: { userId } });
+  async listByProperties({ refreshTokenId, userId }: RefreshTokenFilterProperties): Promise<IRefreshToken> {
+    const refreshToken = await prisma.refreshToken.findFirst({
+      where: { userId, id: refreshTokenId },
+    });
 
     if(!refreshToken) {
       return null;

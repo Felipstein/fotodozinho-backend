@@ -2,6 +2,7 @@ import { IRefreshToken } from '../entities/refresh-token/IRefreshToken';
 import { currentRefreshTokensRepository, currentUsersRepository } from '../repositories';
 import { IRefreshTokensRepository } from '../repositories/refresh-tokens/IRefreshTokensRepository';
 import { IUsersRepository } from '../repositories/users/IUsersRepository';
+import { RefreshTokenFilterProperties } from '../shared/RefreshTokenFilterProperties';
 
 export class RefreshToken {
 
@@ -12,14 +13,14 @@ export class RefreshToken {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async userHasRefreshToken(userId: string): Promise<boolean> {
-    if(!userId) {
-      throw new Error('Params userId cannot be null or undefined');
+  async getRefreshTokenBy({ refreshTokenId, userId }: RefreshTokenFilterProperties): Promise<IRefreshToken | null> {
+    if(!userId && !refreshTokenId) {
+      throw new Error('Params userId or refreshTokenId cannot be null or undefined');
     }
 
-    const refreshTokenExists = await this.refreshTokensRepository.listByUserId(userId);
+    const refreshToken = await this.refreshTokensRepository.listByProperties({ refreshTokenId, userId });
 
-    return !!refreshTokenExists;
+    return refreshToken;
   }
 
   async generate(userId: string): Promise<IRefreshToken> {
@@ -44,7 +45,7 @@ export class RefreshToken {
       throw new Error('Params userId cannot be null or undefined');
     }
 
-    const refreshTokenExists = await this.refreshTokensRepository.listByUserId(userId);
+    const refreshTokenExists = await this.refreshTokensRepository.listByProperties({ userId });
     if(!refreshTokenExists) {
       throw new Error('Refresh Token not found');
     }
@@ -57,7 +58,7 @@ export class RefreshToken {
   }
 
   async delete(userId: string): Promise<void> {
-    const refreshTokenExists = await this.refreshTokensRepository.listByUserId(userId);
+    const refreshTokenExists = await this.refreshTokensRepository.listByProperties({ userId });
     if(!refreshTokenExists) {
       throw new Error('Refresh Token not found');
     }
