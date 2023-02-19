@@ -31,16 +31,17 @@ export class SignInUseCases {
     }
 
     delete user.password;
+    const userId = user.id;
 
-    const token = tokenProvider.generate({ userId: user.id });
+    const token = tokenProvider.generate({ userId });
 
     let refreshToken;
     if(rememberMe && ParseBoolean.parse(rememberMe)) {
-      const userHasRefreshToken = await refreshTokenProvider.userHasRefreshToken(user.id);
+      const userHasRefreshToken = await refreshTokenProvider.userHasRefreshToken(userId);
       if(userHasRefreshToken) {
-        refreshToken = (await refreshTokenProvider.renewExpiresIn(user.id)).userId;
+        refreshToken = (await refreshTokenProvider.renewExpiresIn(userId)).userId;
       } else {
-        refreshToken = (await refreshTokenProvider.generate(user.id)).userId;
+        refreshToken = (await refreshTokenProvider.generate(userId)).userId;
       }
 
     }
