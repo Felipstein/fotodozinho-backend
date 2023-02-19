@@ -51,7 +51,7 @@ export class RefreshToken {
 
     const expiresIn = Math.floor((Date.now() + (this.expiresInSeconds * 1000)) / 1000);
 
-    const refreshToken = await this.refreshTokensRepository.create({ expiresIn, userId });
+    const refreshToken = await this.refreshTokensRepository.updateExpiresIn(userId, { expiresIn });
 
     return refreshToken;
   }
