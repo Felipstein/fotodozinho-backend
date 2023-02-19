@@ -6,6 +6,7 @@
 - Criar a rota para deleção de conta via usuário
 - Criar a verificação de usuário administrador e aplicar nas rotas administrativas
 - Criar a rota para suporte
+- Salvar todos os tokens gerados
 - Refazer os testes unitários corretamente
 - Criar os testes integrais
 - Desenvolver a parte web
