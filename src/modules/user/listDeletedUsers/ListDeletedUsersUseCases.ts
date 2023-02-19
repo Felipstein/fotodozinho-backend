@@ -1,6 +1,7 @@
 import { IUserView } from '../../../entities/user/IUserView';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
+import { getBeforeData } from '../../../utils/getBeforeDate';
 
 export class ListDeletedUsersUseCases {
 
@@ -9,22 +10,15 @@ export class ListDeletedUsersUseCases {
   ) { }
 
   async execute(when?: 'lastweek' | 'lastmonth'): Promise<IUserView[]> {
-    let deletedUsers;
+    let before;
 
-    if(when) {
-      let before;
-      if(when === 'lastmonth') {
-        before = Date.now() - 30 * 24 * 60 * 60 * 1000;
-      } else if(when === 'lastweek') {
-        before = Date.now() - 7 * 24 * 60 * 60 * 1000;
-      } else {
-        throw new BadRequestError('Valor inválido para o parâmetro "when". Valores permitidos são "lastmonth" e "lastweek"');
-      }
-
-      deletedUsers = await this.usersRepository.listDeletedUsers(new Date(before));
-    } else {
-      deletedUsers = await this.usersRepository.listDeletedUsers();
+    try {
+      before = getBeforeData(when);
+    } catch (err: any) {
+      throw new BadRequestError(err.message);
     }
+
+    const deletedUsers = await this.usersRepository.listDeletedUsers(before);
 
     return deletedUsers;
   }
