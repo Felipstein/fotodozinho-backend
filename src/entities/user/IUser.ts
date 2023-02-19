@@ -5,6 +5,7 @@ export interface IUser {
   phone?: string | null;
   password: string;
   createdAt: Date;
+  lastLogin: Date;
   admin: boolean;
   totalPrints: number;
   totalPrintOrders: number;

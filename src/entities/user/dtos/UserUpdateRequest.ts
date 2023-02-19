@@ -3,6 +3,7 @@ export interface UserUpdateRequest {
   phone?: string | null;
   password?: string;
   admin?: boolean;
+  lastLogin?: Date;
   totalPrints?: number;
   totalPrintOrders?: number;
   totalPurchases?: number;
