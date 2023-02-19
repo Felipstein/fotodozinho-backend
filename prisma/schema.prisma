@@ -21,8 +21,9 @@ model User {
   totalPurchaseOrders Decimal         @default(0)
   Notification        Notification[]
   PrintOrder          PrintOrder[]
-  ShoppingCart        ShoppingCart[]
+  ShoppingCart        ShoppingCart?
   PurchaseOrder       PurchaseOrder[]
+  RefreshToken        RefreshToken?
 
   @@map("users")
 }
@@ -200,4 +201,12 @@ model RevokedTokens {
   expiresIn Decimal
 
   @@map("revoked_tokens")
+}
+
+model RefreshToken {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  @@map("refresh_tokens")
 }
