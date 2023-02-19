@@ -15,8 +15,13 @@ const include = {
 
 export class PrismaPrintOrderRepository implements IPrintOrdersRepository {
 
-  async listAll(): Promise<IPrintOrder[]> {
-    const printOrders = await prisma.printOrder.findMany({ include });
+  async listAll(status?: PrintOrderStatus): Promise<IPrintOrder[]> {
+    const printOrders = await prisma.printOrder.findMany({
+      where: {
+        status,
+      },
+      include,
+    });
 
     return printOrders.map(printOrderMapper.toDomain);
   }

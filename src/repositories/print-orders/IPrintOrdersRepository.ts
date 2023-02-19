@@ -3,7 +3,7 @@ import { IPrintOrder, PrintOrderStatus } from '../../entities/print-order/IPrint
 
 export interface IPrintOrdersRepository {
 
-  listAll(): Promise<IPrintOrder[]>;
+  listAll(status?: PrintOrderStatus): Promise<IPrintOrder[]>;
 
   listById(id: string): Promise<IPrintOrder>;
 
