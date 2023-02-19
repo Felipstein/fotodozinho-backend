@@ -11,4 +11,5 @@ export interface SignUpRequest {
 export interface SignUpResponse {
   user: IUserView;
   token: string;
+  refreshToken: string;
 }

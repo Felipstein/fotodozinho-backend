@@ -1,6 +1,7 @@
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { crypt } from '../../../providers/Crypt';
+import { refreshTokenProvider } from '../../../providers/RefreshToken';
 import { tokenProvider } from '../../../providers/Token';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ValidateService } from '../../../services/validate';
@@ -37,8 +38,9 @@ export class SignUpUseCases {
     }, false);
 
     const token = tokenProvider.generate({ userId: user.id });
+    const { id: refreshToken } = await refreshTokenProvider.generate({ userId: user.id });
 
-    return { user, token };
+    return { user, token, refreshToken };
   }
 
 }
