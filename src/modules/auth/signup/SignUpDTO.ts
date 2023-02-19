@@ -1,4 +1,4 @@
-import { IUserView } from '../../../entities/user/IUserView';
+import { IUserPublic } from '../../../entities/user/IUserPublic';
 
 export interface SignUpRequest {
   name: string;
@@ -9,7 +9,7 @@ export interface SignUpRequest {
 }
 
 export interface SignUpResponse {
-  user: IUserView;
+  user: IUserPublic;
   token: string;
   refreshToken: string;
 }

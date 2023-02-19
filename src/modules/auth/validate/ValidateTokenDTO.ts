@@ -1,4 +1,4 @@
-import { IUserView } from '../../../entities/user/IUserView';
+import { IUserPublic } from '../../../entities/user/IUserPublic';
 
 export interface ValidateTokenRequest {
   userId: string;
@@ -6,6 +6,6 @@ export interface ValidateTokenRequest {
 }
 
 export interface ValidateTokenResponse {
-  user: IUserView;
+  user: IUserPublic;
   token: string;
 }

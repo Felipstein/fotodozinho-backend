@@ -1,3 +1,4 @@
+import { userViewMapper } from '../../../domain/UserViewMapper';
 import { InvalidTokenError } from '../../../errors/InvalidTokenError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
@@ -20,7 +21,7 @@ export class ValidateTokenUseCases {
       throw new InvalidTokenError();
     }
 
-    return { user, token };
+    return { user: userViewMapper.toPublic(user), token };
   }
 
 }

@@ -1,3 +1,4 @@
+import { userViewMapper } from '../../../domain/UserViewMapper';
 import { InvalidCredentialsError } from '../../../errors/InvalidCredentialsError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { crypt } from '../../../providers/Crypt';
@@ -48,7 +49,7 @@ export class SignInUseCases {
 
     await this.usersRepository.update(user.id, { lastLogin: new Date() }, false);
 
-    return { user, token, refreshToken };
+    return { user: userViewMapper.toPublic(user), token, refreshToken };
   }
 
 }

@@ -1,3 +1,4 @@
+import { userViewMapper } from '../../../domain/UserViewMapper';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { crypt } from '../../../providers/Crypt';
@@ -41,7 +42,7 @@ export class SignUpUseCases {
     const token = tokenProvider.generate({ userId: userId });
     const { id: refreshToken } = await refreshTokenProvider.generate(userId);
 
-    return { user, token, refreshToken };
+    return { user: userViewMapper.toPublic(user), token, refreshToken };
   }
 
 }

@@ -1,4 +1,4 @@
-import { IUserView } from '../../../entities/user/IUserView';
+import { IUserPublic } from '../../../entities/user/IUserPublic';
 
 export interface SignInRequest {
   email: string;
@@ -7,7 +7,7 @@ export interface SignInRequest {
 }
 
 export interface SignInResponse {
-  user: IUserView;
+  user: IUserPublic;
   token: string;
   refreshToken: string;
 }
