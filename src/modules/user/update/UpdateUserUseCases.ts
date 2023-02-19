@@ -38,17 +38,27 @@ export class UpdateUserUseCases {
       throw new UserNotFoundError();
     }
 
-    const encryptedPassword = password && await crypt.hash(password);
-    const userUpdated = await this.usersRepository.update(id, {
-      name,
-      phone,
-      password: encryptedPassword,
-      admin: admin || false,
-      totalPrints,
-      totalPrintOrders,
-      totalPurchases,
-      totalPurchaseOrders,
-    }, isTest);
+    let userUpdated;
+
+    if(isAdmin) {
+      const encryptedPassword = password && await crypt.hash(password);
+      userUpdated = await this.usersRepository.update(id, {
+        name,
+        phone,
+        password: encryptedPassword,
+        admin: admin || false,
+        totalPrints,
+        totalPrintOrders,
+        totalPurchases,
+        totalPurchaseOrders,
+      }, isTest);
+    } else {
+      userUpdated = await this.usersRepository.update(id, {
+        name,
+        phone,
+      }, isTest);
+    }
+
 
     return isAdmin ? userUpdated : userViewMapper.toPublic(userUpdated);
   }

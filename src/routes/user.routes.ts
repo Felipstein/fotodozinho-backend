@@ -40,7 +40,7 @@ route.post('/', ensureAdminUser, (req, res) => {
   return createUserFactory().controller.handle(req, res);
 });
 
-route.put('/:id', ensureAdminUser, (req, res) => {
+route.put('/:id', ensureSelfAction('params', { fieldUserIdName: 'id' }), (req, res) => {
   return updateUserFactory().controller.handle(req, res);
 });
 
