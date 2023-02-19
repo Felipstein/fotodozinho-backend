@@ -7,6 +7,16 @@ import { IRefreshTokensRepository } from './IRefreshTokensRepository';
 
 export class PrismaRefreshTokensRepository implements IRefreshTokensRepository {
 
+  async listByUserId(userId: string): Promise<IRefreshToken> {
+    const refreshToken = await prisma.refreshToken.findFirst({ where: { userId } });
+
+    if(!refreshToken) {
+      return null;
+    }
+
+    return refreshTokenMapper.toDomain(refreshToken);
+  }
+
   async create({ expiresIn, userId }: RefreshTokenCreateRequest): Promise<IRefreshToken> {
     const refreshToken = await prisma.refreshToken.create({
       data: { expiresIn, userId },
@@ -24,8 +34,8 @@ export class PrismaRefreshTokensRepository implements IRefreshTokensRepository {
     return refreshTokenMapper.toDomain(refreshToken);
   }
 
-  async delete(id: string): Promise<void> {
-    await prisma.refreshToken.delete({ where: { id } });
+  async delete(userId: string): Promise<void> {
+    await prisma.refreshToken.delete({ where: { userId } });
   }
 
 }

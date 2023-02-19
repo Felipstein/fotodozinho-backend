@@ -4,10 +4,12 @@ import { RefreshTokenUpdateRequest } from '../../entities/refresh-token/dtos/Ref
 
 export interface IRefreshTokensRepository {
 
+  listByUserId(userId: string): Promise<IRefreshToken>;
+
   create({ expiresIn, userId }: RefreshTokenCreateRequest): Promise<IRefreshToken>;
 
   updateExpiresIn(userId: string, { expiresIn }: RefreshTokenUpdateRequest): Promise<IRefreshToken>;
 
-  delete(id: string): Promise<void>;
+  delete(userId: string): Promise<void>;
 
 }
