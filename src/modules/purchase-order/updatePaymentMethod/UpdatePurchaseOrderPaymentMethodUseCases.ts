@@ -1,11 +1,9 @@
 import { IPurchaseOrder } from '../../../entities/purchase-order/IPurchaseOrder';
 import { BadRequestError } from '../../../errors/BadRequestError';
-import { ForbiddenError } from '../../../errors/ForbiddenError';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { PaymentMethodNotFoundError } from '../../../errors/PaymentMethodNotFoundError';
 import { PurchaseOrderNotFoundError } from '../../../errors/PurchaseOrderNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
-import { UnauthorizedError } from '../../../errors/UnauthorizedError';
 import { IPaymentMethodsRepository } from '../../../repositories/payment-methods/IPaymentMethodsRepository';
 import { IPurchaseOrdersRepository } from '../../../repositories/purchase-order/IPurchaseOrdersRepository';
 import { verifyUserAuth } from '../../../services/verify-user-auth';

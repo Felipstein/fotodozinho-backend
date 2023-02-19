@@ -2,12 +2,10 @@ import { PrintCreateRequest } from '../../../entities/print-order/print/dtos/Pri
 import { IPrint } from '../../../entities/print-order/print/IPrint';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { ColorNotFoundError } from '../../../errors/ColorNotFoundError';
-import { ForbiddenError } from '../../../errors/ForbiddenError';
 import { NumberValidationError } from '../../../errors/NumberValidationError';
 import { PrintOrderNotFound } from '../../../errors/PrintOrderNotFoundError';
 import { PrintPriceNotFound } from '../../../errors/PrintPriceNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
-import { UnauthorizedError } from '../../../errors/UnauthorizedError';
 import { IColorsRepository } from '../../../repositories/colors/IColorsRepository';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
