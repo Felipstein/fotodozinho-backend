@@ -139,6 +139,17 @@ export class PrismaUsersRepository implements IUsersRepository {
     await prisma.user.delete({ where: { id } });
   }
 
+  async deleteDeactivedUsersForAmonth(): Promise<void> {
+    await prisma.user.deleteMany({
+      where: {
+        deletedAt: {
+          not: null,
+          gt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+        }
+      }
+    });
+  }
+
   cleanRepository(): void {}
 
 }

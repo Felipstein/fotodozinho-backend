@@ -20,6 +20,8 @@ export interface IUsersRepository {
 
   delete(id: string): Promise<void>;
 
+  deleteDeactivedUsersForAmonth(): Promise<void>;
+
   cleanRepository(): void;
 
 }
