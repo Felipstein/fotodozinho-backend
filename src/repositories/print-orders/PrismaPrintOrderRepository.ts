@@ -2,6 +2,7 @@ import { prisma } from '../../database';
 import { printOrderMapper } from '../../domain/PrintOrderMapper';
 import { PrintOrderCreateRequest } from '../../entities/print-order/dtos/PrintOrderCreateRequest';
 import { IPrintOrder, PrintOrderStatus } from '../../entities/print-order/IPrintOrder';
+import { PrintOrderFilter } from '../../shared/PrintOrderFilter';
 import { IPrintOrdersRepository } from './IPrintOrdersRepository';
 
 const include = {
@@ -15,10 +16,13 @@ const include = {
 
 export class PrismaPrintOrderRepository implements IPrintOrdersRepository {
 
-  async listAll(status?: PrintOrderStatus): Promise<IPrintOrder[]> {
+  async listAll({ status, when }: PrintOrderFilter): Promise<IPrintOrder[]> {
     const printOrders = await prisma.printOrder.findMany({
       where: {
         status,
+        createdAt: {
+          gt: when,
+        }
       },
       include,
     });
