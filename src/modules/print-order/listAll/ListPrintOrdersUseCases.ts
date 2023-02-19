@@ -17,10 +17,12 @@ export class ListPrintOrdersUseCases {
     }
 
     let before;
-    try {
-      before = getBeforeData(when);
-    } catch (err: any) {
-      throw new BadRequestError(err.message);
+    if(when) {
+      try {
+        before = getBeforeData(when);
+      } catch (err: any) {
+        throw new BadRequestError(err.message);
+      }
     }
 
     const filter: PrintOrderFilter = {

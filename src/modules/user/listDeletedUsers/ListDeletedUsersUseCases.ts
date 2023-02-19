@@ -11,11 +11,12 @@ export class ListDeletedUsersUseCases {
 
   async execute(when?: 'lastweek' | 'lastmonth'): Promise<IUserView[]> {
     let before;
-
-    try {
-      before = getBeforeData(when);
-    } catch (err: any) {
-      throw new BadRequestError(err.message);
+    if(when) {
+      try {
+        before = getBeforeData(when);
+      } catch (err: any) {
+        throw new BadRequestError(err.message);
+      }
     }
 
     const deletedUsers = await this.usersRepository.listDeletedUsers(before);
