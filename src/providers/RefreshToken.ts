@@ -1,12 +1,14 @@
+import ms from 'ms';
 import { IRefreshToken } from '../entities/refresh-token/IRefreshToken';
 import { currentRefreshTokensRepository, currentUsersRepository } from '../repositories';
 import { IRefreshTokensRepository } from '../repositories/refresh-tokens/IRefreshTokensRepository';
 import { IUsersRepository } from '../repositories/users/IUsersRepository';
+import { EnvProvider } from '../services/env-provider';
 import { RefreshTokenFilterProperties } from '../shared/RefreshTokenFilterProperties';
 
 export class RefreshToken {
 
-  private expiresInSeconds = 15;
+  readonly expiresIn = EnvProvider.tokensExpirationTime.refreshToken;
 
   constructor(
     private refreshTokensRepository: IRefreshTokensRepository,
@@ -33,7 +35,7 @@ export class RefreshToken {
       throw new Error('User not found');
     }
 
-    const expiresIn = Math.floor(Date.now() + (this.expiresInSeconds * 1000));
+    const expiresIn = Date.now() + ms(this.expiresIn);
 
     const refreshToken = await this.refreshTokensRepository.create({ expiresIn, userId });
 
@@ -58,7 +60,7 @@ export class RefreshToken {
       throw new Error('Refresh Token not found');
     }
 
-    const expiresIn = Math.floor(Date.now() + (this.expiresInSeconds * 1000));
+    const expiresIn = Date.now() + ms(this.expiresIn);
 
     await this.delete(refreshToken.id);
     const newRefreshToken = await this.refreshTokensRepository.create({ expiresIn, userId });
