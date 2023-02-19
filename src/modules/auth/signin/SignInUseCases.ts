@@ -46,6 +46,8 @@ export class SignInUseCases {
 
     }
 
+    await this.usersRepository.update(user.id, { lastLogin: new Date() }, false);
+
     return { user, token, refreshToken };
   }
 
