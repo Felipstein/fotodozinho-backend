@@ -1,6 +1,7 @@
 import { prisma } from '../../database';
 import { refreshTokenMapper } from '../../domain/RefreshTokenMapper';
 import { RefreshTokenCreateRequest } from '../../entities/refresh-token/dtos/RefreshTokenCreateRequest';
+import { RefreshTokenUpdateRequest } from '../../entities/refresh-token/dtos/RefreshTokenUpdateRequest';
 import { IRefreshToken } from '../../entities/refresh-token/IRefreshToken';
 import { IRefreshTokensRepository } from './IRefreshTokensRepository';
 
@@ -9,6 +10,15 @@ export class PrismaRefreshTokensRepository implements IRefreshTokensRepository {
   async create({ expiresIn, userId }: RefreshTokenCreateRequest): Promise<IRefreshToken> {
     const refreshToken = await prisma.refreshToken.create({
       data: { expiresIn, userId },
+    });
+
+    return refreshTokenMapper.toDomain(refreshToken);
+  }
+
+  async updateExpiresIn(userId: string, { expiresIn }: RefreshTokenUpdateRequest): Promise<IRefreshToken> {
+    const refreshToken = await prisma.refreshToken.update({
+      where: { userId },
+      data: { expiresIn },
     });
 
     return refreshTokenMapper.toDomain(refreshToken);
