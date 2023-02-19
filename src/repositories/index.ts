@@ -28,7 +28,6 @@ const currentPurchaseOrdersRepository = new PrismaPurchaseOrdersRepository();
 const currentFailedImagesUploadedRepository = new PrismaFailedImagesUploadedRepository();
 const currentRevokedTokensRepository = new PrismaRevokedTokensRepository();
 const currentRefreshTokensRepository = new PrismaRefreshTokensRepository();
-const currentInactiveUsersRepository = new PrismaInactiveUsersRepository();
 
 export {
   currentUsersRepository,
@@ -45,5 +44,4 @@ export {
   currentFailedImagesUploadedRepository,
   currentRevokedTokensRepository,
   currentRefreshTokensRepository,
-  currentInactiveUsersRepository,
 };
