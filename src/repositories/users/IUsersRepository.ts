@@ -10,8 +10,6 @@ export interface IUsersRepository {
 
   listByEmail(email: string, withPassword?: boolean): Promise<(IUserView & { password?: string }) | null>;
 
-  listInactiveUsers(): Promise<IUserView[]>;
-
   listDeletedUsers(when?: Date): Promise<IUserView[]>;
 
   create({ name, email, phone, password, admin }: UserCreateRequest, isTest: boolean): Promise<IUserView>;
