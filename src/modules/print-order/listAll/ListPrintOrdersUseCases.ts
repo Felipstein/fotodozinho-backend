@@ -2,7 +2,7 @@ import { convertPrintOrderStatus, isPrintOrderStatus } from '../../../entities/p
 import { IPrintOrder, PrintOrderStatus } from '../../../entities/print-order/IPrintOrder';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
-import { PrintOrderFilter } from '../../../shared/PrintOrderFilter';
+import { PrintOrderFilter } from '../../../shared/filters/PrintOrderFilter';
 import { getBeforeData } from '../../../utils/getBeforeDate';
 
 export class ListPrintOrdersUseCases {

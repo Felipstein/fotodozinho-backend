@@ -1,6 +1,6 @@
 import { PrintOrderCreateRequest } from '../../entities/print-order/dtos/PrintOrderCreateRequest';
 import { IPrintOrder, PrintOrderStatus } from '../../entities/print-order/IPrintOrder';
-import { PrintOrderFilter } from '../../shared/PrintOrderFilter';
+import { PrintOrderFilter } from '../../shared/filters/PrintOrderFilter';
 
 export interface IPrintOrdersRepository {
 
