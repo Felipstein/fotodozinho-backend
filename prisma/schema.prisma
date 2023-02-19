@@ -15,6 +15,7 @@ model User {
   password            String
   createdAt           DateTime        @default(now())
   lastLogin           DateTime        @default(now())
+  deletedAt           DateTime?
   admin               Boolean         @default(false)
   totalPrints         Decimal         @default(0)
   totalPrintOrders    Decimal         @default(0)
