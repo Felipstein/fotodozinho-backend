@@ -4,6 +4,7 @@ import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { crypt } from '../../../providers/Crypt';
 import { refreshTokenProvider } from '../../../providers/RefreshToken';
 import { tokenProvider } from '../../../providers/Token';
+import { IInactiveUsersRepository } from '../../../repositories/inactive-users/IInactiveUsersRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ParseBoolean } from '../../../services/parse-boolean';
 import { ValidateService } from '../../../services/validate';
@@ -13,6 +14,7 @@ export class SignInUseCases {
 
   constructor(
     private usersRepository: IUsersRepository,
+    private inactiveUsersRepository: IInactiveUsersRepository,
   ) { }
 
   async execute({ email, password, rememberMe }: SignInRequest): Promise<SignInResponse> {
@@ -48,6 +50,11 @@ export class SignInUseCases {
     }
 
     await this.usersRepository.update(user.id, { lastLogin: new Date() }, false);
+
+    const isInactive = await this.inactiveUsersRepository.listByUserId(userId);
+    if(isInactive) {
+      throw this.inactiveUsersRepository.delete(userId);
+    }
 
     return { user: userViewMapper.toPublic(user), token, refreshToken };
   }

@@ -22,6 +22,9 @@ export const selectWithoutPassword = {
 };
 
 export class PrismaUsersRepository implements IUsersRepository {
+  addInactivedUsersToInactiveUsersTable(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
 
   async listAll(includeDeletedUsers = false): Promise<IUserView[]> {
     let users;
