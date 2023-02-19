@@ -40,7 +40,7 @@ export class SignInUseCases {
       if(userHasRefreshToken) {
         refreshToken = (await refreshTokenProvider.renewExpiresIn(user.id)).userId;
       } else {
-        refreshToken = (await refreshTokenProvider.generate({ userId: user.id })).userId;
+        refreshToken = (await refreshTokenProvider.generate(user.id)).userId;
       }
 
     }

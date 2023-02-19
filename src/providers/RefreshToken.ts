@@ -1,5 +1,4 @@
 import { IRefreshToken } from '../entities/refresh-token/IRefreshToken';
-import { RefreshTokenCreateRequest } from '../entities/refresh-token/dtos/RefreshTokenCreateRequest';
 import { currentRefreshTokensRepository, currentUsersRepository } from '../repositories';
 import { IRefreshTokensRepository } from '../repositories/refresh-tokens/IRefreshTokensRepository';
 import { IUsersRepository } from '../repositories/users/IUsersRepository';
@@ -23,7 +22,7 @@ export class RefreshToken {
     return !!refreshTokenExists;
   }
 
-  async generate({ userId }: Omit<RefreshTokenCreateRequest, 'expiresIn'>): Promise<IRefreshToken> {
+  async generate(userId: string): Promise<IRefreshToken> {
     if(!userId) {
       throw new Error('Params userId cannot be null or undefined');
     }
