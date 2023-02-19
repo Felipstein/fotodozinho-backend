@@ -18,7 +18,7 @@ export class DeleteUserUseCases {
       throw new UserNotFoundError();
     }
 
-    await this.usersRepository.delete(id);
+    await this.usersRepository.update(id, { deletedAt: new Date() }, false);
   }
 
 }

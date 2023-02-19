@@ -16,7 +16,7 @@ export interface IUsersRepository {
 
   create({ name, email, phone, password, admin }: UserCreateRequest, isTest: boolean): Promise<IUserView>;
 
-  update(id: string, { name, phone, password, admin, lastLogin, totalPrintOrders, totalPrints, totalPurchaseOrders, totalPurchases }: UserUpdateRequest, isTest: boolean): Promise<IUserView | null>;
+  update(id: string, { name, phone, password, admin, lastLogin, deletedAt, totalPrintOrders, totalPrints, totalPurchaseOrders, totalPurchases }: UserUpdateRequest, isTest: boolean): Promise<IUserView | null>;
 
   delete(id: string): Promise<void>;
 

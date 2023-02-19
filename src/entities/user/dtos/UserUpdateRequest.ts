@@ -4,6 +4,7 @@ export interface UserUpdateRequest {
   password?: string;
   admin?: boolean;
   lastLogin?: Date;
+  deletedAt?: Date;
   totalPrints?: number;
   totalPrintOrders?: number;
   totalPurchases?: number;

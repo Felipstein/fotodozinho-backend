@@ -114,11 +114,20 @@ export class PrismaUsersRepository implements IUsersRepository {
     return userViewMapper.toDomain(user);
   }
 
-  async update(id: string, { name, phone, password, admin, lastLogin, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders }: UserUpdateRequest): Promise<IUserView | null> {
+  async update(id: string, { name, phone, password, admin, lastLogin, deletedAt, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders }: UserUpdateRequest): Promise<IUserView | null> {
     const user = await prisma.user.update({
       where: { id },
       data: {
-        name, phone, password, admin, lastLogin, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders
+        name,
+        phone,
+        password,
+        admin,
+        lastLogin,
+        deletedAt,
+        totalPrints,
+        totalPrintOrders,
+        totalPurchases,
+        totalPurchaseOrders,
       },
       select: selectWithoutPassword,
     });
