@@ -25,7 +25,7 @@ export class RefreshToken {
 
   async generate(userId: string): Promise<IRefreshToken> {
     if(!userId) {
-      throw new Error('Params userId cannot be null or undefined');
+      throw new Error('Param userId cannot be null or undefined');
     }
 
     const userExists = await this.usersRepository.listById(userId);
@@ -33,37 +33,46 @@ export class RefreshToken {
       throw new Error('User not found');
     }
 
-    const expiresIn = Math.floor((Date.now() + (this.expiresInSeconds * 1000)) / 1000);
+    const expiresIn = Math.floor(Date.now() + (this.expiresInSeconds * 1000));
 
     const refreshToken = await this.refreshTokensRepository.create({ expiresIn, userId });
 
     return refreshToken;
   }
 
-  async renewExpiresIn(userId: string): Promise<IRefreshToken> {
-    if(!userId) {
-      throw new Error('Params userId cannot be null or undefined');
+  refreshTokenIsExpired(refreshToken: IRefreshToken): boolean {
+    if(!refreshToken) {
+      throw new Error('Param refreshToken cannot be null or undefined');
     }
 
-    const refreshTokenExists = await this.refreshTokensRepository.listByProperties({ userId });
-    if(!refreshTokenExists) {
-      throw new Error('Refresh Token not found');
-    }
-
-    const expiresIn = Math.floor((Date.now() + (this.expiresInSeconds * 1000)) / 1000);
-
-    const refreshToken = await this.refreshTokensRepository.updateExpiresIn(userId, { expiresIn });
-
-    return refreshToken;
+    return Date.now() > refreshToken.expiresIn;
   }
 
-  async delete(userId: string): Promise<void> {
-    const refreshTokenExists = await this.refreshTokensRepository.listByProperties({ userId });
+  async regenerateRefreshToken(userId: string): Promise<IRefreshToken> {
+    if(!userId) {
+      throw new Error('Param userId cannot be null or undefined');
+    }
+
+    const refreshToken = await this.refreshTokensRepository.listByProperties({ userId });
+    if(!refreshToken) {
+      throw new Error('Refresh Token not found');
+    }
+
+    const expiresIn = Math.floor(Date.now() + (this.expiresInSeconds * 1000));
+
+    await this.delete(refreshToken.id);
+    const newRefreshToken = await this.refreshTokensRepository.create({ expiresIn, userId });
+
+    return newRefreshToken;
+  }
+
+  async delete(refreshToken: string): Promise<void> {
+    const refreshTokenExists = await this.refreshTokensRepository.listByProperties({ refreshTokenId: refreshToken });
     if(!refreshTokenExists) {
       throw new Error('Refresh Token not found');
     }
 
-    await this.refreshTokensRepository.delete(userId);
+    await this.refreshTokensRepository.delete(refreshToken);
   }
 
 }

@@ -39,7 +39,7 @@ export class SignInUseCases {
     if(rememberMe && ParseBoolean.parse(rememberMe)) {
       const userHasRefreshToken = await refreshTokenProvider.getRefreshTokenBy({ userId });
       if(userHasRefreshToken) {
-        refreshToken = (await refreshTokenProvider.renewExpiresIn(userId)).id;
+        refreshToken = (await refreshTokenProvider.regenerateRefreshToken(userId)).id;
       } else {
         refreshToken = (await refreshTokenProvider.generate(userId)).id;
       }
