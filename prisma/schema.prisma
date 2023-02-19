@@ -33,7 +33,7 @@ model User {
 
 model InactiveUser {
   userId String @id
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("inactive_users")
 }
@@ -216,7 +216,7 @@ model RevokedToken {
 model RefreshToken {
   id        String  @id @default(cuid())
   expiresIn Decimal
-  user      User    @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String  @unique
 
   @@map("refresh_tokens")
