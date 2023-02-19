@@ -6,7 +6,6 @@ import { UserCreateRequest } from '../../entities/user/dtos/UserCreateRequest';
 import { UserUpdateRequest } from '../../entities/user/dtos/UserUpdateRequest';
 import { inactiveUserMapper } from '../../domain/InactiveUserMapper';
 
-
 const selectWithoutPassword = {
   id: true,
   name: true,
@@ -14,6 +13,7 @@ const selectWithoutPassword = {
   phone: true,
   createdAt: true,
   lastLogin: true,
+  deletedAt: true,
   admin: true,
   totalPrints: true,
   totalPrintOrders: true,
@@ -74,6 +74,27 @@ export class PrismaUsersRepository implements IUsersRepository {
     });
 
     return users.map(inactiveUserMapper.toDomain);
+  }
+
+  async listDeletedUsers(when?: Date): Promise<IUserView[]> {
+    let users;
+
+    if(when) {
+      users = await prisma.user.findMany({
+        where: {
+          deletedAt: {
+            gt: when,
+          }
+        },
+        select: selectWithoutPassword,
+      });
+    } else {
+      users = await prisma.user.findMany({
+        select: selectWithoutPassword,
+      });
+    }
+
+    return users.map(userViewMapper.toDomain);
   }
 
   async create({ name, email, phone, password, admin }: UserCreateRequest): Promise<IUserView> {

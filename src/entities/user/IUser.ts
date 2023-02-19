@@ -6,6 +6,7 @@ export interface IUser {
   password: string;
   createdAt: Date;
   lastLogin: Date;
+  deletedAt: Date;
   admin: boolean;
   totalPrints: number;
   totalPrintOrders: number;
