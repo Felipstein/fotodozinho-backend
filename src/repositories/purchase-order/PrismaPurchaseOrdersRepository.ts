@@ -4,6 +4,7 @@ import { purchaseOrderProductCreationMapper } from '../../domain/PurchaseOrderPr
 import { IPurchaseOrder } from '../../entities/purchase-order/IPurchaseOrder';
 import { PurchaseOrderCreateRequest } from '../../entities/purchase-order/dtos/PurchaseOrderCreateRequest';
 import { PurchaseOrderUpdateRequest } from '../../entities/purchase-order/dtos/PurchaseOrderUpdateRequest';
+import { PurchaseOrderFilter } from '../../shared/filters/PurchaseOrderFilter';
 import { IPurchaseOrdersRepository } from './IPurchaseOrdersRepository';
 
 const include = {
@@ -21,8 +22,13 @@ const include = {
 
 export class PrismaPurchaseOrdersRepository implements IPurchaseOrdersRepository {
 
-  async listAll(): Promise<IPurchaseOrder[]> {
+  async listAll({ when }: PurchaseOrderFilter): Promise<IPurchaseOrder[]> {
     const purchaseOrders = await prisma.purchaseOrder.findMany({
+      where: {
+        createdAt: {
+          gt: when,
+        },
+      },
       include,
     });
 

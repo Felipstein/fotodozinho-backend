@@ -1,10 +1,11 @@
 import { IPurchaseOrder } from '../../entities/purchase-order/IPurchaseOrder';
 import { PurchaseOrderCreateRequest } from '../../entities/purchase-order/dtos/PurchaseOrderCreateRequest';
 import { PurchaseOrderUpdateRequest } from '../../entities/purchase-order/dtos/PurchaseOrderUpdateRequest';
+import { PurchaseOrderFilter } from '../../shared/filters/PurchaseOrderFilter';
 
 export interface IPurchaseOrdersRepository {
 
-  listAll(): Promise<IPurchaseOrder[]>;
+  listAll(filter: PurchaseOrderFilter): Promise<IPurchaseOrder[]>;
 
   listByUserId(userId: string): Promise<IPurchaseOrder[]>;
 
