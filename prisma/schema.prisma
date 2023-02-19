@@ -26,16 +26,8 @@ model User {
   ShoppingCart        ShoppingCart?
   PurchaseOrder       PurchaseOrder[]
   RefreshToken        RefreshToken?
-  InactiveUser        InactiveUser?
 
   @@map("users")
-}
-
-model InactiveUser {
-  userId String @id
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("inactive_users")
 }
 
 model PrintPrice {
