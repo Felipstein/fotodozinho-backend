@@ -2,6 +2,10 @@ const EnvProvider = {
   host: process.env.HOST,
   port: process.env.PORT,
   secretKey: process.env.SECRET_KEY,
+  tokensExpirationTime: {
+    accessToken: process.env.ACCESS_TOKEN_EXPIRATION_TIME,
+    refreshToken: process.env.REFRESH_TOKEN_EXPIRATION_TIME,
+  },
   adminPassword: process.env.ADMIN_PASSWORD,
   storageType: process.env.STORAGE_TYPE,
   aws: {
