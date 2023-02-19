@@ -204,9 +204,10 @@ model RevokedToken {
 }
 
 model RefreshToken {
-  id     String @id @default(cuid())
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
+  id        String  @id @default(cuid())
+  expiresIn Decimal
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @unique
 
   @@map("refresh_tokens")
 }
