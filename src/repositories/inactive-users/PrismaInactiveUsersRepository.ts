@@ -16,6 +16,21 @@ export class PrismaInactiveUsersRepository implements IInactiveUsersRepository {
     return users.map(inactiveUserMapper.toDomain);
   }
 
+  async listByUserId(userId: string): Promise<IUserView> {
+    const user = await prisma.inactiveUser.findFirst({
+      where: { userId },
+      include: {
+        user: { select: selectWithoutPassword },
+      },
+    });
+
+    if(!user) {
+      return null;
+    }
+
+    return inactiveUserMapper.toDomain(user);
+  }
+
   async delete(userId: string): Promise<void> {
     await prisma.inactiveUser.delete({
       where: { userId },

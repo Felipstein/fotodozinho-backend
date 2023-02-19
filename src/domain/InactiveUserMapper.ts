@@ -15,6 +15,7 @@ class InactiveUserMapper {
       admin: inactiveUserPersistence.user.admin,
       createdAt: inactiveUserPersistence.user.createdAt,
       lastLogin: inactiveUserPersistence.user.lastLogin,
+      deletedAt: inactiveUserPersistence.user.deletedAt,
       totalPrintOrders: Number(inactiveUserPersistence.user.totalPrintOrders),
       totalPrints: Number(inactiveUserPersistence.user.totalPrints),
       totalPurchaseOrders: Number(inactiveUserPersistence.user.totalPurchaseOrders),
