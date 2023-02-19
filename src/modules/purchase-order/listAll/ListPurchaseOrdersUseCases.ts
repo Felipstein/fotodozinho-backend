@@ -1,8 +1,10 @@
 import { IPurchaseOrder } from '../../../entities/purchase-order/IPurchaseOrder';
+import { BadRequestError } from '../../../errors/BadRequestError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { IPurchaseOrdersRepository } from '../../../repositories/purchase-order/IPurchaseOrdersRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { verifyUserAuth } from '../../../services/verify-user-auth';
+import { getBeforeData } from '../../../utils/getBeforeDate';
 
 export class ListPurchaseOrdersUseCases {
 
@@ -11,7 +13,7 @@ export class ListPurchaseOrdersUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(requestingUserId: string, userId?: string): Promise<IPurchaseOrder[]> {
+  async execute(requestingUserId: string, userId?: string, when?: 'today' | 'lastweek' | 'lastmonth'): Promise<IPurchaseOrder[]> {
     if(userId) {
       await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, userId);
 
@@ -27,7 +29,16 @@ export class ListPurchaseOrdersUseCases {
 
     await verifyUserAuth.ensureAdminUser(requestingUserId);
 
-    const purchaseOrders = await this.purchaseOrdersRepository.listAll();
+    let before;
+    if(when) {
+      try {
+        before = getBeforeData(when);
+      } catch (err: any) {
+        throw new BadRequestError(err.message);
+      }
+    }
+
+    const purchaseOrders = await this.purchaseOrdersRepository.listAll({ when: before });
 
     return purchaseOrders;
   }
