@@ -3,6 +3,7 @@ import { IPrintOrder, PrintOrderStatus } from '../../../entities/print-order/IPr
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { PrintOrderFilter } from '../../../shared/PrintOrderFilter';
+import { getBeforeData } from '../../../utils/getBeforeDate';
 
 export class ListPrintOrdersUseCases {
 
@@ -16,22 +17,15 @@ export class ListPrintOrdersUseCases {
     }
 
     let before;
-    if(when) {
-      let before;
-      if(when === 'today') {
-        before = Date.now() - 24 * 60 * 60 * 1000;
-      } else if(when === 'lastmonth') {
-        before = Date.now() - 30 * 24 * 60 * 60 * 1000;
-      } else if(when === 'lastweek') {
-        before = Date.now() - 7 * 24 * 60 * 60 * 1000;
-      } else {
-        throw new BadRequestError('Valor inválido para o parâmetro "when". Valores permitidos são "today", "lastmonth" e "lastweek"');
-      }
+    try {
+      before = getBeforeData(when);
+    } catch (err: any) {
+      throw new BadRequestError(err.message);
     }
 
     const filter: PrintOrderFilter = {
       status: status ? convertPrintOrderStatus(status) : undefined,
-      when: before ? new Date(before) : undefined,
+      when: before,
     };
 
     const printOrders = await this.printOrdersRepository.listAll(filter);
