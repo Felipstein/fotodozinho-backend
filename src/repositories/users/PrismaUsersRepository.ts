@@ -4,6 +4,7 @@ import { IUsersRepository } from './IUsersRepository';
 import { userViewMapper } from '../../domain/UserViewMapper';
 import { UserCreateRequest } from '../../entities/user/dtos/UserCreateRequest';
 import { UserUpdateRequest } from '../../entities/user/dtos/UserUpdateRequest';
+import { getBeforeData } from '../../utils/getBeforeDate';
 
 export const selectWithoutPassword = {
   id: true,
@@ -72,6 +73,19 @@ export class PrismaUsersRepository implements IUsersRepository {
 
     // @ts-ignore
     return withPassword ? { ...userMapped, password: user.password } : userMapped;
+  }
+
+  async listInactiveUsers(): Promise<IUserView[]> {
+    const users = await prisma.user.findMany({
+      where: {
+        lastLogin: {
+          lte: getBeforeData('lastmonth'),
+        }
+      },
+      select: selectWithoutPassword,
+    });
+
+    return users.map(userViewMapper.toDomain);
   }
 
   async listDeletedUsers(when?: Date): Promise<IUserView[]> {
