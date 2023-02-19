@@ -7,7 +7,7 @@ import { IRevokedTokensRepository } from './IRevokedTokensRepository';
 export class PrismaRevokedTokensRepository implements IRevokedTokensRepository {
 
   async listByToken(token: string): Promise<IRevokedToken> {
-    const revokedToken = await prisma.revokedTokens.findFirst({ where: { token } });
+    const revokedToken = await prisma.revokedToken.findFirst({ where: { token } });
 
     if(!revokedToken) {
       return null;
@@ -17,9 +17,9 @@ export class PrismaRevokedTokensRepository implements IRevokedTokensRepository {
   }
 
   async createOrUpdate({ token, expiresIn }: RevokedTokenCreateOrUpdatedRequest): Promise<IRevokedToken> {
-    const exists = await prisma.revokedTokens.findFirst({ where: { token } });
+    const exists = await prisma.revokedToken.findFirst({ where: { token } });
     if(exists) {
-      const revokedToken = await prisma.revokedTokens.update({
+      const revokedToken = await prisma.revokedToken.update({
         where: { token },
         data: { expiresIn },
       });
@@ -27,7 +27,7 @@ export class PrismaRevokedTokensRepository implements IRevokedTokensRepository {
       return revokedTokenMapper.toDomain(revokedToken);
     }
 
-    const revokedToken = await prisma.revokedTokens.create({
+    const revokedToken = await prisma.revokedToken.create({
       data: { token, expiresIn },
     });
 
@@ -35,11 +35,11 @@ export class PrismaRevokedTokensRepository implements IRevokedTokensRepository {
   }
 
   async delete(token: string): Promise<void> {
-    await prisma.revokedTokens.delete({ where: { token } });
+    await prisma.revokedToken.delete({ where: { token } });
   }
 
   async deleteExpiredTokens(): Promise<void> {
-    await prisma.revokedTokens.deleteMany({
+    await prisma.revokedToken.deleteMany({
       where: {
         expiresIn: {
           lt: Date.now(),
