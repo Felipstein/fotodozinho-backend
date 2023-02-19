@@ -156,7 +156,7 @@ export class PrismaUsersRepository implements IUsersRepository {
       where: {
         deletedAt: {
           not: null,
-          gt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+          gt: getBeforeData('lastmonth'),
         }
       }
     });
