@@ -9,6 +9,7 @@ import { listUserByEmailFactory } from '../modules/user/listByEmail';
 import { ensureAuth } from '../middlewares/ensureAuth';
 import { ensureAdminUser } from '../middlewares/ensureAdminUser';
 import { ensureSelfAction } from '../middlewares/ensureSelfAction';
+import { listInactiveUsersFactory } from '../modules/user/listInactives';
 
 const route = Router();
 
@@ -16,6 +17,10 @@ route.use(ensureAuth);
 
 route.get('/', ensureAdminUser, (req, res) => {
   return listUsersFactory().controller.handle(req, res);
+});
+
+route.get('/inactive', ensureAdminUser, (req, res) => {
+  return listInactiveUsersFactory().controller.handle(req, res);
 });
 
 route.get('/id/:id', ensureSelfAction('params', { fieldUserIdName: 'id' }), (req, res) => {
