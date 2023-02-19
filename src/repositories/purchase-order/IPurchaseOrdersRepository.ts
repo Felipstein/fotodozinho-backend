@@ -5,7 +5,7 @@ import { PurchaseOrderFilter } from '../../shared/filters/PurchaseOrderFilter';
 
 export interface IPurchaseOrdersRepository {
 
-  listAll(filter: PurchaseOrderFilter): Promise<IPurchaseOrder[]>;
+  listAll(filter?: PurchaseOrderFilter): Promise<IPurchaseOrder[]>;
 
   listByUserId(userId: string): Promise<IPurchaseOrder[]>;
 
