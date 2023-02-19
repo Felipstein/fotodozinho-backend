@@ -1,5 +1,4 @@
 # A fazer:
-- Verificar quais propriedades podem estar faltando (olhar o figma algo como por exemplo: top comprados na semana, etc)
 - Configurar algum provedor de e-mails
 - Criar a rota para alteração de senha via usuário
 - Criar a rota para recuperação de senhas
