@@ -29,7 +29,6 @@ export class SignOutUseCases {
     const { exp } = tokenProvider.decode(token);
 
     await this.revokedTokensRepository.createOrUpdate({ token, expiresIn: exp * 1000 });
-    await refreshTokenProvider.generate({ userId });
   }
 
 }
