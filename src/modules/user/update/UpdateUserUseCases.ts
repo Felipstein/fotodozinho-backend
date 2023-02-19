@@ -1,3 +1,5 @@
+import { userViewMapper } from '../../../domain/UserViewMapper';
+import { IUserPublic } from '../../../entities/user/IUserPublic';
 import { IUserView } from '../../../entities/user/IUserView';
 import { UserUpdateRequest } from '../../../entities/user/dtos/UserUpdateRequest';
 import { BadRequestError } from '../../../errors/BadRequestError';
@@ -13,7 +15,16 @@ export class UpdateUserUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(id: string, { name, phone, password, admin, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders }: UserUpdateRequest, isTest = false): Promise<IUserView> {
+  async execute(id: string, {
+    name,
+    phone,
+    password,
+    admin,
+    totalPrints,
+    totalPrintOrders,
+    totalPurchases,
+    totalPurchaseOrders
+  }: UserUpdateRequest, isTest = false, isAdmin = false): Promise<IUserView | IUserPublic> {
     if(!id) {
       throw new IDNotGivenError();
     }
@@ -39,7 +50,7 @@ export class UpdateUserUseCases {
       totalPurchaseOrders,
     }, isTest);
 
-    return userUpdated;
+    return isAdmin ? userUpdated : userViewMapper.toPublic(userUpdated);
   }
 
 }

@@ -1,3 +1,5 @@
+import { userViewMapper } from '../../../domain/UserViewMapper';
+import { IUserPublic } from '../../../entities/user/IUserPublic';
 import { IUserView } from '../../../entities/user/IUserView';
 import { BadRequestError } from '../../../errors/BadRequestError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
@@ -10,7 +12,7 @@ export class ListUserByEmailUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(email: string, userIdRequesting: string): Promise<IUserView> {
+  async execute(email: string, userIdRequesting: string, isAdmin = false): Promise<IUserView | IUserPublic> {
     if(!email) {
       throw new BadRequestError('E-mail é obrigatório');
     }
@@ -22,7 +24,7 @@ export class ListUserByEmailUseCases {
 
     await verifyUserAuth.ensureSelfAction({ id: userIdRequesting }, user.id);
 
-    return user;
+    return isAdmin ? user : userViewMapper.toPublic(user);
   }
 
 }

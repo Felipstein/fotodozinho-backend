@@ -10,7 +10,7 @@ export class ListUserByIdController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-    const user = await this.listUserByIdUseCases.execute(id);
+    const user = await this.listUserByIdUseCases.execute(id, req.userIsAdmin);
 
     return res.json(user);
   }

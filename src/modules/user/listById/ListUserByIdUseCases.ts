@@ -1,3 +1,5 @@
+import { userViewMapper } from '../../../domain/UserViewMapper';
+import { IUserPublic } from '../../../entities/user/IUserPublic';
 import { IUserView } from '../../../entities/user/IUserView';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
@@ -9,7 +11,7 @@ export class ListUserByIdUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(id: string): Promise<IUserView> {
+  async execute(id: string, isAdmin = false): Promise<IUserView | IUserPublic> {
     if(!id) {
       throw new IDNotGivenError();
     }
@@ -19,7 +21,7 @@ export class ListUserByIdUseCases {
       throw new UserNotFoundError();
     }
 
-    return user;
+    return isAdmin ? user : userViewMapper.toPublic(user);
   }
 
 }

@@ -11,7 +11,16 @@ export class UpdateUserController {
     const { id } = req.params;
     const { name, password, phone, admin, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders } = req.body;
 
-    const user = await this.updateUserUseCases.execute(id, { name, password, phone, admin, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders });
+    const user = await this.updateUserUseCases.execute(id, {
+      name,
+      password,
+      phone,
+      admin,
+      totalPrints,
+      totalPrintOrders,
+      totalPurchases,
+      totalPurchaseOrders
+    }, false, req.userIsAdmin);
 
     return res.json(user);
   }
