@@ -9,5 +9,4 @@ export interface PrintCreateRequest {
   border: boolean;
   colorId: string;
   quantity: number;
-  printOrderId: string;
 }
