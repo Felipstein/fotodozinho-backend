@@ -1,5 +1,6 @@
 import { PrismaColorsRepository } from './colors/PrismaColorsRepository';
 import { PrismaFailedImagesUploadedRepository } from './failed-images-uploaded/PrismaFailedImagesUploadedRepository';
+import { PrismaInactiveUsersRepository } from './inactive-users/PrismaInactiveUsersRepository';
 import { PrismaNotificationsRepository } from './notifications/PrismaNotificationsRepository';
 import { PrismaPaymentMethodsRepository } from './payment-methods/PrismaPaymentMethodsRepository';
 import { PrismaPrintOrderRepository } from './print-orders/PrismaPrintOrderRepository';
@@ -27,6 +28,7 @@ const currentPurchaseOrdersRepository = new PrismaPurchaseOrdersRepository();
 const currentFailedImagesUploadedRepository = new PrismaFailedImagesUploadedRepository();
 const currentRevokedTokensRepository = new PrismaRevokedTokensRepository();
 const currentRefreshTokensRepository = new PrismaRefreshTokensRepository();
+const currentInactiveUsersRepository = new PrismaInactiveUsersRepository();
 
 export {
   currentUsersRepository,
@@ -43,4 +45,5 @@ export {
   currentFailedImagesUploadedRepository,
   currentRevokedTokensRepository,
   currentRefreshTokensRepository,
+  currentInactiveUsersRepository,
 };
