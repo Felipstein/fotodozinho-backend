@@ -83,6 +83,7 @@ export class PrismaUsersRepository implements IUsersRepository {
       users = await prisma.user.findMany({
         where: {
           deletedAt: {
+            not: null,
             gt: when,
           }
         },
@@ -90,6 +91,11 @@ export class PrismaUsersRepository implements IUsersRepository {
       });
     } else {
       users = await prisma.user.findMany({
+        where: {
+          deletedAt: {
+            not: null,
+          },
+        },
         select: selectWithoutPassword,
       });
     }
