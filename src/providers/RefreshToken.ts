@@ -13,9 +13,19 @@ export class RefreshToken {
     private usersRepository: IUsersRepository,
   ) { }
 
+  async userHasRefreshToken(userId: string): Promise<boolean> {
+    if(!userId) {
+      throw new Error('Params userId cannot be null or undefined');
+    }
+
+    const refreshTokenExists = await this.refreshTokensRepository.listByUserId(userId);
+
+    return !!refreshTokenExists;
+  }
+
   async generate({ userId }: Omit<RefreshTokenCreateRequest, 'expiresIn'>): Promise<IRefreshToken> {
     if(!userId) {
-      throw new Error('Params expiresIn and userId cannot be null or undefined');
+      throw new Error('Params userId cannot be null or undefined');
     }
 
     const userExists = await this.usersRepository.listById(userId);
@@ -32,7 +42,7 @@ export class RefreshToken {
 
   async renewExpiresIn(userId: string): Promise<IRefreshToken> {
     if(!userId) {
-      throw new Error('Params expiresIn and userId cannot be null or undefined');
+      throw new Error('Params userId cannot be null or undefined');
     }
 
     const refreshTokenExists = await this.refreshTokensRepository.listByUserId(userId);
