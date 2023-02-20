@@ -6,4 +6,6 @@ export interface EmailService {
 
   sendRecoveryPasswordEmail(to: string, userName: string, passwordRecoveryToken: string): Promise<void>;
 
+  sendSupportEmail(to: string, userName: string): Promise<void>;
+
 }

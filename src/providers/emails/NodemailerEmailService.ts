@@ -87,4 +87,20 @@ export class NodemailerEmailService implements EmailService {
     );
   }
 
+  async sendSupportEmail(to: string, userName: string): Promise<void> {
+    await this.sendEmail(
+      to,
+      'Suporte - Foto do Zinho',
+      `
+        <p><strong>Olá, ${userName}!</strong></p>
+        <p>Recebemos sua mensagem e estamos trabalhando para ajudá-lo a resolver seus problemas. Nossa equipe de suporte entrará em contato com você o mais breve possível para ajudá-lo com o problema que você está enfrentando.</p>
+        <br>
+        <p>Enquanto isso, se você tiver alguma outra dúvida ou preocupação, não hesite em entrar em contato conosco.</p>
+        <br>
+        <p>Atenciosamente,</p>
+        <p>A equipe de suporte da Foto do Zinho</p>
+      `,
+    );
+  }
+
 }
