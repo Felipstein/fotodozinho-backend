@@ -11,7 +11,7 @@ export class UpdateSupportRequestController {
     const { id } = req.params;
     const { resolved } = req.body;
 
-    const supportRequest = await this.updateSupportRequestUseCase.execute(id, resolved);
+    const supportRequest = await this.updateSupportRequestUseCase.execute(id, { resolved });
 
     return res.json(supportRequest);
   }
