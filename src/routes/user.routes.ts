@@ -10,7 +10,6 @@ import { ensureAuth } from '../middlewares/ensureAuth';
 import { ensureAdminUser } from '../middlewares/ensureAdminUser';
 import { ensureSelfAction } from '../middlewares/ensureSelfAction';
 import { listInactiveUsersFactory } from '../modules/user/listInactives';
-import { listDeletedUsersFactory } from '../modules/user/listDeletedUsers';
 
 const route = Router();
 
@@ -30,10 +29,6 @@ route.get('/id/:id', ensureSelfAction('params', { fieldUserIdName: 'id' }), (req
 
 route.get('/email/:email', (req, res) => {
   return listUserByEmailFactory().controller.handle(req, res);
-});
-
-route.get('/deleted', ensureAdminUser, (req, res) => {
-  return listDeletedUsersFactory().controller.handle(req, res);
 });
 
 route.post('/', ensureAdminUser, (req, res) => {
