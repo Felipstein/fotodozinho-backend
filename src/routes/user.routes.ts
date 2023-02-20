@@ -11,6 +11,7 @@ import { ensureAdminUser } from '../middlewares/ensureAdminUser';
 import { ensureSelfAction } from '../middlewares/ensureSelfAction';
 import { listInactiveUsersFactory } from '../modules/user/listInactives';
 import { updateUserPasswordFactory } from '../modules/user/updatePassword';
+import { userDeleteAccountFactory } from '../modules/user/delete-account';
 
 const route = Router();
 
@@ -46,6 +47,10 @@ route.patch('/:id/password', ensureSelfAction('params', { fieldUserIdName: 'id' 
 
 route.delete('/:id', ensureAdminUser, (req, res) => {
   return deleteUserFactory().controller.handle(req, res);
+});
+
+route.delete('/account/:id', ensureSelfAction('params', { fieldUserIdName: 'id' }), (req, res) => {
+  return userDeleteAccountFactory().controller.handle(req, res);
 });
 
 export { route as userRoutes };
