@@ -33,4 +33,14 @@ export class PrismaPasswordRecoveryTokensRepository implements IPasswordRecovery
     });
   }
 
+  async deleteExpiredTokens(): Promise<void> {
+    await prisma.passwordRecoveryToken.deleteMany({
+      where: {
+        expiresIn: {
+          lt: Date.now(),
+        }
+      }
+    });
+  }
+
 }

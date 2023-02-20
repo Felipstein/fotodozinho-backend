@@ -10,4 +10,6 @@ export interface IPasswordRecoveryTokensRepository {
 
   delete(filter: PasswordRecoveryTokenFilter): Promise<void>;
 
+  deleteExpiredTokens(): Promise<void>;
+
 }

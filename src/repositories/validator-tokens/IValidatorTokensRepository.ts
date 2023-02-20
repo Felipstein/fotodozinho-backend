@@ -12,4 +12,6 @@ export interface IValidatorTokensRepository {
 
   delete({ id, email }: ListValidatorTokenBy): Promise<void>;
 
+  deleteExpiredTokens(): Promise<void>;
+
 }

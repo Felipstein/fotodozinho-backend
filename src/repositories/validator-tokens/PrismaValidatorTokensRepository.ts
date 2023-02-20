@@ -41,4 +41,14 @@ export class PrismaValidatorTokensRepository implements IValidatorTokensReposito
     });
   }
 
+  async deleteExpiredTokens(): Promise<void> {
+    await prisma.validatorToken.deleteMany({
+      where: {
+        expiresIn: {
+          lt: Date.now(),
+        }
+      }
+    });
+  }
+
 }
