@@ -1,6 +1,7 @@
 const EnvProvider = {
   host: process.env.HOST,
   port: process.env.PORT,
+  origin: process.env.ORIGIN,
   secretKey: process.env.SECRET_KEY,
   tokensExpirationTime: {
     accessToken: process.env.ACCESS_TOKEN_EXPIRATION_TIME,

@@ -20,6 +20,7 @@ import { ensureAuth } from '../middlewares/ensureAuth';
 import { ensureAdminUser } from '../middlewares/ensureAdminUser';
 import { validateEmailFactory } from '../modules/auth/validate-email';
 import { setPasswordFactory } from '../modules/user/set-password';
+import { recoveryPasswordFactory } from '../modules/user/recovery-password';
 
 const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
@@ -55,6 +56,10 @@ routes.get('/validate-email/:token', (req, res) => {
 
 routes.post('/set-password', (req, res) => {
   return setPasswordFactory().controller.handle(req, res);
+});
+
+routes.post('/recovery-password', (req, res) => {
+  return recoveryPasswordFactory().controller.handle(req, res);
 });
 
 export { routes };

@@ -62,4 +62,29 @@ export class NodemailerEmailService implements EmailService {
     );
   }
 
+  async sendRecoveryPasswordEmail(to: string, userName: string, passwordRecoveryToken: string): Promise<void> {
+    const recoveryLink = `${EnvProvider.origin}/reset-password?token=${passwordRecoveryToken}`;
+
+    await this.sendEmail(
+      to,
+      'Recuperação de Senha - Foto do Zinho',
+      `
+        <p><strong>Olá, ${userName}! Sentimos muito por isso :(</strong></p>
+        <br>
+        <p>Recebemos uma solicitação para redefinir a senha da sua conta em Foto do Zinho.</p>
+        <p>Para prosseguir com a recuperação da sua senha, clique no link abaixo:</p>
+        <p>
+          <a href="${recoveryLink}" target="_blank">
+            ${recoveryLink}
+          </a>
+        </p>
+        <br>
+        <p>Se você não solicitou a recuperação da senha, por favor ignore este e-mail.</p>
+        <br>
+        <p>Atenciosamente,</p>
+        <p>Equipe Foto do Zinho</p>
+      `,
+    );
+  }
+
 }
