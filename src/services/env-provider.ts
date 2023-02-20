@@ -14,6 +14,12 @@ const EnvProvider = {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
+  smtp: {
+    email: process.env.SMTP_EMAIL,
+    host: process.env.SMTP_HOST,
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
 };
 
 export { EnvProvider };
