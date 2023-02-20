@@ -45,6 +45,8 @@ export class RecoveryPasswordUseCase {
 
     const encryptedPassword = await crypt.hash(newPassword);
     await this.usersRepository.update(userId, { password: encryptedPassword }, false);
+
+    await passwordRecoveryTokenProvider.delete({ id: passwordRecoveryTokenId });
   }
 
 }
