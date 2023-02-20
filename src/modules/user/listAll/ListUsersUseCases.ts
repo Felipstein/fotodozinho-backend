@@ -7,8 +7,8 @@ export class ListUsersUseCases {
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute(includeDeletedUsers = false): Promise<IUserView[]> {
-    const users = await this.usersRepository.listAll(includeDeletedUsers);
+  async execute(): Promise<IUserView[]> {
+    const users = await this.usersRepository.listAll();
 
     return users;
   }
