@@ -4,6 +4,8 @@ import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { accessTokenProvider } from '../../../providers/AccessToken';
 import { crypt } from '../../../providers/Crypt';
 import { refreshTokenProvider } from '../../../providers/RefreshToken';
+import { validatorTokenProvider } from '../../../providers/ValidatorToken';
+import { EmailService } from '../../../providers/emails/EmailService';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ValidateService } from '../../../services/validate';
 import { SignUpRequest, SignUpResponse } from './SignUpDTO';
@@ -12,6 +14,7 @@ export class SignUpUseCases {
 
   constructor(
     private usersRepository: IUsersRepository,
+    private emailService: EmailService,
   ) { }
 
   async execute({ name, email, phone, password, confirmPassword }: SignUpRequest): Promise<SignUpResponse> {
@@ -41,6 +44,7 @@ export class SignUpUseCases {
 
     const token = accessTokenProvider.generate({ userId: userId });
     const { id: refreshToken } = await refreshTokenProvider.generate(userId);
+    const { id: validatorToken } = await validatorTokenProvider.generate(email);
 
     return { user: userViewMapper.toPublic(user), token, refreshToken };
   }

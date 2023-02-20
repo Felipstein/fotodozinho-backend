@@ -12,6 +12,7 @@ import { PrismaRefreshTokensRepository } from './refresh-tokens/PrismaRefreshTok
 import { PrismaRevokedTokensRepository } from './revoked-tokens/PrismaRevokedTokensRepository';
 import { PrismaShoppingCartsRepository } from './shopping-carts/PrismaShoppingCartsRepository';
 import { PrismaUsersRepository } from './users/PrismaUsersRepository';
+import { PrismaValidatorTokensRepository } from './validator-tokens/PrismaValidatorTokensRepository';
 
 const currentUsersRepository = new PrismaUsersRepository();
 const currentPrintPricesRepository = new PrismaPrintPricesRepository();
@@ -27,6 +28,7 @@ const currentPurchaseOrdersRepository = new PrismaPurchaseOrdersRepository();
 const currentFailedImagesUploadedRepository = new PrismaFailedImagesUploadedRepository();
 const currentRevokedTokensRepository = new PrismaRevokedTokensRepository();
 const currentRefreshTokensRepository = new PrismaRefreshTokensRepository();
+const currentValidatorTokensRepository = new PrismaValidatorTokensRepository();
 
 export {
   currentUsersRepository,
@@ -43,4 +45,5 @@ export {
   currentFailedImagesUploadedRepository,
   currentRevokedTokensRepository,
   currentRefreshTokensRepository,
+  currentValidatorTokensRepository,
 };
