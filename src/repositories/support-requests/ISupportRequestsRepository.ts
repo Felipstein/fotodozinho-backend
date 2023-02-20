@@ -5,6 +5,8 @@ export interface ISupportRequestsRepository {
 
   listAll(): Promise<ISupportRequest[]>;
 
+  listById(id: string): Promise<ISupportRequest>;
+
   create(request: SupportRequestCreateRequest): Promise<ISupportRequest>;
 
   updateResolved(id: string, resolved: boolean): Promise<ISupportRequest>;

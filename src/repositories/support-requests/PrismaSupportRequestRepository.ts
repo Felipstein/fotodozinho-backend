@@ -9,6 +9,12 @@ export class PrismaSupportRequestRepository implements ISupportRequestsRepositor
     return prisma.supportRequest.findMany();
   }
 
+  listById(id: string): Promise<ISupportRequest> {
+    return prisma.supportRequest.findFirst({
+      where: { id },
+    });
+  }
+
   create({ email }: SupportRequestCreateRequest): Promise<ISupportRequest> {
     return prisma.supportRequest.create({
       data: { email },
