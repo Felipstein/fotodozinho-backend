@@ -1,6 +1,4 @@
 # A fazer:
-- Criar a rota para suporte
-- Salvar todos os tokens gerados
 - Refazer os testes unitários corretamente
 - Criar os testes integrais
 - Adicionar a parte de suporte no figma
