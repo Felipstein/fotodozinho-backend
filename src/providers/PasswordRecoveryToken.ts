@@ -3,7 +3,6 @@ import { BadRequestError } from '../errors/BadRequestError';
 import { RequiredFieldsError } from '../errors/RequiredFieldsError';
 import { currentPasswordRecoveryTokensRepository, currentUsersRepository } from '../repositories';
 import { IPasswordRecoveryTokensRepository } from '../repositories/password-recovery-tokens/IPasswordRecoveryTokensRepository';
-import { IUsersRepository } from '../repositories/users/IUsersRepository';
 import { EnvProvider } from '../services/env-provider';
 import { PasswordRecoveryTokenFilter } from '../shared/filters/PasswordRecoveryTokenFilter';
 
@@ -13,7 +12,6 @@ export class PasswordRecoveryToken {
 
   constructor(
     private passwordRecoveryTokensRepository: IPasswordRecoveryTokensRepository,
-    private usersRepository: IUsersRepository,
   ) { }
 
   async getPasswordRecoveryToken({ id, userId }: PasswordRecoveryTokenFilter): Promise<IPasswordRecoveryToken> {

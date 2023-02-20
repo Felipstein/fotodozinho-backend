@@ -5,15 +5,15 @@ import { crypt } from '../../../providers/Crypt';
 import { passwordRecoveryTokenProvider } from '../../../providers/PasswordRecoveryToken';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ValidateService } from '../../../services/validate';
-import { RecoveryPasswordRequest } from './RecoveryPasswordDTO';
+import { SetPasswordRequest } from './SetPasswordDTO';
 
-export class RecoveryPasswordUseCase {
+export class SetPasswordUseCase {
 
   constructor(
     private usersRepository: IUsersRepository,
   ) { }
 
-  async execute({ passwordRecoveryTokenId, newPassword, confirmNewPassword }: RecoveryPasswordRequest): Promise<void> {
+  async execute({ passwordRecoveryTokenId, newPassword, confirmNewPassword }: SetPasswordRequest): Promise<void> {
     if(ValidateService.someIsNullOrUndefined(passwordRecoveryTokenId, newPassword, confirmNewPassword)) {
       throw new RequiredFieldsError('Token', 'Nova senha', 'Confirmar nova senha');
     }
