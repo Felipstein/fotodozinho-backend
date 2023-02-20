@@ -1,5 +1,4 @@
 # A fazer:
-- Criar a rota para alteração de senha via usuário
 - Criar a rota para recuperação de senhas
 - Criar a rota para deleção de conta via usuário
 - Criar a verificação de usuário administrador e aplicar nas rotas administrativas
