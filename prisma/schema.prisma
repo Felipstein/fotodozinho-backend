@@ -234,8 +234,8 @@ model PasswordRecoveryToken {
 
 model SupportRequest {
   id        String   @id @default(cuid())
-  resolved  Boolean
-  createdAt DateTime
+  resolved  Boolean  @default(false)
+  createdAt DateTime @default(now())
   email     String
 
   @@map("support_requests")
