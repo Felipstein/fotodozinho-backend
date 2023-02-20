@@ -17,6 +17,7 @@ model User {
   lastLogin           DateTime        @default(now())
   deletedAt           DateTime?
   admin               Boolean         @default(false)
+  verified            Boolean         @default(false)
   totalPrints         Decimal         @default(0)
   totalPrintOrders    Decimal         @default(0)
   totalPurchases      Decimal         @default(0)
