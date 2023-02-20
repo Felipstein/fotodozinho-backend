@@ -29,6 +29,7 @@ export class CreateAdminUserIfNotExistsService {
       email: 'admin@admin',
       password: encryptedPassword,
       admin: true,
+      verified: true,
     }, false);
 
     return 'CREATED';
