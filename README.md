@@ -3,6 +3,7 @@
 - Salvar todos os tokens gerados
 - Refazer os testes unitários corretamente
 - Criar os testes integrais
+- Adicionar a parte de suporte no figma
 - Desenvolver a parte web
 - Adicionar WebSockets na api e na web
 - Criar os testes E2E
