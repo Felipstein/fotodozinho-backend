@@ -213,3 +213,11 @@ model RefreshToken {
 
   @@map("refresh_tokens")
 }
+
+model ValidatorToken {
+  id        String  @id @default(cuid())
+  expiresIn Decimal
+  email     String  @unique
+
+  @@map("validator_tokens")
+}
