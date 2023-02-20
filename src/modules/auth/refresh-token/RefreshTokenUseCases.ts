@@ -1,7 +1,7 @@
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { UnauthorizedError } from '../../../errors/UnauthorizedError';
+import { accessTokenProvider } from '../../../providers/AccessToken';
 import { refreshTokenProvider } from '../../../providers/RefreshToken';
-import { tokenProvider } from '../../../providers/Token';
 import { RefreshTokenResponse } from './RefreshTokenDTO';
 
 export class RefreshTokenUseCases {
@@ -23,7 +23,7 @@ export class RefreshTokenUseCases {
 
     const { userId } = refreshTokenObj;
 
-    const token = tokenProvider.generate({ userId });
+    const token = accessTokenProvider.generate({ userId });
     await refreshTokenProvider.regenerateRefreshToken(userId);
 
     return { token };

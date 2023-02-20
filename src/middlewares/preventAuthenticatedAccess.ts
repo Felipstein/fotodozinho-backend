@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { tokenProvider } from '../providers/Token';
 import { currentUsersRepository } from '../repositories';
 import { AlreadyAuthenticatedError } from '../errors/AlreadyAuthenticatedError';
+import { accessTokenProvider } from '../providers/AccessToken';
 
 export async function preventAuthenticatedAccess(req: Request, res: Response, next: NextFunction) {
   const authorization = req.headers.authorization;
@@ -16,12 +16,12 @@ export async function preventAuthenticatedAccess(req: Request, res: Response, ne
   }
 
   try {
-    await tokenProvider.verify(token);
+    await accessTokenProvider.verify(token);
   } catch {
     return next();
   }
 
-  const { userId } = tokenProvider.decode(token);
+  const { userId } = accessTokenProvider.decode(token);
   if(!userId) {
     return next();
   }

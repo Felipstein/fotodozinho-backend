@@ -5,7 +5,7 @@ import { TokenExpiredError } from '../errors/TokenExpiredError';
 import { currentRevokedTokensRepository } from '../repositories';
 import { RevokedTokenError } from '../errors/RevokedTokenError';
 
-class TokenProvider {
+class AccessTokenProvider {
 
   readonly expiresIn = EnvProvider.tokensExpirationTime.accessToken;
 
@@ -44,6 +44,6 @@ class TokenProvider {
 
 }
 
-const tokenProvider = new TokenProvider();
+const accessTokenProvider = new AccessTokenProvider();
 
-export { tokenProvider };
+export { accessTokenProvider };

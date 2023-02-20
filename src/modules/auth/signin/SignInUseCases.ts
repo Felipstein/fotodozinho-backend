@@ -1,9 +1,9 @@
 import { userViewMapper } from '../../../domain/UserViewMapper';
 import { InvalidCredentialsError } from '../../../errors/InvalidCredentialsError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { accessTokenProvider } from '../../../providers/AccessToken';
 import { crypt } from '../../../providers/Crypt';
 import { refreshTokenProvider } from '../../../providers/RefreshToken';
-import { tokenProvider } from '../../../providers/Token';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ParseBoolean } from '../../../services/parse-boolean';
 import { ValidateService } from '../../../services/validate';
@@ -34,7 +34,7 @@ export class SignInUseCases {
     delete user.password;
     const userId = user.id;
 
-    const token = tokenProvider.generate({ userId });
+    const token = accessTokenProvider.generate({ userId });
 
     let refreshToken;
     if(rememberMe && ParseBoolean.parse(rememberMe)) {

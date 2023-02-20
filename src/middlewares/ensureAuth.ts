@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { UnauthorizedError } from '../errors/UnauthorizedError';
 import { InvalidTokenError } from '../errors/InvalidTokenError';
-import { tokenProvider } from '../providers/Token';
 import { currentUsersRepository } from '../repositories';
+import { accessTokenProvider } from '../providers/AccessToken';
 
 export async function ensureAuth(req: Request, res: Response, next: NextFunction) {
   const authorization = req.headers.authorization;
@@ -20,9 +20,9 @@ export async function ensureAuth(req: Request, res: Response, next: NextFunction
     throw new InvalidTokenError();
   }
 
-  await tokenProvider.verify(token);
+  await accessTokenProvider.verify(token);
 
-  const { userId } = tokenProvider.decode(token);
+  const { userId } = accessTokenProvider.decode(token);
   if(!userId) {
     throw new InvalidTokenError();
   }
