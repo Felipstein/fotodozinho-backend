@@ -1,10 +1,7 @@
 # A fazer:
-- Refazer os testes unitários corretamente
-- Criar os testes integrais
 - Adicionar a parte de suporte no figma
 - Desenvolver a parte web
 - Adicionar WebSockets na api e na web
-- Criar os testes E2E
 
 # Conceitos:
 - Testes E2E para garantir a integração de todos os componentes do sistema
