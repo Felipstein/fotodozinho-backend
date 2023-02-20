@@ -1,5 +1,4 @@
 # A fazer:
-- Criar a verificação de usuário administrador e aplicar nas rotas administrativas
 - Criar a rota para suporte
 - Salvar todos os tokens gerados
 - Refazer os testes unitários corretamente
