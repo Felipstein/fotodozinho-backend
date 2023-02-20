@@ -12,7 +12,7 @@ export class RecoveryPasswordController {
 
     await this.recoveryPasswordUseCase.execute({ email });
 
-    return res.sendStatus(200);
+    return res.sendStatus(204);
   }
 
 }

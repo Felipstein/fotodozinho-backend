@@ -12,7 +12,7 @@ export class ValidateRecoveryPasswordTokenController {
 
     await this.validateRecoveryPasswordTokenUseCase.execute(token);
 
-    return res.sendStatus(200);
+    return res.sendStatus(204);
   }
 
 }

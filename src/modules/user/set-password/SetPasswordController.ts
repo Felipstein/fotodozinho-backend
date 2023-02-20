@@ -12,7 +12,7 @@ export class SetPasswordController {
 
     await this.setPasswordUseCase.execute({ passwordRecoveryTokenId: token, newPassword, confirmNewPassword });
 
-    return res.sendStatus(200);
+    return res.sendStatus(204);
   }
 
 }

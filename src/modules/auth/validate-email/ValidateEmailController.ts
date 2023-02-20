@@ -12,7 +12,7 @@ export class ValidateEmailController {
 
     await this.validateEmailUseCase.execute(token);
 
-    return res.sendStatus(200);
+    return res.sendStatus(204);
   }
 
 }
