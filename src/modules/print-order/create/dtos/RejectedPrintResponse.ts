@@ -1,4 +1,4 @@
-import { PrintCreateRequest } from '../../../entities/print-order/print/dtos/PrintCreateRequest';
+import { PrintCreateRequest } from '../../../../entities/print-order/print/dtos/PrintCreateRequest';
 
 export interface RejectedPrintResponse {
   print: PrintCreateRequest;
