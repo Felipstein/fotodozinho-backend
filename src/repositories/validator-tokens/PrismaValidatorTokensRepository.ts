@@ -2,6 +2,7 @@ import { prisma } from '../../database';
 import { validatorTokenMapper } from '../../domain/ValidatorTokenMapper';
 import { IValidatorToken } from '../../entities/validator-token/IValidatorToken';
 import { ValidatorTokenCreateRequest } from '../../entities/validator-token/dtos/ValidatorTokenCreateRequest';
+import { ListValidatorTokenBy } from '../../shared/ListValidatorTokenBy';
 import { IValidatorTokensRepository } from './IValidatorTokensRepository';
 
 export class PrismaValidatorTokensRepository implements IValidatorTokensRepository {
@@ -34,7 +35,7 @@ export class PrismaValidatorTokensRepository implements IValidatorTokensReposito
     return validatorTokenMapper.toDomain(validatorToken);
   }
 
-  async delete({ id, email }: { id?: string; email?: string; }): Promise<void> {
+  async delete({ id, email }: ListValidatorTokenBy): Promise<void> {
     await prisma.validatorToken.delete({
       where: { id, email },
     });

@@ -7,6 +7,7 @@ import { RequiredFieldsError } from '../errors/RequiredFieldsError';
 import { BadRequestError } from '../errors/BadRequestError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { UnauthorizedError } from '../errors/UnauthorizedError';
+import { ListValidatorTokenBy } from '../shared/ListValidatorTokenBy';
 
 class ValidatorToken {
 
@@ -16,7 +17,7 @@ class ValidatorToken {
     private validatorTokensRepository: IValidatorTokensRepository,
   ) { }
 
-  async getValidatorToken({ id, email }: { id?: string, email?: string }): Promise<IValidatorToken> {
+  async getValidatorToken({ id, email }: ListValidatorTokenBy): Promise<IValidatorToken> {
     if(!email && !id) {
       throw new RequiredFieldsError('ID', 'Email');
     }
@@ -78,7 +79,7 @@ class ValidatorToken {
     return Date.now() > validatorToken.expiresIn;
   }
 
-  async delete({ id, email }: { id?: string, email?: string }): Promise<void> {
+  async delete({ id, email }: ListValidatorTokenBy): Promise<void> {
     if(!id && !email) {
       throw new RequiredFieldsError('Token');
     }

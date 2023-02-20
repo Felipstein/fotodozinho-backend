@@ -1,5 +1,6 @@
 import { IValidatorToken } from '../../entities/validator-token/IValidatorToken';
 import { ValidatorTokenCreateRequest } from '../../entities/validator-token/dtos/ValidatorTokenCreateRequest';
+import { ListValidatorTokenBy } from '../../shared/ListValidatorTokenBy';
 
 export interface IValidatorTokensRepository {
 
@@ -9,6 +10,6 @@ export interface IValidatorTokensRepository {
 
   create({ expiresIn, email }: ValidatorTokenCreateRequest): Promise<IValidatorToken>;
 
-  delete({ id, email }: { id?: string, email?: string }): Promise<void>;
+  delete({ id, email }: ListValidatorTokenBy): Promise<void>;
 
 }
