@@ -15,6 +15,16 @@ class ValidatorToken {
     private validatorTokensRepository: IValidatorTokensRepository,
   ) { }
 
+  async getValidatorToken(email: string): Promise<IValidatorToken> {
+    if(!email) {
+      throw new RequiredFieldsError('E-mail');
+    }
+
+    const validatorToken = await this.validatorTokensRepository.listByEmail(email);
+
+    return validatorToken;
+  }
+
   async generate(email: string): Promise<IValidatorToken> {
     if(!email) {
       throw new RequiredFieldsError('E-mail');
