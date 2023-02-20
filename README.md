@@ -1,5 +1,4 @@
 # A fazer:
-- Configurar algum provedor de e-mails
 - Criar a rota para alteração de senha via usuário
 - Criar a rota para recuperação de senhas
 - Criar a rota para deleção de conta via usuário
