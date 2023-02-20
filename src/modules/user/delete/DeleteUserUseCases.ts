@@ -21,7 +21,7 @@ export class DeleteUserUseCases {
 
     await this.usersRepository.delete(id);
 
-    const validatorTokenExists = await validatorTokenProvider.getValidatorToken(user.email);
+    const validatorTokenExists = await validatorTokenProvider.getValidatorToken({ id });
     if(validatorTokenExists) {
       await validatorTokenProvider.delete({ id });
     }
