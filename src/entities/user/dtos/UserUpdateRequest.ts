@@ -5,7 +5,6 @@ export interface UserUpdateRequest {
   admin?: boolean;
   verified?: boolean;
   lastLogin?: Date;
-  deletedAt?: Date;
   totalPrints?: number;
   totalPrintOrders?: number;
   totalPurchases?: number;
