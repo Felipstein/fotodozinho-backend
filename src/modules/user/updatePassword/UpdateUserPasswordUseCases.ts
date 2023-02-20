@@ -17,7 +17,7 @@ export class UpdateUserPasswordUseCases {
 
   async execute({ userId, currentPassword, newPassword, confirmNewPassword }: UpdateUserPasswordRequest, isAdmin = false): Promise<IUserView | IUserPublic> {
     if(ValidateService.someIsNullOrUndefined(currentPassword, newPassword, confirmNewPassword)) {
-      throw new RequiredFieldsError('Senha', 'Confirmar senha');
+      throw new RequiredFieldsError('Senha atual', 'Nova senha', 'Confirmar senha');
     }
 
     if(newPassword !== confirmNewPassword) {
