@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 import 'express-async-errors';
 import 'dotenv/config';
 
@@ -8,6 +9,7 @@ import { errorHandler } from './middlewares/errorHandler';
 import './infra/scheduler';
 import { CreateAdminUserIfNotExistsService } from './services/create-admin-user';
 import { currentUsersRepository } from './repositories';
+import { EnvProvider } from './services/env-provider';
 
 const app = express();
 
@@ -24,6 +26,10 @@ function main() {
 }
 
 main();
+
+app.use(cors({
+  origin: EnvProvider.origin,
+}));
 
 app.use(express.json());
 app.use('/images', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')));
