@@ -21,6 +21,7 @@ model User {
   totalPrintOrders      Decimal                @default(0)
   totalPurchases        Decimal                @default(0)
   totalPurchaseOrders   Decimal                @default(0)
+  notifyServicesByEmail Boolean
   Notification          Notification[]
   PrintOrder            PrintOrder[]
   ShoppingCart          ShoppingCart?
