@@ -1,5 +1,8 @@
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { PasswordTooShortError } from '../../../errors/PasswordTooShortError';
+import { PasswordsDoNotMatchError } from '../../../errors/PasswordsDoNotMatchError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { SamePasswordsError } from '../../../errors/SamePasswordsError';
 import { UnauthorizedError } from '../../../errors/UnauthorizedError';
 import { crypt } from '../../../providers/Crypt';
 import { passwordRecoveryTokenProvider } from '../../../providers/PasswordRecoveryToken';
@@ -34,13 +37,17 @@ export class SetPasswordUseCase {
       throw new UnauthorizedError('Token inválido ou já expirado');
     }
 
+    if(newPassword.length < 3) {
+      throw new PasswordTooShortError();
+    }
+
     if(newPassword !== confirmNewPassword) {
-      throw new BadRequestError('As senhas não coincidem');
+      throw new PasswordsDoNotMatchError();
     }
 
     const samePassword = await crypt.matches(newPassword, user.password);
     if(samePassword) {
-      throw new BadRequestError('A nova senha não pode ser igual à sua atual');
+      throw new SamePasswordsError();
     }
 
     const encryptedPassword = await crypt.hash(newPassword);

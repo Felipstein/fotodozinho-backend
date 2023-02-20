@@ -1,5 +1,7 @@
 import { userViewMapper } from '../../../domain/UserViewMapper';
 import { BadRequestError } from '../../../errors/BadRequestError';
+import { PasswordTooShortError } from '../../../errors/PasswordTooShortError';
+import { PasswordsDoNotMatchError } from '../../../errors/PasswordsDoNotMatchError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { accessTokenProvider } from '../../../providers/AccessToken';
 import { crypt } from '../../../providers/Crypt';
@@ -25,11 +27,11 @@ export class SignUpUseCases {
     }
 
     if(password.length < 3) {
-      throw new BadRequestError('Senha muito curta. Por favor, escolha uma senha com pelo menos 3 caracteres');
+      throw new PasswordTooShortError();
     }
 
     if(password !== confirmPassword) {
-      throw new BadRequestError('A confirmação de senha não corresponde à senha inserida. Por favor, tente novamente');
+      throw new PasswordsDoNotMatchError();
     }
 
     const emailExists = await this.usersRepository.listByEmail(email);
