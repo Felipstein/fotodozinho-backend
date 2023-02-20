@@ -36,6 +36,11 @@ export class UpdateUserPasswordUseCases {
     }
 
     const encryptedPassword = await crypt.hash(newPassword);
+
+    if(user.password === encryptedPassword) {
+      throw new BadRequestError('A nova senha não pode ser igual à sua atual');
+    }
+
     const userUpdated = await this.usersRepository.update(userId, { password: encryptedPassword }, false);
 
     return isAdmin ? userUpdated : userViewMapper.toPublic(userUpdated);
