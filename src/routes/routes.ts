@@ -18,7 +18,7 @@ import { printRoutes } from './print.routes';
 import { authRoutes } from './auth.routes';
 import { ensureAuth } from '../middlewares/ensureAuth';
 import { ensureAdminUser } from '../middlewares/ensureAdminUser';
-import { validateTokenFactory } from '../modules/auth/validate';
+import { validateEmailFactory } from '../modules/auth/validate-email';
 
 const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
@@ -49,7 +49,7 @@ routes.use('/purchase-orders', purchaseOrderRoutes);
 routes.use('/failed-images-uploaded', failedImageUploadedRoutes);
 
 routes.get('/validate-email/:token', (req, res) => {
-  return validateTokenFactory().controller.handle(req, res);
+  return validateEmailFactory().controller.handle(req, res);
 });
 
 export { routes };

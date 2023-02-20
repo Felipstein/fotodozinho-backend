@@ -14,7 +14,7 @@ export class ValidateEmailUseCase {
     }
 
     await validatorTokenProvider.verify(validatorToken);
-    const { email } = await validatorTokenProvider.getValidatorToken(validatorToken);
+    const { email } = await validatorTokenProvider.getValidatorToken({ id: validatorToken });
 
     const { id: userId } = await this.usersRepository.listByEmail(email);
     await this.usersRepository.update(userId, { verified: true }, false);
