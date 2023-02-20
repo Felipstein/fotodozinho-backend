@@ -228,4 +228,15 @@ model PasswordRecoveryToken {
   expiresIn Decimal
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String  @unique
+
+  @@map("password_recovery_tokens")
+}
+
+model SupportRequest {
+  id        String   @id @default(cuid())
+  resolved  Boolean
+  createdAt DateTime
+  email     String
+
+  @@map("support_requests")
 }
