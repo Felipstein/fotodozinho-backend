@@ -16,7 +16,7 @@
 - Desenvolvido com **Node** e **Typescript** para aumentar a robustez e clareza do código
 - Segurança de senhas aprimoradas atráves da **criptografia**
 - Code Style com **ESLint**
-- **Testes unitários** e **testes integrais** garantindo a qualidade do software com **Jest**
+<!-- - **Testes unitários** e **testes integrais** garantindo a qualidade do software com **Jest** --> (Feature congelada no momento)
 - Autenticação segura de usuários com **Tokens JWT**, **Refresh Tokens** e **Tokens Revogados/Invalidados**
 - Suporte ao upload de imagens (tanto local quanto no **Amazon S3** da **AWS**) usando **Multer**
 - Sistema de administração para usuários com permissões especiais
