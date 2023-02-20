@@ -12,7 +12,7 @@ export interface IUsersRepository {
 
   listInactiveUsers(): Promise<IUserView[]>;
 
-  create({ name, email, phone, password, admin, verified }: UserCreateRequest, isTest: boolean): Promise<IUserView>;
+  create({ name, email, phone, password, admin, notifyServicesByEmail, verified }: UserCreateRequest, isTest: boolean): Promise<IUserView>;
 
   update(id: string, {
     name,
@@ -20,6 +20,7 @@ export interface IUsersRepository {
     password,
     admin,
     verified,
+    notifyServicesByEmail,
     lastLogin,
     totalPrintOrders,
     totalPrints,
