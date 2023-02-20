@@ -6,6 +6,7 @@ export interface SignUpRequest {
   phone?: string;
   password: string;
   confirmPassword: string;
+  notifyServicesByEmail: boolean;
 }
 
 export interface SignUpResponse {

@@ -21,7 +21,7 @@ export class SignUpUseCases {
     private emailService: EmailService,
   ) { }
 
-  async execute({ name, email, phone, password, confirmPassword }: SignUpRequest): Promise<SignUpResponse> {
+  async execute({ name, email, phone, password, confirmPassword, notifyServicesByEmail }: SignUpRequest): Promise<SignUpResponse> {
     if(ValidateService.someIsNullOrUndefined(name, email, password, confirmPassword)) {
       throw new RequiredFieldsError('Name', 'E-mail', 'Senha', 'Confirmar senha');
     }
@@ -42,7 +42,7 @@ export class SignUpUseCases {
     const encryptedPassword = await crypt.hash(password);
 
     const user = await this.usersRepository.create({
-      name, email, phone, password: encryptedPassword,
+      name, email, phone, password: encryptedPassword, notifyServicesByEmail,
     }, false);
     const userId = user.id;
 
