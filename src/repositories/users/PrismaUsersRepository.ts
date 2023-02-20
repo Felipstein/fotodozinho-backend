@@ -13,7 +13,6 @@ export const selectWithoutPassword = {
   phone: true,
   createdAt: true,
   lastLogin: true,
-  deletedAt: true,
   admin: true,
   verified: true,
   totalPrints: true,
@@ -24,19 +23,10 @@ export const selectWithoutPassword = {
 
 export class PrismaUsersRepository implements IUsersRepository {
 
-  async listAll(includeDeletedUsers = false): Promise<IUserView[]> {
-    let users;
-
-    if(includeDeletedUsers) {
-      users = await prisma.user.findMany({
-        select: selectWithoutPassword,
-      });
-    } else {
-      users = await prisma.user.findMany({
-        where: { deletedAt: null },
-        select: selectWithoutPassword,
-      });
-    }
+  async listAll(): Promise<IUserView[]> {
+    const users = await prisma.user.findMany({
+      select: selectWithoutPassword,
+    });
 
     return users.map(userViewMapper.toDomain);
   }
@@ -89,33 +79,6 @@ export class PrismaUsersRepository implements IUsersRepository {
     return users.map(userViewMapper.toDomain);
   }
 
-  async listDeletedUsers(when?: Date): Promise<IUserView[]> {
-    let users;
-
-    if(when) {
-      users = await prisma.user.findMany({
-        where: {
-          deletedAt: {
-            not: null,
-            gt: when,
-          }
-        },
-        select: selectWithoutPassword,
-      });
-    } else {
-      users = await prisma.user.findMany({
-        where: {
-          deletedAt: {
-            not: null,
-          },
-        },
-        select: selectWithoutPassword,
-      });
-    }
-
-    return users.map(userViewMapper.toDomain);
-  }
-
   async create({ name, email, phone, password, admin, verified }: UserCreateRequest): Promise<IUserView> {
     const user = await prisma.user.create({
       data: {
@@ -134,7 +97,6 @@ export class PrismaUsersRepository implements IUsersRepository {
     admin,
     verified,
     lastLogin,
-    deletedAt,
     totalPrints,
     totalPrintOrders,
     totalPurchases,
@@ -149,7 +111,6 @@ export class PrismaUsersRepository implements IUsersRepository {
         admin,
         verified,
         lastLogin,
-        deletedAt,
         totalPrints,
         totalPrintOrders,
         totalPurchases,
@@ -163,17 +124,6 @@ export class PrismaUsersRepository implements IUsersRepository {
 
   async delete(id: string): Promise<void> {
     await prisma.user.delete({ where: { id } });
-  }
-
-  async deleteDeactivedUsersForAmonth(): Promise<void> {
-    await prisma.user.deleteMany({
-      where: {
-        deletedAt: {
-          not: null,
-          gt: getBeforeData('lastmonth'),
-        }
-      }
-    });
   }
 
   cleanRepository(): void {}
