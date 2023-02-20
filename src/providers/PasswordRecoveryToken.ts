@@ -7,6 +7,7 @@ import { IPasswordRecoveryTokensRepository } from '../repositories/password-reco
 import { EnvProvider } from '../services/env-provider';
 import { PasswordRecoveryTokenFilter } from '../shared/filters/PasswordRecoveryTokenFilter';
 import { IUsersRepository } from '../repositories/users/IUsersRepository';
+import { UserNotFoundError } from '../errors/UserNotFoundError';
 
 export class PasswordRecoveryToken {
 
@@ -32,6 +33,16 @@ export class PasswordRecoveryToken {
       throw new BadRequestError('Usuário é obrigatório');
     }
 
+    const user = await this.usersRepository.listById(userId);
+    if(!user) {
+      throw new UserNotFoundError();
+    }
+
+    const alreadyExists = await this.getPasswordRecoveryToken({ userId });
+    if(alreadyExists) {
+      await this.delete({ userId });
+    }
+
     const expiresIn = Date.now() + ms(this.expiresIn);
 
     const passwordRecoveryToken = await this.passwordRecoveryTokensRepository.create({ expiresIn, userId });
@@ -40,7 +51,7 @@ export class PasswordRecoveryToken {
   }
 
   isExpired(passwordRecoveryToken: IPasswordRecoveryToken): boolean {
-    if(passwordRecoveryToken) {
+    if(!passwordRecoveryToken) {
       throw new RequiredFieldsError('Token');
     }
 
@@ -52,12 +63,13 @@ export class PasswordRecoveryToken {
       throw new BadRequestError('Os campos ID ou Usuário são obrigatórios');
     }
 
+
     const passwordRecoveryToken = await this.getPasswordRecoveryToken({ id, userId });
     if(!passwordRecoveryToken) {
       throw new BadRequestError('Token inválido ou expirado');
     }
 
-    if(passwordRecoveryTokenProvider.isExpired(passwordRecoveryToken)) {
+    if(this.isExpired(passwordRecoveryToken)) {
       throw new BadRequestError('Token inválido ou expirado');
     }
 

@@ -4,6 +4,7 @@ import { passwordRecoveryTokenProvider } from '../../../providers/PasswordRecove
 export class ValidateRecoveryPasswordTokenUseCase {
 
   async execute(recoveryPasswordToken: string): Promise<void> {
+
     if(!recoveryPasswordToken) {
       throw new RequiredFieldsError('Token');
     }
