@@ -10,6 +10,7 @@ import { validatorTokenProvider } from '../../../providers/ValidatorToken';
 import { EmailService } from '../../../providers/emails/EmailService';
 import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
+import { ParseBoolean } from '../../../services/parse-boolean';
 import { ValidateService } from '../../../services/validate';
 import { SignUpRequest, SignUpResponse } from './SignUpDTO';
 
@@ -21,9 +22,13 @@ export class SignUpUseCases {
     private emailService: EmailService,
   ) { }
 
-  async execute({ name, email, phone, password, confirmPassword, notifyServicesByEmail }: SignUpRequest): Promise<SignUpResponse> {
-    if(ValidateService.someIsNullOrUndefined(name, email, password, confirmPassword)) {
-      throw new RequiredFieldsError('Name', 'E-mail', 'Senha', 'Confirmar senha');
+  async execute({ name, email, phone, password, confirmPassword, notifyServicesByEmail, acceptedTermsAndConditions }: SignUpRequest): Promise<SignUpResponse> {
+    if(ValidateService.someIsNullOrUndefined(name, email, password, confirmPassword, notifyServicesByEmail, acceptedTermsAndConditions)) {
+      throw new RequiredFieldsError('Name', 'E-mail', 'Senha', 'Confirmar senha', 'Notificar serviços pelo e-mail', 'Aceito sobre os Termos de Condições e Uso');
+    }
+
+    if(ParseBoolean.parse(acceptedTermsAndConditions)) {
+      throw new BadRequestError('Você deve aceitar os termos de condições e de uso para prosseguir');
     }
 
     if(password.length < 3) {
@@ -42,7 +47,11 @@ export class SignUpUseCases {
     const encryptedPassword = await crypt.hash(password);
 
     const user = await this.usersRepository.create({
-      name, email, phone, password: encryptedPassword, notifyServicesByEmail,
+      name,
+      email,
+      phone,
+      password: encryptedPassword,
+      notifyServicesByEmail: ParseBoolean.parse(notifyServicesByEmail),
     }, false);
     const userId = user.id;
 

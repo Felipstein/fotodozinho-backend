@@ -7,6 +7,7 @@ export interface SignUpRequest {
   password: string;
   confirmPassword: string;
   notifyServicesByEmail: boolean;
+  acceptedTermsAndConditions: boolean;
 }
 
 export interface SignUpResponse {
