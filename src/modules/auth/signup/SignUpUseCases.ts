@@ -44,7 +44,9 @@ export class SignUpUseCases {
 
     const token = accessTokenProvider.generate({ userId: userId });
     const { id: refreshToken } = await refreshTokenProvider.generate(userId);
-    await validatorTokenProvider.generate(email);
+    const { id: validatorToken } = await validatorTokenProvider.generate(email);
+
+    await this.emailService.sendConfirmEmail(email, name, validatorToken);
 
     return { user: userViewMapper.toPublic(user), token, refreshToken };
   }
