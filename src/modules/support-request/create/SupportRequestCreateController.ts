@@ -10,7 +10,7 @@ export class SupportRequestCreateController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { email } = req.body;
 
-    await this.supportRequestCreateUseCase.execute({ email });
+    await this.supportRequestCreateUseCase.execute({ email }, req.userId);
 
     return res.sendStatus(201);
   }
