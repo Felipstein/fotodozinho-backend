@@ -32,7 +32,7 @@ const currentRevokedTokensRepository = new PrismaRevokedTokensRepository();
 const currentRefreshTokensRepository = new PrismaRefreshTokensRepository();
 const currentValidatorTokensRepository = new PrismaValidatorTokensRepository();
 const currentPasswordRecoveryTokensRepository = new PrismaPasswordRecoveryTokensRepository();
-const supportRequestsRepository = new PrismaSupportRequestRepository();
+const currentSupportRequestsRepository = new PrismaSupportRequestRepository();
 
 export {
   currentUsersRepository,
@@ -51,5 +51,5 @@ export {
   currentRefreshTokensRepository,
   currentValidatorTokensRepository,
   currentPasswordRecoveryTokensRepository,
-  supportRequestsRepository,
+  currentSupportRequestsRepository,
 };
