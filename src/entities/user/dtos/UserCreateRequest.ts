@@ -4,5 +4,6 @@ export interface UserCreateRequest {
   phone?: string | null;
   password: string;
   admin?: boolean;
+  notifyServicesByEmail: boolean;
   verified?: boolean;
 }

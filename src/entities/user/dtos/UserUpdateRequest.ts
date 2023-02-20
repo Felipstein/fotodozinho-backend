@@ -5,6 +5,7 @@ export interface UserUpdateRequest {
   admin?: boolean;
   verified?: boolean;
   lastLogin?: Date;
+  notifyServicesByEmail?: boolean;
   totalPrints?: number;
   totalPrintOrders?: number;
   totalPurchases?: number;

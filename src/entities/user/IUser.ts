@@ -8,6 +8,7 @@ export interface IUser {
   lastLogin: Date;
   admin: boolean;
   verified: boolean;
+  notifyServicesByEmail: boolean;
   totalPrints: number;
   totalPrintOrders: number;
   totalPurchases: number;
