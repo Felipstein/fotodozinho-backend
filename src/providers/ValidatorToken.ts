@@ -6,6 +6,7 @@ import { EnvProvider } from '../services/env-provider';
 import { RequiredFieldsError } from '../errors/RequiredFieldsError';
 import { BadRequestError } from '../errors/BadRequestError';
 import { NotFoundError } from '../errors/NotFoundError';
+import { UnauthorizedError } from '../errors/UnauthorizedError';
 
 class ValidatorToken {
 
@@ -25,23 +26,43 @@ class ValidatorToken {
     return validatorToken;
   }
 
+  async verify(id: string): Promise<void> {
+    if(!id) {
+      throw new RequiredFieldsError('Token');
+    }
+
+    const validatorToken = await this.validatorTokensRepository.listById(id);
+    if(!validatorToken) {
+      throw new UnauthorizedError('Token já expirado ou não é válido');
+    }
+
+    if(this.isExpired(validatorToken)) {
+      throw new UnauthorizedError('Token expirado, clique em enviar verificação novamente');
+    }
+  }
+
   async generate(email: string): Promise<IValidatorToken> {
     if(!email) {
       throw new RequiredFieldsError('E-mail');
     }
 
-    const alreadyExists = await this.validatorTokensRepository.listByEmail(email);
-    if(alreadyExists) {
+    const validatorToken = await this.validatorTokensRepository.listByEmail(email);
+
+    if(this.isExpired(validatorToken)) {
+      throw this.delete({ email });
+    }
+
+    if(validatorToken) {
       throw new BadRequestError('Esse e-mail já está aguardando verificação');
     }
 
     const expiresIn = Date.now() + ms(this.expiresIn);
 
-    const validatorToken = await this.validatorTokensRepository.create({
+    const validatorTokenCreated = await this.validatorTokensRepository.create({
       email, expiresIn,
     });
 
-    return validatorToken;
+    return validatorTokenCreated;
   }
 
   isExpired(validatorToken: IValidatorToken): boolean {
