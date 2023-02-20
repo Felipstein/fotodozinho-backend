@@ -1,8 +1,3 @@
-# A fazer:
-- Adicionar a parte de suporte no figma
-- Desenvolver a parte web
-- Adicionar WebSockets na api e na web
-
 ## Backend:
 - Manipulação/CRUD das entidades completo por meio dos padrões **REST** e **RESTful**
 - **Banco de dados SQL Postgres** para relações mais complexas
