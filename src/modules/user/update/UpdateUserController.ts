@@ -9,13 +9,14 @@ export class UpdateUserController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { name, password, phone, admin, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders } = req.body;
+    const { name, password, phone, admin, notifyServicesByEmail, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders } = req.body;
 
     const user = await this.updateUserUseCases.execute(id, {
       name,
       password,
       phone,
       admin,
+      notifyServicesByEmail,
       totalPrints,
       totalPrintOrders,
       totalPurchases,

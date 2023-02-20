@@ -20,6 +20,7 @@ export class UpdateUserUseCases {
     phone,
     password,
     admin,
+    notifyServicesByEmail,
     totalPrints,
     totalPrintOrders,
     totalPurchases,
@@ -47,6 +48,7 @@ export class UpdateUserUseCases {
         phone,
         password: encryptedPassword,
         admin: admin || false,
+        notifyServicesByEmail,
         totalPrints,
         totalPrintOrders,
         totalPurchases,
@@ -56,6 +58,7 @@ export class UpdateUserUseCases {
       userUpdated = await this.usersRepository.update(id, {
         name,
         phone,
+        notifyServicesByEmail,
       }, isTest);
     }
 

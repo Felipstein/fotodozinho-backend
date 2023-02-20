@@ -14,7 +14,7 @@ export class CreateUserUseCases {
     private shoppingCartsRepository: IShoppingCartsRepository,
   ) { }
 
-  async execute({ name, email, phone, password, admin = false }: UserCreateRequest, isTest = false): Promise<IUserView> {
+  async execute({ name, email, phone, password, notifyServicesByEmail, admin = false }: UserCreateRequest, isTest = false): Promise<IUserView> {
     if(ValidateService.someIsNullOrUndefined(name, email, password)) {
       throw new RequiredFieldsError('Nome', 'E-mail', 'Senha');
     }
@@ -25,7 +25,7 @@ export class CreateUserUseCases {
     }
 
     const encryptedPassword = await crypt.hash(password);
-    const user = await this.usersRepository.create({ name, email, phone, password: encryptedPassword, admin }, isTest);
+    const user = await this.usersRepository.create({ name, email, phone, password: encryptedPassword, admin, notifyServicesByEmail }, isTest);
 
     await this.shoppingCartsRepository.create(user.id);
 
