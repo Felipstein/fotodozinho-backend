@@ -8,7 +8,8 @@ export class UserDeleteAccountController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { userId, password } = req.body;
+    const { id: userId } = req.params;
+    const { password } = req.body;
 
     await this.userDeleteAccountUseCase.execute({ userId, password });
 
