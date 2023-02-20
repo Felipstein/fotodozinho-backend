@@ -12,6 +12,7 @@ import { PrismaPurchaseOrdersRepository } from './purchase-order/PrismaPurchaseO
 import { PrismaRefreshTokensRepository } from './refresh-tokens/PrismaRefreshTokensRepository';
 import { PrismaRevokedTokensRepository } from './revoked-tokens/PrismaRevokedTokensRepository';
 import { PrismaShoppingCartsRepository } from './shopping-carts/PrismaShoppingCartsRepository';
+import { PrismaSupportRequestRepository } from './support-requests/PrismaSupportRequestRepository';
 import { PrismaUsersRepository } from './users/PrismaUsersRepository';
 import { PrismaValidatorTokensRepository } from './validator-tokens/PrismaValidatorTokensRepository';
 
@@ -31,6 +32,7 @@ const currentRevokedTokensRepository = new PrismaRevokedTokensRepository();
 const currentRefreshTokensRepository = new PrismaRefreshTokensRepository();
 const currentValidatorTokensRepository = new PrismaValidatorTokensRepository();
 const currentPasswordRecoveryTokensRepository = new PrismaPasswordRecoveryTokensRepository();
+const supportRequestsRepository = new PrismaSupportRequestRepository();
 
 export {
   currentUsersRepository,
@@ -49,4 +51,5 @@ export {
   currentRefreshTokensRepository,
   currentValidatorTokensRepository,
   currentPasswordRecoveryTokensRepository,
+  supportRequestsRepository,
 };
