@@ -15,6 +15,7 @@ export const selectWithoutPassword = {
   lastLogin: true,
   deletedAt: true,
   admin: true,
+  verified: true,
   totalPrints: true,
   totalPrintOrders: true,
   totalPurchases: true,
@@ -115,10 +116,10 @@ export class PrismaUsersRepository implements IUsersRepository {
     return users.map(userViewMapper.toDomain);
   }
 
-  async create({ name, email, phone, password, admin }: UserCreateRequest): Promise<IUserView> {
+  async create({ name, email, phone, password, admin, verified }: UserCreateRequest): Promise<IUserView> {
     const user = await prisma.user.create({
       data: {
-        name, email, phone, password, admin
+        name, email, phone, password, admin, verified,
       },
       select: selectWithoutPassword,
     });
@@ -126,7 +127,19 @@ export class PrismaUsersRepository implements IUsersRepository {
     return userViewMapper.toDomain(user);
   }
 
-  async update(id: string, { name, phone, password, admin, lastLogin, deletedAt, totalPrints, totalPrintOrders, totalPurchases, totalPurchaseOrders }: UserUpdateRequest): Promise<IUserView | null> {
+  async update(id: string, {
+    name,
+    phone,
+    password,
+    admin,
+    verified,
+    lastLogin,
+    deletedAt,
+    totalPrints,
+    totalPrintOrders,
+    totalPurchases,
+    totalPurchaseOrders,
+  }: UserUpdateRequest): Promise<IUserView | null> {
     const user = await prisma.user.update({
       where: { id },
       data: {
@@ -134,6 +147,7 @@ export class PrismaUsersRepository implements IUsersRepository {
         phone,
         password,
         admin,
+        verified,
         lastLogin,
         deletedAt,
         totalPrints,

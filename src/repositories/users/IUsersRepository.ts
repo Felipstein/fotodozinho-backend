@@ -14,9 +14,21 @@ export interface IUsersRepository {
 
   listDeletedUsers(when?: Date): Promise<IUserView[]>;
 
-  create({ name, email, phone, password, admin }: UserCreateRequest, isTest: boolean): Promise<IUserView>;
+  create({ name, email, phone, password, admin, verified }: UserCreateRequest, isTest: boolean): Promise<IUserView>;
 
-  update(id: string, { name, phone, password, admin, lastLogin, deletedAt, totalPrintOrders, totalPrints, totalPurchaseOrders, totalPurchases }: UserUpdateRequest, isTest: boolean): Promise<IUserView | null>;
+  update(id: string, {
+    name,
+    phone,
+    password,
+    admin,
+    verified,
+    lastLogin,
+    deletedAt,
+    totalPrintOrders,
+    totalPrints,
+    totalPurchaseOrders,
+    totalPurchases,
+  }: UserUpdateRequest, isTest: boolean): Promise<IUserView | null>;
 
   delete(id: string): Promise<void>;
 

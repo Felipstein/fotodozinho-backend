@@ -8,6 +8,7 @@ export interface IUser {
   lastLogin: Date;
   deletedAt: Date;
   admin: boolean;
+  verified: boolean;
   totalPrints: number;
   totalPrintOrders: number;
   totalPurchases: number;
