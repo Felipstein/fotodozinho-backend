@@ -29,7 +29,7 @@ export class NodemailerEmailService implements EmailService {
   }
 
   async sendConfirmEmail(to: string, userName: string, validatorToken: string): Promise<void> {
-    const confirmLink = `${EnvProvider.host}/validate-email/${validatorToken}`;
+    const confirmLink = `${EnvProvider.host}:${EnvProvider.port}/validate-email/${validatorToken}`;
 
     await this.sendEmail(
       to,
