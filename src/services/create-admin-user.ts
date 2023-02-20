@@ -30,6 +30,7 @@ export class CreateAdminUserIfNotExistsService {
       password: encryptedPassword,
       admin: true,
       verified: true,
+      notifyServicesByEmail: false,
     }, false);
 
     return 'CREATED';
