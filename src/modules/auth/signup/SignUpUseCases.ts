@@ -6,6 +6,7 @@ import { crypt } from '../../../providers/Crypt';
 import { refreshTokenProvider } from '../../../providers/RefreshToken';
 import { validatorTokenProvider } from '../../../providers/ValidatorToken';
 import { EmailService } from '../../../providers/emails/EmailService';
+import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ValidateService } from '../../../services/validate';
 import { SignUpRequest, SignUpResponse } from './SignUpDTO';
@@ -14,6 +15,7 @@ export class SignUpUseCases {
 
   constructor(
     private usersRepository: IUsersRepository,
+    private shoppingCartsRepository: IShoppingCartsRepository,
     private emailService: EmailService,
   ) { }
 
@@ -41,6 +43,8 @@ export class SignUpUseCases {
       name, email, phone, password: encryptedPassword,
     }, false);
     const userId = user.id;
+
+    await this.shoppingCartsRepository.create(user.id);
 
     const token = accessTokenProvider.generate({ userId: userId });
     const { id: refreshToken } = await refreshTokenProvider.generate(userId);

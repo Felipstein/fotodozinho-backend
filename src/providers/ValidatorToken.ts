@@ -54,12 +54,12 @@ class ValidatorToken {
 
     const validatorToken = await this.validatorTokensRepository.listByEmail(email);
 
-    if(this.isExpired(validatorToken)) {
-      throw this.delete({ email });
-    }
-
     if(validatorToken) {
-      throw new BadRequestError('Esse e-mail já está aguardando verificação');
+      if(this.isExpired(validatorToken)) {
+        await this.delete({ email });
+      } else {
+        throw new BadRequestError('Esse e-mail já está aguardando verificação');
+      }
     }
 
     const expiresIn = Date.now() + ms(this.expiresIn);
