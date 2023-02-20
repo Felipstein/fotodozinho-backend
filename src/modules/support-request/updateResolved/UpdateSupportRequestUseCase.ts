@@ -1,9 +1,9 @@
 import { ISupportRequest } from '../../../entities/support-request/ISupportRequest';
 import { SupportRequestUpdateResolvedRequest } from '../../../entities/support-request/dtos/SupportRequestUpdateResolvedRequest';
+import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { SupportRequestNotFoundError } from '../../../errors/SupportRequestNotFoundError';
 import { ISupportRequestsRepository } from '../../../repositories/support-requests/ISupportRequestsRepository';
-import { ValidateService } from '../../../services/validate';
 
 export class UpdateSupportRequestResolvedUseCase {
 
@@ -12,8 +12,12 @@ export class UpdateSupportRequestResolvedUseCase {
   ) { }
 
   async execute(id: string, { resolved }: SupportRequestUpdateResolvedRequest): Promise<ISupportRequest> {
-    if(ValidateService.someIsNullOrUndefined(id, resolved)) {
-      throw new RequiredFieldsError('Pedido para o suporte', 'Resolvido');
+    if(!id) {
+      throw new IDNotGivenError();
+    }
+
+    if(!resolved) {
+      throw new RequiredFieldsError('Resolvido');
     }
 
     const supportRequestExists = await this.supportRequestsRepository.listById(id);
