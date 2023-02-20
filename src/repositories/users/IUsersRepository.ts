@@ -6,7 +6,7 @@ export interface IUsersRepository {
 
   listAll(): Promise<IUserView[]>;
 
-  listById(id: string): Promise<IUserView | null>;
+  listById(id: string, withPassword?: boolean): Promise<(IUserView & { password?: string }) | null>;
 
   listByEmail(email: string, withPassword?: boolean): Promise<(IUserView & { password?: string }) | null>;
 

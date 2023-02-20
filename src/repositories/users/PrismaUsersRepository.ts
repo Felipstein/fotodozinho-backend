@@ -31,17 +31,26 @@ export class PrismaUsersRepository implements IUsersRepository {
     return users.map(userViewMapper.toDomain);
   }
 
-  async listById(id: string): Promise<IUserView | null> {
-    const user = await prisma.user.findFirst({
-      where: { id },
-      select: selectWithoutPassword,
-    });
+  async listById(id: string, withPassword = false): Promise<(IUserView & { password?: string }) | null> {
+    let user;
+
+    if(withPassword) {
+      user = await prisma.user.findFirst({ where: { id } });
+    } else {
+      user = await prisma.user.findFirst({
+        where: { id },
+        select: selectWithoutPassword,
+      });
+    }
 
     if(!user) {
       return null;
     }
 
-    return userViewMapper.toDomain(user);
+    const userMapped = userViewMapper.toDomain(user);
+
+    // @ts-ignore
+    return withPassword ? { ...userMapped, password: user.password } : userMapped;
   }
 
   async listByEmail(email: string, withPassword = false): Promise<(IUserView & { password?: string }) | null> {
