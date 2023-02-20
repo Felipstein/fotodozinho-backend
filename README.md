@@ -1,5 +1,4 @@
 # A fazer:
-- Criar a rota para deleção de conta via usuário
 - Criar a verificação de usuário administrador e aplicar nas rotas administrativas
 - Criar a rota para suporte
 - Salvar todos os tokens gerados
