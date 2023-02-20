@@ -5,6 +5,7 @@ const EnvProvider = {
   tokensExpirationTime: {
     accessToken: process.env.ACCESS_TOKEN_EXPIRATION_TIME,
     refreshToken: process.env.REFRESH_TOKEN_EXPIRATION_TIME,
+    validateToken: process.env.VALIDATE_TOKEN_EXPIRATION_TIME,
   },
   adminPassword: process.env.ADMIN_PASSWORD,
   storageType: process.env.STORAGE_TYPE,
