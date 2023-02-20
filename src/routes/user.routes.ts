@@ -10,6 +10,7 @@ import { ensureAuth } from '../middlewares/ensureAuth';
 import { ensureAdminUser } from '../middlewares/ensureAdminUser';
 import { ensureSelfAction } from '../middlewares/ensureSelfAction';
 import { listInactiveUsersFactory } from '../modules/user/listInactives';
+import { updateUserPasswordFactory } from '../modules/user/updatePassword';
 
 const route = Router();
 
@@ -37,6 +38,10 @@ route.post('/', ensureAdminUser, (req, res) => {
 
 route.put('/:id', ensureSelfAction('params', { fieldUserIdName: 'id' }), (req, res) => {
   return updateUserFactory().controller.handle(req, res);
+});
+
+route.patch('/:id/password', ensureSelfAction('params', { fieldUserIdName: 'id' }), (req, res) => {
+  return updateUserPasswordFactory().controller.handle(req, res);
 });
 
 route.delete('/:id', ensureAdminUser, (req, res) => {
