@@ -1,3 +1,4 @@
+import ms from 'ms';
 import { IPasswordRecoveryToken } from '../entities/password-recovery-token/IPasswordRecoveryToken';
 import { BadRequestError } from '../errors/BadRequestError';
 import { RequiredFieldsError } from '../errors/RequiredFieldsError';
@@ -20,6 +21,18 @@ export class PasswordRecoveryToken {
     }
 
     const passwordRecoveryToken = await this.passwordRecoveryTokensRepository.listBy({ id, userId });
+
+    return passwordRecoveryToken;
+  }
+
+  async generate(userId: string): Promise<IPasswordRecoveryToken> {
+    if(!userId) {
+      throw new BadRequestError('Usuário é obrigatório');
+    }
+
+    const expiresIn = Date.now() + ms(this.expiresIn);
+
+    const passwordRecoveryToken = await this.passwordRecoveryTokensRepository.create({ expiresIn, userId });
 
     return passwordRecoveryToken;
   }

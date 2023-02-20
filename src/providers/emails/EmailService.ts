@@ -4,4 +4,6 @@ export interface EmailService {
 
   sendConfirmEmail(to: string, userName: string, validatorToken: string): Promise<void>;
 
+  sendRecoveryPasswordEmail(to: string, userName: string, passwordRecoveryToken: string): Promise<void>;
+
 }
