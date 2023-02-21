@@ -1,12 +1,12 @@
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { NotificationNotFoundError } from '../../../errors/NotificationNotFoundError';
-import { INotificationsRepository } from '../../../repositories/notifications/INotificationsRepository';
+import { NotificationsService } from '../../../services/notifications';
 import { verifyUserAuth } from '../../../services/verify-user-auth';
 
 export class DeleteNotificationUseCases {
 
   constructor(
-    private notificationsRepository: INotificationsRepository,
+    private notificationsService: NotificationsService,
   ) { }
 
   async execute(id: string, requestingUserId: string): Promise<void> {
@@ -14,14 +14,14 @@ export class DeleteNotificationUseCases {
       throw new IDNotGivenError();
     }
 
-    const notification = await this.notificationsRepository.listById(id);
+    const notification = await this.notificationsService.getNotification(id);
     if(!notification) {
       throw new NotificationNotFoundError();
     }
 
     await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, notification.userId);
 
-    await this.notificationsRepository.delete(id);
+    await this.notificationsService.deleteNotification(id);
   }
 
 }

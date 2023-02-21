@@ -1,14 +1,14 @@
 import { INotification } from '../../../entities/notification/INotification';
-import { INotificationsRepository } from '../../../repositories/notifications/INotificationsRepository';
+import { NotificationsService } from '../../../services/notifications';
 
 export class ListAllNotificationsUseCases {
 
   constructor(
-    private notificationsRepository: INotificationsRepository,
+    private notificationsService: NotificationsService,
   ) { }
 
   async execute(): Promise<INotification[]> {
-    const notifications = await this.notificationsRepository.listAll();
+    const notifications = await this.notificationsService.getAll();
 
     return notifications;
   }

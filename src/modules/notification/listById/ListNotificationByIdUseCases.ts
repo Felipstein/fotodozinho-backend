@@ -1,12 +1,12 @@
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { INotification } from '../../../entities/notification/INotification';
-import { INotificationsRepository } from '../../../repositories/notifications/INotificationsRepository';
 import { NotificationNotFoundError } from '../../../errors/NotificationNotFoundError';
+import { NotificationsService } from '../../../services/notifications';
 
 export class ListNotificationByIdUseCases {
 
   constructor(
-    private notificationsRepository: INotificationsRepository,
+    private notificationsService: NotificationsService,
   ) { }
 
   async execute(id: string): Promise<INotification> {
@@ -14,7 +14,7 @@ export class ListNotificationByIdUseCases {
       throw new IDNotGivenError();
     }
 
-    const notification = await this.notificationsRepository.listById(id);
+    const notification = await this.notificationsService.getNotification(id);
     if(!notification) {
       throw new NotificationNotFoundError();
     }

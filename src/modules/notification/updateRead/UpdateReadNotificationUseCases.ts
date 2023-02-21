@@ -3,12 +3,12 @@ import { INotification } from '../../../entities/notification/INotification';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { NotificationNotFoundError } from '../../../errors/NotificationNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { NotificationsService } from '../../../services/notifications';
 import { verifyUserAuth } from '../../../services/verify-user-auth';
-import { INotificationsRepository } from './../../../repositories/notifications/INotificationsRepository';
 export class UpdateReadNotificationUseCases {
 
   constructor(
-    private notificationsRepository: INotificationsRepository,
+    private notificationsService: NotificationsService,
   ) { }
 
   async execute(id: string, { read }: NotificationUpdateReadRequest, requestingUserId: string): Promise<INotification> {
@@ -20,14 +20,14 @@ export class UpdateReadNotificationUseCases {
       throw new RequiredFieldsError('Lida');
     }
 
-    const notification = await this.notificationsRepository.listById(id);
+    const notification = await this.notificationsService.getNotification(id);
     if(!notification) {
       throw new NotificationNotFoundError();
     }
 
     await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, notification.userId);
 
-    const notificationUpdated = await this.notificationsRepository.updateRead(id, read);
+    const notificationUpdated = await this.notificationsService.updateNotificationRead(id, read);
 
     return notificationUpdated;
   }

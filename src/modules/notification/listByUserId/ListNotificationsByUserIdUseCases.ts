@@ -1,13 +1,13 @@
 import { INotification } from '../../../entities/notification/INotification';
-import { INotificationsRepository } from '../../../repositories/notifications/INotificationsRepository';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
+import { NotificationsService } from '../../../services/notifications';
 
 export class ListNotificationsByUserIdUseCases {
 
   constructor(
-    private notificationsRepository: INotificationsRepository,
+    private notificationsService: NotificationsService,
     private usersRepository: IUsersRepository,
   ) { }
 
@@ -16,12 +16,12 @@ export class ListNotificationsByUserIdUseCases {
       throw new RequiredFieldsError('Usuário');
     }
 
-    const userExists = await this.usersRepository.listById(userId);
-    if(!userExists) {
+    const user = await this.usersRepository.listById(userId);
+    if(!user) {
       throw new UserNotFoundError();
     }
 
-    const notifications = await this.notificationsRepository.listByUserId(userId);
+    const notifications = await this.notificationsService.getNotificationsByUser(user);
 
     return notifications;
   }

@@ -1,15 +1,15 @@
 import { INotification } from '../../../entities/notification/INotification';
-import { INotificationsRepository } from '../../../repositories/notifications/INotificationsRepository';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { UserNotFoundError } from '../../../errors/UserNotFoundError';
 import { NotificationCreateRequest } from '../../../entities/notification/dtos/NotificationCreateRequest';
 import { ValidateService } from '../../../services/validate';
+import { NotificationsService } from '../../../services/notifications';
 
 export class CreateNotificationUseCases {
 
   constructor(
-    private notificationsRepository: INotificationsRepository,
+    private notificationsService: NotificationsService,
     private usersRepository: IUsersRepository,
   ) { }
 
@@ -23,7 +23,7 @@ export class CreateNotificationUseCases {
       throw new UserNotFoundError();
     }
 
-    const notification = await this.notificationsRepository.create({ title, message, userId });
+    const notification = await this.notificationsService.createNotification(title, message, user);
 
     return notification;
   }
