@@ -52,15 +52,36 @@ Para começar a usar o Foto do Zinho, você precisará fazer o clone do reposit�
 
 
 ## Rotas Disponíveis
-Aqui estão as rotas disponíveis no Foto do Zinho:
+Aqui estão as **principais** rotas disponíveis no Foto do Zinho:
 
 ### Autenticação
 ```
-POST /auth/signin: essa rota é usada para que o usuário faça login na aplicação. Ela é protegida pelo middleware preventAuthenticatedAccess, que impede o acesso à rota caso o usuário já esteja autenticado.
-POST /auth/signup: essa rota é usada para que um novo usuário se cadastre na aplicação. Ela também é protegida pelo middleware preventAuthenticatedAccess.
-DELETE /auth/signout: essa rota é usada para que o usuário faça logout da aplicação. Ela é protegida pelo middleware ensureAuth, que impede o acesso à rota caso o usuário não esteja autenticado.
-GET /auth/validate: essa rota é usada para validar se o token de acesso enviado na requisição é válido. Ela também é protegida pelo middleware ensureAuth.
-POST /auth/refresh-token: essa rota é usada para gerar um novo token de acesso a partir do refresh token. Ela não é protegida por nenhum middleware, mas requer um refresh token válido na requisição.
+POST /auth/signin: usada para que o usuário faça login na aplicação. Ela é protegida pelo middleware preventAuthenticatedAccess, que impede o acesso à rota caso o usuário já esteja autenticado.
+POST /auth/signup: usada para que um novo usuário se cadastre na aplicação. Ela também é protegida pelo middleware preventAuthenticatedAccess.
+DELETE /auth/signout: usada para que o usuário faça logout da aplicação. Ela é protegida pelo middleware ensureAuth, que impede o acesso à rota caso o usuário não esteja autenticado.
+GET /auth/validate: usada para validar se o token de acesso enviado na requisição é válido. Ela também é protegida pelo middleware ensureAuth.
+POST /auth/refresh-token: usada para gerar um novo token de acesso a partir do refresh token. Ela não é protegida por nenhum middleware, mas requer um refresh token válido na requisição.
+```
+
+### Manipulação de usuários
+```
+GET /users: Lista todos os usuários cadastrados no sistema (para administradores apenas)
+GET /users/inactive: Lista todos os usuários inativos (para administradores apenas)
+GET /users/id/:id: Retorna informações sobre um usuário específico (apenas para o próprio usuário ou administradores)
+GET /users/email/:email: Retorna informações sobre um usuário específico, identificado pelo seu endereço de email
+POST /users: Cria um novo usuário no sistema (para administradores apenas)
+PUT /users/:id: Atualiza informações do usuário com o ID especificado (apenas para o próprio usuário ou administradores)
+PATCH /users/:id/password: Atualiza a senha do usuário com o ID especificado (apenas para o próprio usuário ou administradores)
+DELETE /users/:id: Remove o usuário com o ID especificado (para administradores apenas)
+DELETE /users/account/:id: Remove a conta do próprio usuário com o ID especificado (apenas para o próprio usuário ou administradores)
+```
+
+### Validações e recuperação de senha
+```
+/validate-email/:token: Valida o e-mail do usuário;
+/set-password: Define uma nova senha para o usuário que utilizou da recuperação de senha (apenas se o token for válido);
+/recovery-password: Envia um token para recuperação de senha no e-mail do usuário;
+/validate-recovery-password-token/:token: Apenas verifica se o token para recuperação de senha é válido.
 ```
 
 
