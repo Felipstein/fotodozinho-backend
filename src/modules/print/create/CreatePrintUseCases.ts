@@ -6,12 +6,13 @@ import { NumberValidationError } from '../../../errors/NumberValidationError';
 import { PrintOrderNotFound } from '../../../errors/PrintOrderNotFoundError';
 import { PrintPriceNotFound } from '../../../errors/PrintPriceNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { EmailService } from '../../../providers/emails/EmailService';
 import { IColorsRepository } from '../../../repositories/colors/IColorsRepository';
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
 import { IPrintsRepository } from '../../../repositories/prints/IPrintsRepository';
-import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ImageStoragedService } from '../../../services/image-storaged-type';
+import { NotificationsService } from '../../../services/notifications';
 import { ParseBoolean } from '../../../services/parse-boolean';
 import { ValidateService } from '../../../services/validate';
 import { verifyUserAuth } from '../../../services/verify-user-auth';
@@ -23,7 +24,8 @@ export class CreatePrintUseCases {
     private printOrdersRepository: IPrintOrdersRepository,
     private colorsRepository: IColorsRepository,
     private printPricesRepository: IPrintPricesRepository,
-    private usersRepository: IUsersRepository,
+    private notificationsService: NotificationsService,
+    private emailService: EmailService,
   ) { }
 
   async execute(
@@ -81,6 +83,8 @@ export class CreatePrintUseCases {
 
     if((printOrder.prints.length + 1) >= printOrder.totalPrintsExpected) {
       await this.printOrdersRepository.updateStatus(printOrder.id, 'WAITING');
+
+
     }
 
     return print;
