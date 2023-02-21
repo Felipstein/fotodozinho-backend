@@ -3,6 +3,7 @@ import { INotification } from '../../../entities/notification/INotification';
 import { IDNotGivenError } from '../../../errors/IDNotGivenError';
 import { NotificationNotFoundError } from '../../../errors/NotificationNotFoundError';
 import { RequiredFieldsError } from '../../../errors/RequiredFieldsError';
+import { verifyUserAuth } from '../../../services/verify-user-auth';
 import { INotificationsRepository } from './../../../repositories/notifications/INotificationsRepository';
 export class UpdateReadNotificationUseCases {
 
@@ -10,7 +11,7 @@ export class UpdateReadNotificationUseCases {
     private notificationsRepository: INotificationsRepository,
   ) { }
 
-  async execute(id: string, { read }: NotificationUpdateReadRequest): Promise<INotification> {
+  async execute(id: string, { read }: NotificationUpdateReadRequest, requestingUserId: string): Promise<INotification> {
     if(!id) {
       throw new IDNotGivenError();
     }
@@ -19,14 +20,16 @@ export class UpdateReadNotificationUseCases {
       throw new RequiredFieldsError('Lida');
     }
 
-    const notificationExists = await this.notificationsRepository.listById(id);
-    if(!notificationExists) {
+    const notification = await this.notificationsRepository.listById(id);
+    if(!notification) {
       throw new NotificationNotFoundError();
     }
 
-    const notification = await this.notificationsRepository.updateRead(id, read);
+    await verifyUserAuth.ensureSelfAction({ id: requestingUserId }, notification.userId);
 
-    return notification;
+    const notificationUpdated = await this.notificationsRepository.updateRead(id, read);
+
+    return notificationUpdated;
   }
 
 }

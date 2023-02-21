@@ -27,7 +27,7 @@ export class SignUpUseCases {
       throw new RequiredFieldsError('Name', 'E-mail', 'Senha', 'Confirmar senha', 'Notificar serviços pelo e-mail', 'Aceito sobre os Termos de Condições e Uso');
     }
 
-    if(ParseBoolean.parse(acceptedTermsAndConditions)) {
+    if(!ParseBoolean.parse(acceptedTermsAndConditions)) {
       throw new BadRequestError('Você deve aceitar os termos de condições e de uso para prosseguir');
     }
 

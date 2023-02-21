@@ -29,11 +29,11 @@ route.post('/', ensureAdminUser, (req, res) => {
   return createNotificationFactory().controller.handle(req, res);
 });
 
-route.patch('/:id', ensureSelfAction(), (req, res) => {
+route.patch('/:id', (req, res) => {
   return updateReadNotificationFactory().controller.handle(req, res);
 });
 
-route.delete('/:id', ensureAdminUser, (req, res) => {
+route.delete('/:id', (req, res) => {
   return deleteNotificationFactory().controller.handle(req, res);
 });
 
