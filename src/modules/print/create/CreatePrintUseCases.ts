@@ -11,6 +11,7 @@ import { IColorsRepository } from '../../../repositories/colors/IColorsRepositor
 import { IPrintOrdersRepository } from '../../../repositories/print-orders/IPrintOrdersRepository';
 import { IPrintPricesRepository } from '../../../repositories/print-prices/IPrintPricesRepository';
 import { IPrintsRepository } from '../../../repositories/prints/IPrintsRepository';
+import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
 import { ImageStoragedService } from '../../../services/image-storaged-type';
 import { NotificationsService } from '../../../services/notifications';
 import { ParseBoolean } from '../../../services/parse-boolean';
@@ -24,6 +25,7 @@ export class CreatePrintUseCases {
     private printOrdersRepository: IPrintOrdersRepository,
     private colorsRepository: IColorsRepository,
     private printPricesRepository: IPrintPricesRepository,
+    private usersRepository: IUsersRepository,
     private notificationsService: NotificationsService,
     private emailService: EmailService,
   ) { }
@@ -84,7 +86,13 @@ export class CreatePrintUseCases {
     if((printOrder.prints.length + 1) >= printOrder.totalPrintsExpected) {
       await this.printOrdersRepository.updateStatus(printOrder.id, 'WAITING');
 
+      const user = await this.usersRepository.listById(printOrder.userId);
 
+      await this.notificationsService.createStructuredNotification('print-order-released', user);
+
+      if(user.notifyServicesByEmail) {
+        await this.emailService.sendPrintOrderReleasedEmail(user.email, user.name);
+      }
     }
 
     return print;

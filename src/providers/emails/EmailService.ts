@@ -8,4 +8,6 @@ export interface EmailService {
 
   sendSupportEmail(to: string, userName: string): Promise<void>;
 
+  sendPrintOrderReleasedEmail(to: string, userName: string): Promise<void>;
+
 }
