@@ -10,6 +10,7 @@ import { validatorTokenProvider } from '../../../providers/ValidatorToken';
 import { EmailService } from '../../../providers/emails/EmailService';
 import { IShoppingCartsRepository } from '../../../repositories/shopping-carts/IShoppingCartsRepository';
 import { IUsersRepository } from '../../../repositories/users/IUsersRepository';
+import { NotificationsService } from '../../../services/notifications';
 import { ParseBoolean } from '../../../services/parse-boolean';
 import { ValidateService } from '../../../services/validate';
 import { SignUpRequest, SignUpResponse } from './SignUpDTO';
@@ -19,6 +20,7 @@ export class SignUpUseCases {
   constructor(
     private usersRepository: IUsersRepository,
     private shoppingCartsRepository: IShoppingCartsRepository,
+    private notificationsService: NotificationsService,
     private emailService: EmailService,
   ) { }
 
@@ -62,6 +64,8 @@ export class SignUpUseCases {
     const { id: validatorToken } = await validatorTokenProvider.generate(email);
 
     await this.emailService.sendConfirmEmail(email, name, validatorToken);
+
+    await this.notificationsService.createStructuredNotification('welcome', user);
 
     return { user: userViewMapper.toPublic(user), token, refreshToken };
   }
