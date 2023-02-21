@@ -10,7 +10,7 @@ export class DeleteNotificationController {
   async handle(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-    await this.deleteNotificationUseCases.execute(id);
+    await this.deleteNotificationUseCases.execute(id, req.userId);
 
     return res.sendStatus(204);
   }

@@ -11,7 +11,7 @@ export class UpdateReadNotificationController {
     const { id } = req.params;
     const { read } = req.body;
 
-    const notification = await this.updateReadNotificationUseCases.execute(id, { read });
+    const notification = await this.updateReadNotificationUseCases.execute(id, { read }, req.userId);
 
     return res.json(notification);
   }

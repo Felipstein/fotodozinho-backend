@@ -5,6 +5,10 @@ class ParseBoolean {
       return value.toLowerCase() === 'true';
     }
 
+    if(typeof value === 'boolean') {
+      return value;
+    }
+
     return value === 'true';
   }
 
