@@ -1,7 +1,3 @@
-# A fazer:
-- enviar notificações sobre serviços quando atualizados e criados
-- enviar e-mails (se a configuração estiver ativada) sobre serviços atualizados e criados
-
 # Foto do Zinho
 **Foto do Zinho é uma aplicação baseada nos serviços de uma empresa de fotografia e outros serviços relacionados. A aplicação oferece rotas para manipulação e uso desses serviços, registro de usuários, sistema de administração, rotas autenticadas e mais.**
 
