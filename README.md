@@ -1,3 +1,7 @@
+# A fazer:
+- enviar notificações sobre serviços quando atualizados e criados
+- enviar e-mails (se a configuração estiver ativada) sobre serviços atualizados e criados
+
 ## Backend:
 - Manipulação/CRUD das entidades completo por meio dos padrões **REST** e **RESTful**
 - **Banco de dados SQL Postgres** para relações mais complexas
