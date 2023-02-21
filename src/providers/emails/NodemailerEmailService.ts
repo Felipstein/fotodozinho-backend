@@ -103,4 +103,69 @@ export class NodemailerEmailService implements EmailService {
     );
   }
 
+  async sendPrintOrderReleasedEmail(to: string, userName: string): Promise<void> {
+    await this.sendEmail(
+      to,
+      'Pedido de Revelação de Fotos - Foto do Zinho',
+      `
+        <p><strong>Olá, ${userName}!</strong></p>
+        <p>Seu pedido de revelação de fotos foi enviado para nós com êxito, e já já vamos começar!</p>
+        <p>Assim que o status for atualizado, entraremos em contato com você.</p>
+        <br>
+        <p>Enquanto isso, se você tiver alguma outra dúvida ou preocupação, não hesite em entrar em contato conosco.</p>
+        <br>
+        <p>Atenciosamente,</p>
+        <p>A equipe de suporte da Foto do Zinho</p>
+      `,
+    );
+  }
+
+  async sendPrintOrderInProductionEmail(to: string, userName: string): Promise<void> {
+    await this.sendEmail(
+      to,
+      'Pedido de Revelação de Fotos - Foto do Zinho',
+      `
+        <p><strong>Olá, ${userName}!</strong></p>
+        <p>Seu pedido de revelação de fotos já entrou para revelação!</p>
+        <p>Assim que for finalizado, entraremos em contato com você.</p>
+        <br>
+        <p>Enquanto isso, se você tiver alguma outra dúvida ou preocupação, não hesite em entrar em contato conosco.</p>
+        <br>
+        <p>Atenciosamente,</p>
+        <p>A equipe de suporte da Foto do Zinho</p>
+      `,
+    );
+  }
+
+  async sendPrintOrderFinishedEmail(to: string, userName: string, date: string, time: string): Promise<void> {
+    await this.sendEmail(
+      to,
+      'Pedido de Revelação de Fotos - Foto do Zinho',
+      `
+        <p><strong>Olá, ${userName}!</strong></p>
+        <p>Suas fotos para revelar do dia ${date} às ${time} já estão prontas!</p>
+        <p>Você já pode vir na loja para retira-las.</p>
+        <br>
+        <p>Atenciosamente,</p>
+        <p>A equipe de suporte da Foto do Zinho</p>
+      `,
+    );
+  }
+
+  async sendPurchaseOrderReleasedEmail(to: string, userName: string): Promise<void> {
+    await this.sendEmail(
+      to,
+      'Pedido de compras - Foto do Zinho',
+      `
+        <p><strong>Olá, ${userName}!</strong></p>
+        <p>Seu pedido de compras já está quase pronto, basta apenas escolher o método de pagamento!</p>
+        <br>
+        <p>Enquanto isso, se você tiver alguma outra dúvida ou preocupação, não hesite em entrar em contato conosco.</p>
+        <br>
+        <p>Atenciosamente,</p>
+        <p>A equipe de suporte da Foto do Zinho</p>
+      `,
+    );
+  }
+
 }
