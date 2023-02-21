@@ -10,4 +10,6 @@ export interface EmailService {
 
   sendPrintOrderReleasedEmail(to: string, userName: string): Promise<void>;
 
+  sendPurchaseOrderReleasedEmail(to: string, userName: string): Promise<void>;
+
 }
