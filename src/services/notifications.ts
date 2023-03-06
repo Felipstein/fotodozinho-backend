@@ -63,6 +63,10 @@ export class NotificationsService {
   async createStructuredNotification(notificationType: NotificationsType, user: IUserView, replaceKeys?: Record<string, string>): Promise<INotification> {
     const notificationStructured = notificationsStructured[notificationType];
 
+    if(!notificationStructured) {
+      throw new Error('Notification not found');
+    }
+
     let message = notificationStructured.message;
 
     if(replaceKeys) {
