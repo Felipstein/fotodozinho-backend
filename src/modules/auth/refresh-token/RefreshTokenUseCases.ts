@@ -24,9 +24,9 @@ export class RefreshTokenUseCases {
     const { userId } = refreshTokenObj;
 
     const token = accessTokenProvider.generate({ userId });
-    await refreshTokenProvider.regenerateRefreshToken(userId);
+    const newRefreshToken = await refreshTokenProvider.regenerateRefreshToken(userId);
 
-    return { token };
+    return { token, refreshToken: newRefreshToken.id };
   }
 
 }
