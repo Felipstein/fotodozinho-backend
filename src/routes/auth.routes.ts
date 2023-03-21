@@ -21,7 +21,7 @@ route.delete('/signout', ensureAuth, (req, res) => {
   return signOutFactory().controller.handle(req, res);
 });
 
-route.get('/validate', ensureAuth, (req, res) => {
+route.get('/validate', (req, res) => {
   return validateTokenFactory().controller.handle(req, res);
 });
 

@@ -8,9 +8,9 @@ export class ValidateTokenController {
   ) { }
 
   async handle(req: Request, res: Response): Promise<Response> {
-    const { userId, tokenRequesting } = req;
+    const { token } = req.body;
 
-    const response = await this.validateTokenUseCases.execute({ userId, token: tokenRequesting });
+    const response = await this.validateTokenUseCases.execute({ token });
 
     return res.json(response);
   }
