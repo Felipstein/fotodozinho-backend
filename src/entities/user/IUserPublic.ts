@@ -4,6 +4,7 @@ export interface IUserPublic {
   email: string;
   phone?: string | null;
   createdAt: Date;
+  admin: boolean;
   totalPrints: number;
   totalPrintOrders: number;
   totalPurchases: number;
