@@ -1,7 +1,9 @@
 # Foto do Zinho
+
 **Foto do Zinho é uma aplicação baseada nos serviços de uma empresa de fotografia e outros serviços relacionados. A aplicação oferece rotas para manipulação e uso desses serviços, registro de usuários, sistema de administração, rotas autenticadas e mais.**
 
 ## Tecnologias e Termos Usados
+
 - Manipulação/CRUD das entidades completo por meio dos padrões **REST** e **RESTful**
 - **Banco de dados SQL Postgres** para relações mais complexas
 - **ORM Prisma** para manipualação do banco de dados
@@ -20,16 +22,16 @@
 - Código organizado e estruturado seguindo os princípios **SOLID** e **Clean Architecture**
 - Utilizando **node-cron** para **agendamento** na deleção do banco de dados os tokens expirados
 
-
-
 ## Como Usar
+
 Para começar a usar o Foto do Zinho, você precisará fazer o clone do repositório e instalar as dependências com o comando `npm install` ou `yarn`. Você também precisará criar um arquivo `.env` na raiz do projeto com as variáveis de ambiente necessárias. Você pode utilizar o arquivo `.env.example` para se basear nas variáveis.
 
-
 ## Rotas Disponíveis
+
 Aqui estão as **principais** rotas disponíveis no Foto do Zinho:
 
 ### Autenticação
+
 ```
 POST /auth/signin: usada para que o usuário faça login na aplicação. Ela é protegida pelo middleware preventAuthenticatedAccess, que impede o acesso à rota caso o usuário já esteja autenticado.
 POST /auth/signup: usada para que um novo usuário se cadastre na aplicação. Ela também é protegida pelo middleware preventAuthenticatedAccess.
@@ -39,6 +41,7 @@ POST /auth/refresh-token: usada para gerar um novo token de acesso a partir do r
 ```
 
 ### Manipulação de usuários
+
 ```
 GET /users: Lista todos os usuários cadastrados no sistema (para administradores apenas)
 GET /users/inactive: Lista todos os usuários inativos (para administradores apenas)
@@ -52,23 +55,28 @@ DELETE /users/account/:id: Remove a conta do próprio usuário com o ID especifi
 ```
 
 ### Validações e recuperação de senha
+
 ```
 /validate-email/:token: Valida o e-mail do usuário;
 /set-password: Define uma nova senha para o usuário que utilizou da recuperação de senha (apenas se o token for válido);
 /recovery-password: Envia um token para recuperação de senha no e-mail do usuário;
 /validate-recovery-password-token/:token: Apenas verifica se o token para recuperação de senha é válido.
+/send-new-validate-email Envia um novo token para validar o e-mail do usuário.
 ```
 
-
 ## Segurança
+
 O Foto do Zinho utiliza tokens JWT para autenticação de usuários, e possui sistema de autenticação e autorização de rotas. A aplicação também utiliza criptografia para manter as senhas dos usuários seguras. O projeto também utiliza tokens para recuperação de senha e validação de e-mail, além de tokens refresh para evitar que os usuários tenham que fazer login frequentemente.
 
 ## Tratamento de Erros
+
 O Foto do Zinho utiliza middleware para o tratamento de erros, fornecendo respostas claras e adequadas para os usuários em caso de erros na API.
 
 ## Envio de E-mails
+
 O Foto do Zinho utiliza o SES da AWS da Amazon para enviar e-mails, com o uso do pacote Nodemailer.
 Você precisa configurar os dados para autenticação do seu SES caso queira utilizar do serviço de envio de e-mails.
 
 ## Código Organizado
+
 O código do Foto do Zinho segue os padrões SOLID e Clean Architecture, tornando-o mais organizado e fácil de manter.
