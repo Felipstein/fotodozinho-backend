@@ -26,6 +26,7 @@ class UserViewMapper {
       phone: viewPublic.phone,
       createdAt: viewPublic.createdAt,
       admin: viewPublic.admin,
+      verified: viewPublic.verified,
       totalPrintOrders: viewPublic.totalPrintOrders,
       totalPrints: viewPublic.totalPrints,
       totalPurchaseOrders: viewPublic.totalPurchaseOrders,
