@@ -6,6 +6,8 @@ import { validateTokenFactory } from '../modules/auth/validate';
 import { preventAuthenticatedAccess } from '../middlewares/preventAuthenticatedAccess';
 import { ensureAuth } from '../middlewares/ensureAuth';
 import { refreshTokenFactory } from '../modules/auth/refresh-token';
+import { sendNewValidateEmailFactory } from '../modules/auth/send-new-validate-email';
+import { ensureSelfAction } from '../middlewares/ensureSelfAction';
 
 const route = Router();
 
@@ -27,6 +29,10 @@ route.get('/validate/:token', (req, res) => {
 
 route.post('/refresh-token', (req, res) => {
   return refreshTokenFactory().controller.handle(req, res);
+});
+
+route.post('/send-new-validate-email', ensureAuth, (req, res) => {
+  return sendNewValidateEmailFactory().controller.handle(req, res);
 });
 
 export { route as authRoutes };
