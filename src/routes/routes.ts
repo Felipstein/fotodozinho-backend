@@ -55,10 +55,6 @@ routes.use('/failed-images-uploaded', failedImageUploadedRoutes);
 
 routes.use('/support', supportRequestRoutes);
 
-routes.get('/validate-email/:token', (req, res) => {
-  return validateEmailFactory().controller.handle(req, res);
-});
-
 routes.post('/set-password', (req, res) => {
   return setPasswordFactory().controller.handle(req, res);
 });
@@ -69,6 +65,10 @@ routes.post('/recovery-password', (req, res) => {
 
 routes.get('/validate-recovery-password-token/:token', (req, res) => {
   return validateRecoveryPasswordTokenFactory().controller.handle(req, res);
+});
+
+routes.get('/validate-email/:token', (req, res) => {
+  return validateEmailFactory().controller.handle(req, res);
 });
 
 routes.post('/send-new-validate-email', ensureAuth, (req, res) => {
