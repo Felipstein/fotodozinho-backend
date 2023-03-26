@@ -23,6 +23,7 @@ import { setPasswordFactory } from '../modules/user/set-password';
 import { recoveryPasswordFactory } from '../modules/user/recovery-password';
 import { validateRecoveryPasswordTokenFactory } from '../modules/user/validate-recovery-password-token';
 import { supportRequestRoutes } from './support-request.routes';
+import { sendNewValidateEmailFactory } from '../modules/auth/send-new-validate-email';
 
 const injectUserId = ensureShoppingCartUser(currentShoppingCartsRepository, currentUsersRepository);
 
@@ -68,6 +69,10 @@ routes.post('/recovery-password', (req, res) => {
 
 routes.get('/validate-recovery-password-token/:token', (req, res) => {
   return validateRecoveryPasswordTokenFactory().controller.handle(req, res);
+});
+
+routes.post('/send-new-validate-email', ensureAuth, (req, res) => {
+  return sendNewValidateEmailFactory().controller.handle(req, res);
 });
 
 export { routes };
