@@ -67,7 +67,7 @@ routes.get('/validate-recovery-password-token/:token', (req, res) => {
   return validateRecoveryPasswordTokenFactory().controller.handle(req, res);
 });
 
-routes.get('/validate-email/:token', (req, res) => {
+routes.patch('/validate-email/:token', (req, res) => {
   return validateEmailFactory().controller.handle(req, res);
 });
 
