@@ -55,7 +55,7 @@ routes.use('/failed-images-uploaded', failedImageUploadedRoutes);
 
 routes.use('/support', supportRequestRoutes);
 
-routes.post('/set-password', (req, res) => {
+routes.patch('/set-password', (req, res) => {
   return setPasswordFactory().controller.handle(req, res);
 });
 
