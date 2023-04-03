@@ -15,15 +15,9 @@ export function ensureSelfAction(locationOfUserId: 'body' | 'params' = 'params',
   }
 
   return function middleware(req: Request, res: Response, next: NextFunction) {
-    let userIdAction;
-
     const fieldUserIdName = userIdPropertyOptions?.fieldUserIdName || 'userId';
 
-    if(locationOfUserId === 'params') {
-      userIdAction = req.params[fieldUserIdName];
-    } else {
-      userIdAction = req.body[fieldUserIdName];
-    }
+    const userIdAction = req[locationOfUserId][fieldUserIdName];
 
     const { userId: userIdRequesting } = req;
 
